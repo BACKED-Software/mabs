@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# mcabs
+mcabs project for csce431
+>>>>>>> e47c80973ae37077a0a39a9ad582af22102fc559
