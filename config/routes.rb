@@ -3,4 +3,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  #define the events resources routes
+  resources :events do
+    #special route for deleting events
+    member do
+      get 'delete'
+    end
+  end
 end
