@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Events</h1> <%= link_to "New Event", new_event_path %><br><br>
+<% i = 1 %>
+<div id="events">
+  <% @events.each do |event| %>
+    <%=i%>. <%= link_to event do %>
+              <%= event.eventName %>
+            <% end %>
+    <% i = i + 1 %>
+    <br>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+<p style="color: green"><%= notice %></p>
+<%= link_to "Back to list", events_path %>
+<%= render @event %>
+
+<div class="actions">
+  <%= link_to("Edit", edit_event_path(@event)) %>
+  <%= link_to("Delete", delete_event_path(@event))%>
+</div>

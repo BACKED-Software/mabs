@@ -47,13 +47,14 @@ class EventsController < ApplicationController
       end
     end
   
-    # DELETE /events/1 or /events/1.json
+    def delete
+      @event = Event.find(params[:id])
+    end
+    
     def destroy
-      @event.destroy
-      respond_to do |format|
-        format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      @event = Event.find(params[:id])
+      @event.destroy!
+      redirect_to(events_path, notice: 'Event was successfully deleted.')
     end
   
     private
@@ -67,5 +68,5 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :sponsor_id)
     end
-  end
+end
   
