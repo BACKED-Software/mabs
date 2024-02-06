@@ -3,4 +3,5 @@ class Event < ApplicationRecord
     #belongs_to :sponsor
   
     # Add any additional associations or validations here
+    
   end
