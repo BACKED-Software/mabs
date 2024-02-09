@@ -1,0 +1,30 @@
+<%= form_with(model: announcement) do |form| %>
+  <% if announcement.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(announcement.errors.count, "error") %> prohibited this announcement from being saved:</h2>
+
+      <ul>
+        <% announcement.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :announcementID, style: "display: block" %>
+    <%= form.text_field :announcementID %>
+    <%= form.label :googleUserID, style: "display: block" %>
+    <%= form.text_area :googleUserID %>
+    <%= form.label :subject, style: "display: block" %>
+    <%= form.text_field :subject %>
+    <%= form.label :dateOfAnnouncement, style: "display: block" %>
+    <%= form.datetime_local_field :dateOfAnnouncement %>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_field :body %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
