@@ -1,13 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Announcements</h1> <%= link_to "New Announcement", new_announcement_path %><br><br>
-<% i = 1 %>
+
 <div id="announcements">
   <% @announcements.each do |announcement| %>
-    <%=i%>. <%= link_to announcement do %>
-              <%= announcement.announcementID %>
-            <% end %>
-    <% i = i + 1 %>
+    <div class="announcement">
+      <h2><%= announcement.announcementID%>. <%= link_to announcement.subject, announcement %></h2>
+      <blockquote>
+        <%= announcement.body %>
+      </blockquote>
+    </div>
     <br>
   <% end %>
 </div>

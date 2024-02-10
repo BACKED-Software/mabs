@@ -1,2 +1,9 @@
-<h1>Announcements#edit</h1>
-<p>Find me in app/views/announcements/edit.html.erb</p>
+<h1>Edit Announcement</h1>
+
+<%= render 'form', announcement: @announcement %>
+
+<br>
+
+<div>
+  <%= link_to "Back to announcements", announcements_path %>
+</div>

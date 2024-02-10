@@ -12,15 +12,13 @@
   <% end %>
 
   <div>
-    <%= form.label :announcementID, style: "display: block" %>
-    <%= form.text_field :announcementID %>
-    <%= form.label :googleUserID, style: "display: block" %>
+    <%= form.label :googleUserID, "googleUserID", style: "display: block" %>
     <%= form.text_area :googleUserID %>
-    <%= form.label :subject, style: "display: block" %>
+    <%= form.label :subject, "Subject", style: "display: block" %>
     <%= form.text_field :subject %>
-    <%= form.label :dateOfAnnouncement, style: "display: block" %>
+    <%= form.label :dateOfAnnouncement, "Date of Announcement", style: "display: block" %>
     <%= form.datetime_local_field :dateOfAnnouncement %>
-    <%= form.label :body, style: "display: block" %>
+    <%= form.label :body, "Body", style: "display: block" %>
     <%= form.text_field :body %>
   </div>
 

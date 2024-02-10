@@ -5,6 +5,11 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements or /announcements.json
   def index
+    # Delete all rows
+    #Announcement.delete_all
+    # Reset the PK sequence
+    #ActiveRecord::Base.connection.reset_pk_sequence!('announcements')
+
     @announcements = Announcement.all
   end
 

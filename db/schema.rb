@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_09_233157) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_10_204106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "announcements", force: :cascade do |t|
-    t.integer "announcementID"
+  create_table "announcements", primary_key: "announcementID", force: :cascade do |t|
     t.string "googleUserID"
     t.text "subject"
     t.datetime "dateOfAnnouncement"
