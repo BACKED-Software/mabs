@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# app/controllers/events_controller.rb
+# Controller for managing event-related actions.
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
