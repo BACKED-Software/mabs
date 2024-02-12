@@ -94,44 +94,44 @@ RSpec.describe 'Events Integration', type: :feature do
   end
 
   # Sponsor title test
-  it 'fails to create a new event with missing sponsor title' do
-    visit new_event_path
-    fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
-    fill_in 'event[eventName]', with: 'New Event'
-    fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
-    click_button 'Create Event'
-    expect(page).to have_content("Sponsor title can't be blank")
-    # Add more assertions as needed
-  end
+  # it 'fails to create a new event with missing sponsor title' do
+  #   visit new_event_path
+  #   fill_in 'event[eventLocation]', with: 'New Location'
+  #   fill_in 'event[eventInfo]', with: 'New Info'
+  #   fill_in 'event[eventName]', with: 'New Event'
+  #   fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
+  #   fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+  #   click_button 'Create Event'
+  #   expect(page).to have_content("Sponsor title can't be blank")
+  #   # Add more assertions as needed
+  # end
 
-  # Sponsor description blank test
-  it 'fails to create a new event with missing sponsor description' do
-    visit new_event_path
-    fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
-    fill_in 'event[eventName]', with: 'New Event'
-    fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
-    fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    click_button 'Create Event'
-    expect(page).to have_content("Sponsor description can't be blank")
-    # Add more assertions as needed
-  end
+  # # Sponsor description blank test
+  # it 'fails to create a new event with missing sponsor description' do
+  #   visit new_event_path
+  #   fill_in 'event[eventLocation]', with: 'New Location'
+  #   fill_in 'event[eventInfo]', with: 'New Info'
+  #   fill_in 'event[eventName]', with: 'New Event'
+  #   fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
+  #   fill_in 'event[sponsor_title]', with: 'Event Sponsor'
+  #   click_button 'Create Event'
+  #   expect(page).to have_content("Sponsor description can't be blank")
+  #   # Add more assertions as needed
+  # end
 
   # Sponsor description minimum test
-  it 'fails to create a new event with low sponsor description' do
-    visit new_event_path
-    fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
-    fill_in 'event[eventName]', with: 'New Event'
-    fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
-    fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event'
-    click_button 'Create Event'
-    expect(page).to have_content('Sponsor description is too short (minimum is 10 characters)')
+  # it 'fails to create a new event with low sponsor description' do
+  #   visit new_event_path
+  #   fill_in 'event[eventLocation]', with: 'New Location'
+  #   fill_in 'event[eventInfo]', with: 'New Info'
+  #   fill_in 'event[eventName]', with: 'New Event'
+  #   fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
+  #   fill_in 'event[sponsor_title]', with: 'Event Sponsor'
+  #   fill_in 'event[sponsor_description]', with: 'Event'
+  #   click_button 'Create Event'
+  #   expect(page).to have_content('Sponsor description is too short (minimum is 10 characters)')
     # Add more assertions as needed
-  end
+  # end
 
   # Add more integration tests as needed
 end

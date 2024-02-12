@@ -9,6 +9,4 @@ class Event < ApplicationRecord
   validates :eventName, presence: true
   validates :eventTime, presence: true
   validates :eventLocation, presence: true
-  validates :sponsor_title, presence: true
-  validates :sponsor_description, presence: true, length: { minimum: 10 }
 end
