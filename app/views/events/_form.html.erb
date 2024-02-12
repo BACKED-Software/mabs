@@ -20,7 +20,14 @@
     <%= form.text_field :eventInfo %>
     <%= form.label :eventTime, style: "display: block" %>
     <%= form.datetime_local_field :eventTime %>
+
+    <%= form.label :sponsor_title, style: "display: block" %>
+    <%= form.text_field :sponsor_title %>
+
+    <%= form.label :sponsor_description, style: "display: block" %>
+    <%= form.text_area :sponsor_description %>
   </div>
+  
 
   <div>
     <%= form.submit %>
