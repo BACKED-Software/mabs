@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # location: spec/models/announcement_spec.rb
 require 'rails_helper'
 

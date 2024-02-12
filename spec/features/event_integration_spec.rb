@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/features/event_integration_spec.rb
 
 require 'rails_helper'
@@ -8,7 +10,7 @@ RSpec.describe 'Events Integration', type: :feature do
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now,
+      eventTime: DateTime.now
     )
   end
 

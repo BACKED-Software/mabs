@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/features/announcement_integration_spec.rb
 require 'rails_helper'
 
@@ -35,10 +37,10 @@ RSpec.describe 'Announcements Integration', type: :feature do
   it 'updates an existing announcement' do
     # Create a new announcement to update
     announcement = Announcement.create(
-        googleUserID: 'new_user_id',
-        subject: 'New Subject',
-        dateOfAnnouncement: DateTime.now,
-        body: 'New Body'
+      googleUserID: 'new_user_id',
+      subject: 'New Subject',
+      dateOfAnnouncement: DateTime.now,
+      body: 'New Body'
     )
 
     # Visit the show page of the announcement
@@ -52,10 +54,10 @@ RSpec.describe 'Announcements Integration', type: :feature do
   it 'deletes an announcement' do
     # Create a new announcement to update
     announcement = Announcement.create(
-        googleUserID: 'new_user_id',
-        subject: 'New Subject',
-        dateOfAnnouncement: DateTime.now,
-        body: 'New Body'
+      googleUserID: 'new_user_id',
+      subject: 'New Subject',
+      dateOfAnnouncement: DateTime.now,
+      body: 'New Body'
     )
 
     # Visit the show page of the announcement
@@ -63,7 +65,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
     click_link 'Delete'
     expect(page).not_to have_content('Example Subject')
   end
-  
+
   it 'fails to create a new announcement with missing subject' do
     visit new_announcement_path
     fill_in 'announcement[googleUserID]', with: 'new_user_id'

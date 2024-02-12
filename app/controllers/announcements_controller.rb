@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
+# This class is for creating and storing MCABS announcements
 class AnnouncementsController < ApplicationController
   before_action :set_announcement, only: %i[show edit update destroy]
 
   # GET /announcements or /announcements.json
   def index
     # Delete all rows
-    #Announcement.delete_all
+    # Announcement.delete_all
     # Reset the PK sequence
-    #ActiveRecord::Base.connection.reset_pk_sequence!('announcements')
+    # ActiveRecord::Base.connection.reset_pk_sequence!('announcements')
 
     @announcements = Announcement.all
   end
@@ -56,7 +57,7 @@ class AnnouncementsController < ApplicationController
   def delete
     @announcement = Announcement.find(params[:id])
   end
-  
+
   def destroy
     @announcement = Announcement.find(params[:id])
     @announcement.destroy!
@@ -73,11 +74,11 @@ class AnnouncementsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def announcement_params
     params.require(:announcement).permit(
-        :announcementID,
-        :googleUserID,
-        :subject,
-        :dateOfAnnouncement,
-        :body
-      )
+      :announcementID,
+      :googleUserID,
+      :subject,
+      :dateOfAnnouncement,
+      :body
+    )
   end
 end
