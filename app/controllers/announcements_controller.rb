@@ -27,6 +27,7 @@ class AnnouncementsController < ApplicationController
   # POST /announcements or /announcements.json
   def create
     @announcement = Announcement.new(announcement_params)
+    @announcement.dateOfAnnouncement = DateTime.now
 
     respond_to do |format|
       if @announcement.save
@@ -73,7 +74,7 @@ class AnnouncementsController < ApplicationController
   def announcement_params
     params.require(:announcement).permit(
         :announcementID,
-        :googleUsedID,
+        :googleUserID,
         :subject,
         :dateOfAnnouncement,
         :body
