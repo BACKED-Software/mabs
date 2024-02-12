@@ -7,8 +7,6 @@ class CreateEvents < ActiveRecord::Migration[7.0]
       t.text :eventInfo
       t.string :eventName
       t.datetime :eventTime
-      t.string sponsor_title
-      t.text sponsor_description
 
       t.timestamps
     end
