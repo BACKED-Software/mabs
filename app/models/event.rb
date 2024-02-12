@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ApplicationRecord
   # will be added later after sponsor table is created
   # belongs_to :sponsor
