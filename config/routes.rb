@@ -5,5 +5,10 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   #define the events resources routes
-  resources :events
+  resources :events do
+    #special route for deleting events
+    member do
+      get 'delete'
+    end
+  end
 end
