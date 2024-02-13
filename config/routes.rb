@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # dashboard route
+  root to: 'dashboard#index'
 
-  #dashboard route
-  get '/dashboard', to: 'dashboard#index'
-
-  #define the events resources routes
+  # define the events resources routes
 
   resources :events do
     # special route for deleting events
