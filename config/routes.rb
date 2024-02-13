@@ -7,10 +7,17 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   # define the events resources routes
+
+  #dashboard route
+  get '/dashboard', to: 'dashboard#index'
+
+  #define the events resources routes
+
   resources :events do
     # special route for deleting events
     member do
       get 'delete'
     end
   end
+
 end
