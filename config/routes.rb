@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-
-  # define the events resources routes
 
   #dashboard route
   get '/dashboard', to: 'dashboard#index'
@@ -20,4 +14,18 @@ Rails.application.routes.draw do
     end
   end
 
+  # define the announcements resources routes
+  resources :announcements do
+    # special route for deleting events
+    member do
+      get 'delete'
+    end
+  end
+
+  # get 'announcements/index'
+  # get 'announcements/show'
+  # get 'announcements/new'
+  # get 'announcements/edit'
+  # get 'announcements/delete'
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end
