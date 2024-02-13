@@ -8,7 +8,9 @@ RSpec.describe Event, type: :model do
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now
+      eventTime: DateTime.now,
+      sponsor_title: 'Sample Sponsor',
+      sponsor_description: 'Sample Description'
       # sponsor: Sponsor.create(name: "Sample Sponsor")
     )
   end
@@ -36,6 +38,16 @@ RSpec.describe Event, type: :model do
     event.eventTime = nil
     expect(event).to_not be_valid
   end
+
+  # it 'is not valid without a title' do
+  #   event.sponsor_title = nil
+  #   expect(event).to_not be_valid
+  # end
+
+  # it 'is not valid without a description' do
+  #   event.sponsor_description = nil
+  #   expect(event).to_not be_valid
+  # end
 
   # Add more tests as needed
 end

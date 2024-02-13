@@ -9,4 +9,9 @@ class Event < ApplicationRecord
   validates :eventName, presence: true
   validates :eventTime, presence: true
   validates :eventLocation, presence: true
+<<<<<<< HEAD
+=======
+#   validates :sponsor_title
+#   validates :sponsor_description
+>>>>>>> main
 end

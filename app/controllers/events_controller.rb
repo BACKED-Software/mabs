@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 # This class is for creating and storing MCABS events
+=======
+# app/controllers/events_controller.rb
+# Controller for managing event-related actions.
+>>>>>>> main
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
@@ -67,6 +72,11 @@ class EventsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def event_params
+<<<<<<< HEAD
     params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :sponsor_id)
+=======
+    params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :sponsor_title,
+                                  :sponsor_description)
+>>>>>>> main
   end
 end

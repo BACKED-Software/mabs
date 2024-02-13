@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root 'main#index'
 
-  match 'events', to: 'events#index', via: :get
-  match 'announcements', to: 'announcements#index', via: :get
+  #dashboard route
+  get '/dashboard', to: 'dashboard#index'
 
-  # define the events resources routes
+  #define the events resources routes
+
   resources :events do
     # special route for deleting events
     member do
