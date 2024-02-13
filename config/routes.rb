@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  #dashboard route
+  get '/dashboard', to: 'dashboard#index'
+
   #define the events resources routes
   resources :events do
     #special route for deleting events
@@ -11,4 +14,5 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
+
 end
