@@ -80,6 +80,38 @@
           font-size: 14px;
       }
 
+      .points-summary-container {
+          position: relative; /* Needed for absolute positioning inside */
+      }
+
+      .points-arch {
+          height: 40px; /* Height of the arch */
+          display: flex; /* Use flexbox to create the segments side by side */
+          border-radius: 20px; /* Half the height to make a semi-circle */
+          overflow: hidden; /* Hide anything outside the border-radius */
+          box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Subtle shadow for depth */
+      }
+
+      .arch-segment {
+          flex: 1; /* Flex basis, this should be dynamic based on points */
+          transition: flex-grow 0.5s ease-in-out; /* Smooth transition for changes */
+      }
+
+      .total-points-display {
+          margin-top: 20px; /* Space between arch and total points text */
+      }
+
+      .total-points {
+          font-weight: bold;
+          font-size: 1.5rem; /* Larger font size for emphasis */
+          color: #333; /* Dark color for contrast */
+      }
+
+      .points-value {
+          color: #007bff; /* Theme color for the points value */
+      }
+
+
   </style>
 </head>
 <body>
@@ -106,10 +138,24 @@
 </nav>
 
 
+
+
+
+
 <div class="container mt-5">
-  <div class="ps-5">
-    <h1>Good Morning, Joe</h1>
-    <p class="lead">Welcome to your dashboard</p>
+  <div class="row">
+    <div class="col-md-5 ps-5">
+      <h1>Good Morning, Joe</h1>
+      <p class="lead">Welcome to your dashboard</p>
+    </div>
+    <!-- Announcement Column -->
+    <div class="col-md-7">
+      <div class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
+        <h5 class="mb-3">Latest Announcement</h5>
+        <p class="announcement-date text-muted mb-1">February 12, 2024</p>
+        <p class="announcement-content mb-0">Don't forget to check out our latest event this weekend!</p>
+      </div>
+    </div>
   </div>
   <div class="events-container bg-white rounded shadow-lg p-4">
     <h4 class="mb-4">Upcoming Events</h4>
@@ -131,6 +177,14 @@
       <% end %>
     </ul>
   </div>
+  <div class="points-summary-container mt-5 p-4 bg-white rounded shadow-lg text-center">
+    <h4 class="mb-4">Points Summary</h4>
+    <div class="total-points-display mt-3">
+      <h2 class="total-points">Total Points: <span class="points-value">150</span></h2>
+    </div>
+  </div>
+
+
 </div>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
