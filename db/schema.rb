@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_12_204008) do
     t.datetime "eventTime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "eventPoints"
     t.string "sponsor_title"
     t.text "sponsor_description"
   end

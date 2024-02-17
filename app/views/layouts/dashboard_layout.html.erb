@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= yield(:title) %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= csrf_meta_tags %>
+  <%= yield(:extra_css) %>
+      </head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light fixed-top navbar-bg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MABS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+        </li>
+      </ul>
+      <a>
+        <div class="d-flex align-items-center justify-content-center bg-secondary text-light rounded-circle" style="width: 40px; height: 40px;">
+          <p class="mb-0 fs-6">JA</p>
+        </div>
+      </a>
+    </div>
+  </div></nav>
+
+      <%= yield %>
+
+  <%= yield(:extra_js) %>
+  </body>
+</html>
