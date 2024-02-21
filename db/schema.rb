@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_12_204008) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_21_040036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_12_204008) do
     t.datetime "updated_at", null: false
     t.string "sponsor_title"
     t.text "sponsor_description"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.boolean "is_admin", default: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "middle_initial", limit: 1
+    t.string "gender"
+    t.boolean "is_hispanic_or_latino"
+    t.string "race"
+    t.boolean "is_us_citizen"
+    t.boolean "is_first_generation_college_student"
+    t.datetime "date_of_birth"
+    t.string "phone_number"
+    t.string "avatar_url"
+    t.text "bio"
+    t.string "classification"
+    t.integer "total_points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
