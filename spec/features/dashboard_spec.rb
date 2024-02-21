@@ -1,9 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-RSpec.describe 'Events Index', type: :feature do
+RSpec.describe 'Dashboard Integration', type: :feature do
   before do
+    @user = create(:user)
     # Update this section to include eventInfo
     Event.create!(eventName: 'Event 1', eventTime: 1.day.from_now, eventLocation: 'Location 1',
                   eventInfo: 'Info about Event 1')
@@ -23,5 +22,22 @@ RSpec.describe 'Events Index', type: :feature do
       expect(page).to have_content(event.eventTime.strftime('%A, %B %-d'))
       expect(page).to have_content(event.eventLocation)
     end
+  end
+
+  it 'diplays the user name' do
+    login_as(@user, scope: :user)
+    visit '/'
+    expect(page).to have_content(@user.full_name)
+  end
+
+  it 'has sign in button if signed out' do
+    visit '/'
+    expect(page).to have_content('Sign In')
+  end
+
+  it 'has sign out button if signed in' do
+    login_as(@user, scope: :user)
+    visit '/'
+    expect(page).to have_content('Sign Out')
   end
 end
