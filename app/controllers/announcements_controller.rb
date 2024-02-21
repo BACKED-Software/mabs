@@ -2,6 +2,7 @@
 
 # This class is for creating and storing MCABS announcements
 class AnnouncementsController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create edit update delete destroy]
   before_action :set_announcement, only: %i[show edit update destroy]
 
   # GET /announcements or /announcements.json

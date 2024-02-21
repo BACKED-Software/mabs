@@ -36,10 +36,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_040036) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "uid"
     t.string "email", null: false
     t.boolean "is_admin", default: false
-    t.string "first_name"
-    t.string "last_name"
+    t.string "full_name"
     t.string "middle_initial", limit: 1
     t.string "gender"
     t.boolean "is_hispanic_or_latino"

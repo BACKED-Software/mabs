@@ -3,10 +3,10 @@
 class DeviseCreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
+      t.string :uid
       t.string :email,              null: false
-      t.boolean :is_admin, default: false
-      t.string :first_name
-      t.string :last_name
+      t.boolean :is_admin,          default: false
+      t.string :full_name
       t.string :middle_initial, limit: 1
       t.string :gender
       t.boolean :is_hispanic_or_latino

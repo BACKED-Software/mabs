@@ -40,5 +40,9 @@ a {
     font-weight: bold;
 }
 
+.flash__alert   { color: red; }
+.flash__notice  { color: blue; }
+.flash__success { color: green; }
+
 
 
