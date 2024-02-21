@@ -79,3 +79,10 @@ group :test do
   gem 'brakeman'
   gem 'rubocop'
 end
+
+#gems for authentication
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+
+
