@@ -86,3 +86,6 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
 
+#gem for .env file
+gem 'dotenv-rails'
+
