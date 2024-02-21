@@ -78,6 +78,7 @@ group :test do
 
   gem 'brakeman'
   gem 'rubocop'
+  gem 'launchy'
 end
 
 # gems for authentication
