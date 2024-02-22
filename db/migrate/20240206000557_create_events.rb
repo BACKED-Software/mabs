@@ -7,6 +7,7 @@ class CreateEvents < ActiveRecord::Migration[7.0]
       t.text :eventInfo
       t.string :eventName
       t.datetime :eventTime
+      t.integer :eventPoints
 
       t.timestamps
     end

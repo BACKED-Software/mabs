@@ -3,6 +3,7 @@
 # app/controllers/events_controller.rb
 # Controller for managing event-related actions.
 class EventsController < ApplicationController
+  # before_action :authenticate_user!, except: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
 
   # GET /events or /events.json

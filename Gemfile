@@ -73,7 +73,22 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'webdrivers'
 
   gem 'brakeman'
   gem 'rubocop'
+  gem 'launchy'
 end
+
+# gems for authentication
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+
+# gem for .env file
+gem 'dotenv-rails'
+
+gem 'factory_bot_rails'
+gem 'faker'

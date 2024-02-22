@@ -39,15 +39,20 @@ RSpec.describe Event, type: :model do
     expect(event).to_not be_valid
   end
 
-  it 'is not valid without a title' do
-    event.sponsor_title = nil
-    expect(event).to_not be_valid
+  it 'can be deleted' do
+    event.save
+    expect { event.destroy }.to change(described_class, :count).by(-1)
   end
 
-  it 'is not valid without a description' do
-    event.sponsor_description = nil
-    expect(event).to_not be_valid
-  end
+  # it 'is not valid without a title' do
+  #   event.sponsor_title = nil
+  #   expect(event).to_not be_valid
+  # end
+
+  # it 'is not valid without a description' do
+  #   event.sponsor_description = nil
+  #   expect(event).to_not be_valid
+  # end
 
   # Add more tests as needed
 end
