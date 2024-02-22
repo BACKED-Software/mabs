@@ -1,0 +1,14 @@
+<h1>Admin#index</h1>
+<p>Find me in app/views/admin/index.html.erb</p>
+
+<% @users.each do |user| %>
+    <%= form_for(user, url: admin_path(user), remote: true method: :patch) do |f| %>
+        <p>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+        <%= f.label :role %>
+        <%= f.select (:role, User.roles.keys.map { |w| [w.humanize, w] }) %>
+        <%= f.submit %>
+        </p>
+    <% end %>
+<% end %>

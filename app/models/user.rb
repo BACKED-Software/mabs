@@ -8,4 +8,5 @@ class User < ApplicationRecord
     create_with(uid:, full_name:, avatar_url:).find_or_create_by!(email:)
   end
   validates :email, presence: true
+  enum role: { student: 0, admin: 1}
 end

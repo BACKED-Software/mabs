@@ -1,2 +1,7 @@
 <h2>You're Logged out! Log in to the Users Dashboard</h2>
 <%= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+
+<% if user_signed_in? %>
+  <%= link_to "Admin", admin_index_path if current_user.admin? %>
+  <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+<% end %>

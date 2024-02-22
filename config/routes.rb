@@ -8,16 +8,16 @@ Rails.application.routes.draw do
   end
   # dashboard route
   root to: 'dashboard#index'
-
+  
   # define the events resources routes
-
+  
   resources :events do
     # special route for deleting events
     member do
       get 'delete'
     end
   end
-
+  
   # define the announcements resources routes
   resources :announcements do
     # special route for deleting events
@@ -25,4 +25,8 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
+  resources :admin, only: [:index, :create, :update]
+  # get 'admin/index'
+  # post 'admin/users', to: 'admin#create', as: 'admin_users'
+  # patch '/admin/users/:id', to: 'admin#update', as: 'admin_user'
 end
