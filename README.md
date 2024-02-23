@@ -1,29 +1,61 @@
-<<<<<<< HEAD
-# README
+# Multicultural Association of Business Students (MABS) Event Scheduler
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Description
 
-Things you may want to cover:
+The Multicultural Association of Business Students (MABS) Event Scheduler is a web application designed to streamline event scheduling for the organization. It allows organizers to efficiently plan and manage events, while members can earn points for attending, fostering a sense of engagement and competition within the organization.
 
-* Ruby version
+## Features
 
-* System dependencies
+- **Event Scheduling:** Easily create and schedule events for the organization.
+- **Attendance Points:** Members earn points for attending events, promoting active participation.
+- **Leaderboard:** A leaderboard displays member standings based on attendance points.
+- **User Profiles:** Members can view their own profiles, track attendance, and see their rankings.
 
-* Configuration
+## Demo
 
-* Database creation
+_[Demo link or instructions will be provided here]_
 
-* Database initialization
+## Table of Contents
 
-* How to run the test suite
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Testing](#testing)
+- [Contributors](#contributors)
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## Installation
+To set up the project locally, follow these steps:
 
-* ...
-=======
-# mcabs
-mcabs project for csce431
->>>>>>> e47c80973ae37077a0a39a9ad582af22102fc559
+```bash
+# Clone the repository
+git clone https://github.com/BACKED-Software/mabs.git
+cd mabs
+
+# Install dependencies
+bundle install
+
+# Set up the database
+rails db:create db:migrate
+```
+
+## Usage
+```bash
+rails server
+```
+
+## Configuration
+
+_[configuration will go here]_
+
+## Testing
+```bash
+bundle exec rspec
+```
+## Contributors
+ - Abdulhameed Adesokan
+ - Dinesh Balakrishnan
+ - Brandon Fornero
+ - Kirk Graham
+ - Conner Kaufhold
+
