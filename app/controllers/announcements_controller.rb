@@ -29,6 +29,7 @@ class AnnouncementsController < ApplicationController
   # POST /announcements or /announcements.json
   def create
     @announcement = Announcement.new(announcement_params)
+    @announcement.googleUserID = current_user.uid
     @announcement.dateOfAnnouncement = DateTime.now
 
     respond_to do |format|
