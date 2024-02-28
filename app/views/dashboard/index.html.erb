@@ -168,8 +168,8 @@
     </div>
     <!-- Announcement Column -->
     <div class="col-md-7">
-    <div class="announcement-panel" style="max-height: 25%; overflow-y: scroll;">
-      <h4 class="mb-4">Latest Announcements</h4>
+    <h4 class="mb-4">Latest Announcements</h4>
+    <div class="announcement-panel" style="max-height: 40%; overflow-y: scroll;">
       <% @announcements.each do |announcement| %>
         <div class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
           <h5 class="mb"> <%= announcement.subject %></h5>
@@ -178,7 +178,7 @@
               <p class="mb-0 "> <%= announcement.googleUserID %> </p>
             </div>
             <div class="mx-lg-3">
-              <p class="announcement-date text-muted mb-1"><%= announcement.dateOfAnnouncement %></p>
+              <p class="announcement-date text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%Y-%m-%d %H:%M:%S %Z") %></p>
               <p class="announcement-content mb-0"><%= announcement.body %></p>
             </div>
           </div>

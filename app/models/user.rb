@@ -8,5 +8,5 @@ class User < ApplicationRecord
     create_with(uid:, full_name:, avatar_url:).find_or_create_by!(email:)
   end
   validates :email, presence: true
-  has_many :announcements
+  #has_many :announcements
 end
