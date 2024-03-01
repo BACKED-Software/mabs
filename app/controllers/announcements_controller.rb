@@ -4,6 +4,7 @@
 class AnnouncementsController < ApplicationController
   # before_action :authenticate_user!, only: %i[new create edit update delete destroy]
   before_action :set_announcement, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy create index]
 
   # GET /announcements or /announcements.json
   def index
@@ -28,8 +29,8 @@ class AnnouncementsController < ApplicationController
 
   # POST /announcements or /announcements.json
   def create
-    @announcement = Announcement.new(announcement_params)
-    #@announcement.googleUserID = current_user.uid
+    @announcement = @user.announcements.new(announcement_params)
+    @announcement.googleUserID = @user.uid
     @announcement.dateOfAnnouncement = DateTime.now
 
     respond_to do |format|
@@ -71,6 +72,11 @@ class AnnouncementsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_announcement
     @announcement = Announcement.find(params[:id])
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = current_user
   end
 
   # Only allow a list of trusted parameters through.
