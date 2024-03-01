@@ -53,11 +53,30 @@ RSpec.describe 'Announcements Integration', type: :feature do
     expect(page).to have_content('Updated Subject')
   end
 
+  it 'fails to update an announcement' do
+    # Create a new announcement to fail update
+    announcement = Announcement.create(
+      googleUserID: user.uid,
+      subject: 'To Fail Update',
+      dateOfAnnouncement: DateTime.now,
+      body: 'Body to fail update'
+    )
+
+    visit announcements_path(announcement)
+    click_link 'To Fail Update'
+    click_link 'Edit'
+    fill_in 'announcement[subject]', with: ''
+    fill_in 'announcement[body]', with: 'Updated Body'
+    click_button 'Update Announcement'
+
+    expect(page).to have_content("Subject can't be blank")
+  end
+
   it 'deletes an announcement' do
     # Create a new announcement to update
     announcement = Announcement.create(
       googleUserID: user.uid,
-      subject: 'New Subject',
+      subject: 'To Be Deleted',
       dateOfAnnouncement: DateTime.now,
       body: 'New Body'
     )
@@ -65,7 +84,9 @@ RSpec.describe 'Announcements Integration', type: :feature do
     # Visit the show page of the announcement
     visit announcement_path(announcement)
     click_link 'Delete'
-    expect(page).not_to have_content('Example Subject')
+    click_button 'Delete announcement'
+    expect(page).not_to have_content('To Be Deleted')
+    expect(page).to have_content('announcement was successfully deleted.')
   end
 
   it 'fails to create a new announcement with missing subject' do
