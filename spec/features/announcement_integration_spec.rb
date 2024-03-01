@@ -4,9 +4,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Announcements Integration', type: :feature do
+  let(:user) { create(:user) }
+
   before do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     Announcement.create(
-      googleUserID: 'example_user_id',
+      googleUserID: user.uid,
       subject: 'Example Subject',
       dateOfAnnouncement: DateTime.now,
       body: 'Example Body'
@@ -26,7 +29,6 @@ RSpec.describe 'Announcements Integration', type: :feature do
 
   it 'creates a new announcement' do
     visit new_announcement_path
-    fill_in 'announcement[googleUserID]', with: 'new_user_id'
     fill_in 'announcement[subject]', with: 'New Subject'
     fill_in 'announcement[body]', with: 'New Body'
     click_button 'Create Announcement'
@@ -37,7 +39,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
   it 'updates an existing announcement' do
     # Create a new announcement to update
     announcement = Announcement.create(
-      googleUserID: 'new_user_id',
+      googleUserID: user.uid,
       subject: 'New Subject',
       dateOfAnnouncement: DateTime.now,
       body: 'New Body'
@@ -54,7 +56,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
   it 'deletes an announcement' do
     # Create a new announcement to update
     announcement = Announcement.create(
-      googleUserID: 'new_user_id',
+      googleUserID: user.uid,
       subject: 'New Subject',
       dateOfAnnouncement: DateTime.now,
       body: 'New Body'
@@ -68,7 +70,6 @@ RSpec.describe 'Announcements Integration', type: :feature do
 
   it 'fails to create a new announcement with missing subject' do
     visit new_announcement_path
-    fill_in 'announcement[googleUserID]', with: 'new_user_id'
     fill_in 'announcement[body]', with: 'New Body'
     click_button 'Create Announcement'
     expect(page).to have_content("Subject can't be blank")
@@ -76,7 +77,6 @@ RSpec.describe 'Announcements Integration', type: :feature do
 
   it 'fails to create a new announcement with missing body' do
     visit new_announcement_path
-    fill_in 'announcement[googleUserID]', with: 'new_user_id'
     fill_in 'announcement[subject]', with: 'New Subject'
     click_button 'Create Announcement'
     expect(page).to have_content("Body can't be blank")

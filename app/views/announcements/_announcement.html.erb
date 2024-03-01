@@ -5,12 +5,14 @@
         <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' %>
       </div>
       <div class="flex-grow-1">
-        <h5 class="mb"> <%= announcement.subject %></h5>
+        <%= link_to announcement_path(announcement) do %>
+          <h5 class="mb"> <%= announcement.subject %></h5>
+        <% end %>
       </div>
     </div>
     <p class="announcement-date text-muted mb-1">Posted on: <%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
     <p class="announcement-content mb-0">
-      <%= truncate_with_link(announcement.body, 100, announcement_path(announcement)) %>
+      <%= announcement.body %>
     </p>
   </div>
 </div>
