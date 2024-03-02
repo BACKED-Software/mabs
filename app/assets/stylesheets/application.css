@@ -14,25 +14,6 @@
  *= require_self
  */
 
-
-
-body {
-    margin: 0;
-    padding: 0;
-    background: white;
-    overflow-x: hidden; 
-}
-
-
-.top-bar {
-    background-color: maroon;
-    color: white;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
-
 a {
 
     font-size: x-large;

@@ -25,4 +25,6 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
+
+  get 'dashboard/index'
 end
