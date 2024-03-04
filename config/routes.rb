@@ -25,8 +25,9 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
-  resources :admin, only: [:index, :create, :update]
+  resources :admin, only: [:index, :update, :destroy]
   # get 'admin/index'
   # post 'admin/users', to: 'admin#create', as: 'admin_users'
   # patch '/admin/users/:id', to: 'admin#update', as: 'admin_user'
+  resources :users
 end
