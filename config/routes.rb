@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     # special route for deleting users  
     member do 
       get 'delete'
+      patch 'make_admin'
     end
   end
 

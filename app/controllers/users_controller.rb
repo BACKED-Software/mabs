@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: %i[show edit update destroy]
+    before_action :set_user, only: %i[show edit update destroy make_admin delete]
     before_action :authorize_user!, only: [:edit, :update, :destroy, :delete]
+    before_action :authorize_admin!, only: [:make_admin]
+
+    def make_admin
+      @user.update!(is_admin: true)
+      redirect_to @user, notice: 'User is now an admin.'
+    end
   
     # GET /users or /users.json
     def index
@@ -12,34 +18,15 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
   
-    # GET /users/new
-    def new
-    end
-  
     # GET /users/1/edit
     def edit
-    end
-  
-    # POST /users or /users.json
-    def create
-      @user = User.new(user_params)
-  
-      respond_to do |format|
-        if @user.save
-          format.html { redirect_to(users_path, notice: 'User was successfully created.') }
-          format.json { render(:show, status: :created, location: @user) }
-        else
-          format.html { render(:new, status: :unprocessable_entity) }
-          format.json { render(json: @user.errors, status: :unprocessable_entity) }
-        end
-      end
     end
   
     # PATCH/PUT /users/1 or /users/1.json
     def update
       respond_to do |format|
         if @user.update(user_params)
-          format.html { redirect_to(users_path, notice: 'User was successfully updated.') }
+          format.html { redirect_to(@user, notice: 'User was successfully updated.') }
           format.json { render(:show, status: :ok, location: @user) }
         else
           format.html { render(:edit, status: :unprocessable_entity) }
@@ -83,6 +70,13 @@ class UsersController < ApplicationController
       unless current_user == @user || current_user.is_admin?
         flash.now[:alert] = "You are not authorized to perform this action."
         redirect_to(users_path)
+      end
+    end
+
+    def authorize_admin!
+      unless current_user.is_admin?
+        flash[:alert] = "You are not authorized to perform this action."
+        redirect_to root_path
       end
     end
   end
