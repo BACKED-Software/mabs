@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard</title>
+  <link rel="stylesheet" type="text/css" href="application.css">
+</head>
+<body>
+  <div class="top-bar">
+    <h1>Leaderboard</h1>
+    <h2> <%= link_to 'Dashboard', dashboard_index_path %> </h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Your Ranking: <%= @current_user_rank %></h2>
+      <div class="profile">
+        <%= image_tag(current_user.avatar_url) %>
+        <p><%= current_user.full_name %></p>
+        <p><%= current_user.total_points %> points</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Top Users</h2>
+      <% @users.each_with_index do |user| %>
+        <div class="profile">
+          <span class="rank"><%= user.rank %></span>
+          <%= image_tag(user.avatar_url) %>
+          <p><%= user.full_name %></p>
+          <p><%= user.total_points %> points</p>
+        </div>
+      <% end %>
+      <% unless @show_all_users or @all_displayed %>
+        <%= link_to 'View All Users', leaderboard_index_path(show_all: true), class: 'btn btn-primary' %>
+        
+        <%# TODO: for production, change from incrementing user_count by 1 to a larger index like 5 or 10 %>
+        <%= link_to 'View Next Users', leaderboard_index_path(user_count: @user_count + 1), class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

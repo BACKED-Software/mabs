@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'leaderboard/index'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     get 'users/sign_in', to: 'users/sessions#new', as: :new_user_session
@@ -34,6 +35,6 @@ Rails.application.routes.draw do
       patch 'make_admin'
     end
   end
-
+  get 'leaderboard/index'
   get 'dashboard/index'
 end
