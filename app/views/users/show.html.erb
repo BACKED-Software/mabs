@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+<%= link_to "Back to Home", root_path %>
+
+
+<% if @user %>
+  <div id="<%= dom_id @user %>">
+    <%= render @user %>
+  </div>
+<% else %>
+  <p>User not found</p>
+<% end %>
+
+<% if user_signed_in? && (current_user == @user) %>
+  <div class="actions">
+    <%= link_to "Update Profile", edit_user_path(@user) %>
+    <%= link_to "Delete", delete_user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
+
+<h2> <%= link_to 'Back to Dashboard', root_path %> </h2>

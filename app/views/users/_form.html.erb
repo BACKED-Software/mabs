@@ -12,8 +12,6 @@
     <% end %>
   
     <div>
-      <%= form.label :email, style: "display: block" %>
-      <%= form.text_field :email %>
   
       <%= form.label :full_name, style: "display: block" %>
       <%= form.text_field :full_name %>
@@ -25,7 +23,7 @@
       <%= form.collection_radio_buttons :is_hispanic_or_latino, [[true, 'Yes'], [false, 'No']], :first, :last %>
   
       <%= form.label :race, style: "display: block" %>
-      <%= form.select :race, ['Option1', 'Option2', 'Option3'], include_blank: true %>
+      <%= form.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], include_blank: true %>
   
       <%= form.label :is_us_citizen, style: "display: block" %>
       <%= form.collection_radio_buttons :is_us_citizen, [[true, 'Yes'], [false, 'No']], :first, :last %>

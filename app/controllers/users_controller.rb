@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, only: %i[edit update delete destroy]
-    #before_action :set_user, only: %i[show edit update destroy]
+    before_action :set_user, only: %i[show edit update destroy]
+    before_action :authorize_user!, only: [:edit, :update, :destroy, :delete]
   
     # GET /users or /users.json
     def index
@@ -9,11 +9,11 @@ class UsersController < ApplicationController
   
     # GET /users/1 or /users/1.json
     def show
+      @user = User.find(params[:id])
     end
   
     # GET /users/new
     def new
-      @user = User.new
     end
   
     # GET /users/1/edit
@@ -76,5 +76,13 @@ class UsersController < ApplicationController
                                    :is_first_generation_college_student, :date_of_birth,
                                    :phone_number, :avatar_url, :bio, :classification,
                                    :total_points)
+    end
+    
+    #function to make sure the user is authorized to perform the action
+    def authorize_user!
+      unless current_user == @user || current_user.is_admin?
+        flash.now[:alert] = "You are not authorized to perform this action."
+        redirect_to(users_path)
+      end
     end
   end
