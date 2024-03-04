@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DashboardController < ApplicationController
-  layout "dashboard_layout"
+  layout "authenticated_layout"
 
   def index
     @events = Event.all
@@ -21,4 +21,5 @@ class DashboardController < ApplicationController
     #   @date_announcement = "February 12, 2024"
     # end
   end
+  
 end
