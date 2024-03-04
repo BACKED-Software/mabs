@@ -14,6 +14,16 @@
  *= require_self
  */
 
+
+.top-bar {
+    background-color: maroon;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
 a {
 
     font-size: x-large;
@@ -26,4 +36,86 @@ a {
 .flash__success { color: green; }
 
 
+body {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.87)), url('mabs-modern-background.png');
+    background-size: cover;
+    padding-top: 56px; /* Padding for fixed navbar */
+    background-color: rgba(255, 255, 255, 0.7);
 
+}
+.navbar-bg {
+    background-color: #500000; /* Vibrant blue background for navbar */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Subtle shadow for depth */
+}
+.navbar-brand, .nav-link, .btn-outline-success {
+    color: #fff !important; /* White text for better contrast */
+}
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Consistent shadow for cards */
+}
+.card-header h3 {
+    margin-bottom: 0; /* Adjust if necessary */
+}
+.card-header {
+    background-color: #500000; /* Matching the navbar color */
+    color: #fff; /* White text for header */
+}
+.card-body {
+    background-color: #ffffff; /* White background for content */
+}
+.events-container {
+    max-width: 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+.event-date {
+    font-size: 16px;
+}
+
+.event-details {
+    border-left: 4px solid #007bff;
+    padding-left: 15px;
+}
+
+.event-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.event-time, .event-location {
+    font-size: 14px;
+}
+
+.points-summary-container {
+    position: relative; /* Needed for absolute positioning inside */
+}
+
+.points-arch {
+    height: 40px; /* Height of the arch */
+    display: flex; /* Use flexbox to create the segments side by side */
+    border-radius: 20px; /* Half the height to make a semi-circle */
+    overflow: hidden; /* Hide anything outside the border-radius */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Subtle shadow for depth */
+}
+
+.arch-segment {
+    flex: 1; /* Flex basis, this should be dynamic based on points */
+    transition: flex-grow 0.5s ease-in-out; /* Smooth transition for changes */
+}
+
+.total-points-display {
+    margin-top: 20px; /* Space between arch and total points text */
+}
+
+.total-points {
+    font-weight: bold;
+    font-size: 1.5rem; /* Larger font size for emphasis */
+    color: #333; /* Dark color for contrast */
+}
+
+.points-value {
+    color: #007bff; /* Theme color for the points value */
+}

@@ -1,226 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-      body {
-
-          padding-top: 56px; /* Padding for fixed navbar */
-      }
-      .card-header h3 {
-          margin-bottom: 0; /* Remove margin for card header to align title properly */
-      }
-      .navbar-bg {
-          background-color: #f8f9fa; /* A light grey background for navbar */
-      }
-  </style>
-</head>
-<body><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-      body {
-          position: relative;
-          background: linear-gradient(to bottom, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.87)),
-          url(<%= asset_path 'mabs-modern-background.png' %>);
-          background-size: cover;
-          padding-top: 56px; /* Padding for fixed navbar */
-          background-color: rgba(255, 255, 255, 0.7);
-
-      }
-      .navbar-bg {
-          background-color: #500000; /* Vibrant blue background for navbar */
-          box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Subtle shadow for depth */
-      }
-      .navbar-brand, .nav-link, .btn-outline-success {
-          color: #fff !important; /* White text for better contrast */
-      }
-      .card {
-          box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Consistent shadow for cards */
-      }
-      .card-header h3 {
-          margin-bottom: 0; /* Adjust if necessary */
-      }
-      .card-header {
-          background-color: #500000; /* Matching the navbar color */
-          color: #fff; /* White text for header */
-      }
-      .card-body {
-          background-color: #ffffff; /* White background for content */
-      }
-      .events-container {
-          max-width: 100%;
-          background-color: #ffffff;
-          border-radius: 8px;
-          box-shadow: 0 2px 5px rgba(0,0,0,.1);
-      }
-
-      .event-date {
-          font-size: 16px;
-      }
-
-      .event-details {
-          border-left: 4px solid #007bff;
-          padding-left: 15px;
-      }
-
-      .event-title {
-          font-size: 18px;
-          margin-bottom: 5px;
-      }
-
-      .event-time, .event-location {
-          font-size: 14px;
-      }
-
-      .points-summary-container {
-          position: relative; /* Needed for absolute positioning inside */
-      }
-
-      .points-arch {
-          height: 40px; /* Height of the arch */
-          display: flex; /* Use flexbox to create the segments side by side */
-          border-radius: 20px; /* Half the height to make a semi-circle */
-          overflow: hidden; /* Hide anything outside the border-radius */
-          box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Subtle shadow for depth */
-      }
-
-      .arch-segment {
-          flex: 1; /* Flex basis, this should be dynamic based on points */
-          transition: flex-grow 0.5s ease-in-out; /* Smooth transition for changes */
-      }
-
-      .total-points-display {
-          margin-top: 20px; /* Space between arch and total points text */
-      }
-
-      .total-points {
-          font-weight: bold;
-          font-size: 1.5rem; /* Larger font size for emphasis */
-          color: #333; /* Dark color for contrast */
-      }
-
-      .points-value {
-          color: #007bff; /* Theme color for the points value */
-      }
-
-
-  </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-md navbar-light fixed-top navbar-bg">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">MABS</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Events", events_path, class: "nav-link"%>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Announcements", announcements_path, class: "nav-link"%>
-        </li>
-        <li class="nav-item">
-          <% if user_signed_in? %>
-            <!-- Display sign-out button if the user is signed in -->
-            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-          <% else %>
-            <!-- Display sign-in button if the user is not signed in -->
-            <%= link_to 'Sign In', new_user_session_path %>
-          <% end %>
-        </li>
-        <!-- Add more navigation items here -->
-      </ul>
-      <a>
-        <% if user_signed_in? %>
-          <%= link_to user_path(current_user) do %>
-            <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden;">
-              <%= image_tag current_user.avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' %>
-            </div>
-          <% end %>
-        <% end %>
-      </a>
+<% content_for(:title, 'Dashboard') %>
+<!-- Flash Messages -->
+<% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+      <%= msg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-  </div>
-</nav>
-
-
-
-
-
+  <% end %>
+<% end %>
 
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-5 ps-5">
-      <h1>Good Morning<%if user_signed_in? %>, <%= @user.full_name %><% end %></h1>
-      <p class="lead">Welcome to your dashboard</p>
+    <div class="col-md-5">
+      <h1>Good Morning<% if user_signed_in? %>, <%= @user.full_name %><% end %></h1>
+      <p>Welcome to your dashboard</p>
+      <div class="points-summary mt-5 p-4 bg-white rounded shadow text-center">
+        <h4>Points Summary</h4>
+        <div class="total-points mt-3">
+          <h2>Total Points: <span class="points-value">150</span></h2>
+        </div>
+      </div>
     </div>
+
     <!-- Announcement Column -->
     <div class="col-md-7">
-      <h4 class="mb-4">Latest Announcements</h4>
-      <div class="announcement-panel" style="max-height: 40%; overflow-y: scroll;">
-        <% @announcements.each do |announcement| %>
-          <div class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
-            <div class="d-flex align-items-start">
-              <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 60px; border-radius: 50%; overflow: hidden; margin-right: 2%">
-                <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' %>
+      <div class="announcements bg-light rounded p-4 shadow">
+        <h4>Latest Announcements</h4>
+        <div class="announcement-list mt-3">
+          <% @announcements.each do |announcement| %>
+            <div class="announcement bg-info-subtle shadow-lg rounded p-3 mb-3">
+              <div class="d-flex align-items-center mb-2">
+                <div class="avatar rounded-circle overflow-hidden mr-3" style="width: 40px; height: 40px;">
+                  <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "img-fluid" %>
+                </div>
+                <h5 class="mb-0"><%= announcement.subject %></h5>
               </div>
-              <div class="flex-grow-1">
-                <h5 class="mb"> <%= announcement.subject %></h5>
-              </div>
+              <p class="text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
+              <p class="mb-0"><%= truncate_with_link(announcement.body, 100, announcement_path(announcement)) %></p>
             </div>
-            <p class="announcement-date text-muted mb-1">Posted on: <%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
-            <p class="announcement-content mb-0">
-              <%= truncate_with_link(announcement.body, 100, announcement_path(announcement)) %>
-            </p>
-          </div>
-        <% end %>
-      <div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="events-container bg-white rounded shadow-lg p-4">
-    <h4 class="mb-4">Upcoming Events</h4>
-    <ul class="list-unstyled">
+
+  <!-- Events Section -->
+  <div class="events mt-4 bg-white rounded p-4 shadow">
+    <h4>Upcoming Events</h4>
+    <ul class="list-unstyled mt-3">
       <% @events.sort_by(&:eventTime).each do |event| %>
-        <li class="mb-3">
-          <div class="event-date text-primary mb-1">
-            <strong><%= event.eventTime.strftime("%A, %B %-d") %></strong>
-          </div>
-          <div class="d-flex justify-content-between align-items-start">
-            <div class="event-details">
-              <h5 class="event-title mb-1"><%= event.eventName %></h5>
-              <p class="event-time text-muted mb-0"><%= event.eventTime.strftime("%H:%M") %></p>
-              <p class="event-location text-muted"><%= event.eventLocation %></p>
+        <li class="event mb-3 p-3 bg-light rounded">
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
+              <div class="event-details">
+                <h5 class="event-title mb-1"><%= event.eventName %></h5>
+                <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
+                <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+              </div>
             </div>
-            <a href="/rsvp?event_id=<%= event.id %>" class="btn btn-primary mt-2">RSVP</a>
+            <a href="/rsvp?event_id=<%= event.id %>" class="btn btn-primary align-self-start">RSVP</a>
           </div>
         </li>
       <% end %>
     </ul>
   </div>
-  <div class="points-summary-container mt-5 p-4 bg-white rounded shadow-lg text-center">
-    <h4 class="mb-4">Points Summary</h4>
-    <div class="total-points-display mt-3">
-      <h2 class="total-points">Total Points: <span class="points-value">150</span></h2>
-    </div>
-  </div>
 
 
 </div>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-</html>
+<% content_for(:extra_js) do %>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<% end %>
