@@ -77,8 +77,8 @@ group :test do
   gem 'webdrivers'
 
   gem 'brakeman'
-  gem 'rubocop'
   gem 'launchy'
+  gem 'rubocop'
 end
 
 # gems for authentication
