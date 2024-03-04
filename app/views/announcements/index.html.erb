@@ -1,15 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Announcements</h1> <%= link_to "New Announcement", new_announcement_path %><br><br>
+<h1>Announcements</h1>
+
+<%= require_sign_in do %>
+  <%= link_to "Create New Announcement", new_announcement_path %><br><br>
+<% end %>
 
 <div id="announcements">
   <% @announcements.each do |announcement| %>
-    <div class="announcement">
-      <h2><%= announcement.announcementID%>. <%= link_to announcement.subject, announcement %></h2>
-      <blockquote>
-        <%= announcement.body %>
-      </blockquote>
+    <div id="<%= dom_id announcement %>">
+      <%= render announcement %>
     </div>
     <br>
   <% end %>
+
+  <h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
 </div>

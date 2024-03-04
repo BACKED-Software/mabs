@@ -1,0 +1,19 @@
+<div>
+  <%= link_to "Back to Dashboard", root_path %>
+</div>
+
+<body>
+  <header class="top-bar">
+    <h1>
+      Users
+    </h1>
+  </header>
+  <div id="users">
+    <% @users.each do |user| %>
+      <%= link_to user do %>
+        <%= user.full_name %>
+      <% end %>
+      <br>
+    <% end %>
+  </div>
+</body>
