@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
 
   # define the events resources routes
+  get '/admin-tools', to: 'admin#index'
 
   resources :events do
     # special route for deleting events
