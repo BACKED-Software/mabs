@@ -6,6 +6,7 @@ require 'rails_helper'
 
 RSpec.describe 'Events Integration', type: :feature do
   before do
+    @user = create(:user)
     Event.create(
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
@@ -30,7 +31,8 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'creates a new event with valid inputs' do
+  it 'creates a new event with valid inputs if logged in' do
+    login_as(@user, scope: :user)
     sleep 1
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
@@ -45,7 +47,8 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'fails to create a new event with missing location' do
+  it 'fails to create a new event with missing location if logged in' do
+    login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventInfo]', with: 'New Info'
     fill_in 'event[eventName]', with: 'New Event'
@@ -57,7 +60,8 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'fails to create a new event with missing info' do
+  it 'fails to create a new event with missing info if logged in' do
+    login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
     fill_in 'event[eventName]', with: 'New Event'
@@ -69,7 +73,8 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'fails to create a new event with missing name' do
+  it 'fails to create a new event with missing name if logged in' do
+    login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
     fill_in 'event[eventInfo]', with: 'New Info'
@@ -81,7 +86,8 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'fails to create a new event with missing time' do
+  it 'fails to create a new event with missing time if logged in' do
+    login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
     fill_in 'event[eventInfo]', with: 'New Info'
@@ -130,7 +136,7 @@ RSpec.describe 'Events Integration', type: :feature do
   #   fill_in 'event[sponsor_description]', with: 'Event'
   #   click_button 'Create Event'
   #   expect(page).to have_content('Sponsor description is too short (minimum is 10 characters)')
-    # Add more assertions as needed
+  # Add more assertions as needed
   # end
 
   # Add more integration tests as needed

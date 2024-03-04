@@ -77,5 +77,18 @@ group :test do
   gem 'webdrivers'
 
   gem 'brakeman'
+  gem 'launchy'
   gem 'rubocop'
 end
+
+# gems for authentication
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+
+# gem for .env file
+gem 'dotenv-rails'
+
+gem 'factory_bot_rails'
+gem 'faker'
