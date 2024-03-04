@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, only: %i[edit update destroy]
+    before_action :authenticate_user!, only: %i[edit update delete destroy]
     #before_action :set_user, only: %i[show edit update destroy]
   
     # GET /users or /users.json
@@ -56,8 +56,10 @@ class UsersController < ApplicationController
     # DELETE /users/1 or /users/1.json
     def destroy
       @user = User.find(params[:id])
+      # Sign out the user before deleting the account
+      sign_out(current_user) if user_signed_in?
       @user.destroy!
-      redirect_to(users_path, notice: 'User was successfully deleted.')
+      redirect_to(root_path, notice: 'Your account has been successfully deleted.')
     end
   
     private
