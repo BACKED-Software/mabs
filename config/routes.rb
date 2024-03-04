@@ -20,9 +20,17 @@ Rails.application.routes.draw do
 
   # define the announcements resources routes
   resources :announcements do
-    # special route for deleting events
+    # special route for deleting announcements
     member do
       get 'delete'
+    end
+  end
+
+  resources :users do
+    # special route for deleting users
+    member do
+      get 'delete'
+      patch 'make_admin'
     end
   end
 
