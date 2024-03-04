@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    # special route for deleting users  
-    member do 
+    # special route for deleting users
+    member do
       get 'delete'
       patch 'make_admin'
     end
