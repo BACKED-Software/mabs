@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PointsController < ApplicationController
   before_action :set_point, only: %i[show edit update destroy]
 
@@ -13,8 +15,7 @@ class PointsController < ApplicationController
     @point = Point.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @point = Point.new(point_params)
@@ -61,10 +62,10 @@ class PointsController < ApplicationController
     end
   end
 
-  def set_point
-  end
+  def set_point; end
+
   def save_changes
-    params[:points].each do |_, point_params|
+    params[:points].each_value do |point_params|
       point = Point.find(point_params[:id])
       if point.update(point_params.permit(:id, :numPointsAwarded, :awardedBy, :dateOfAward, :awardDescription))
         # Successfully updated
@@ -75,6 +76,7 @@ class PointsController < ApplicationController
     end
     redirect_to admin_tools_path, notice: 'Points were successfully updated.'
   end
+
   def delete
     @point = Point.find(params[:id])
   end
@@ -91,5 +93,4 @@ class PointsController < ApplicationController
     # Ensure you list all the required and permitted parameters for a point here
     params.require(:point).permit(:numPointsAwarded, :awardedBy, :awardedTo, :dateOfAward, :awardDescription)
   end
-
 end

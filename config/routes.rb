@@ -37,7 +37,6 @@ Rails.application.routes.draw do
 
   post 'award_points', to: 'points#award', as: 'award_points'
 
-
   get 'manage_points', to: 'points#manage', as: 'manage_points'
 
   # config/routes.rb
