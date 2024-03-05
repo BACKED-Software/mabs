@@ -1,0 +1,50 @@
+<%= form_with(model: user) do |form| %>
+    <% if user.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  
+        <ul>
+          <% user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div>
+  
+      <%= form.label :full_name, style: "display: block" %>
+      <%= form.text_field :full_name %>
+  
+      <%= form.label :gender, style: "display: block" %>
+      <%= form.select :gender, ['Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'], include_blank: true %>
+  
+      <%= form.label :is_hispanic_or_latino, style: "display: block" %>
+      <%= form.collection_radio_buttons :is_hispanic_or_latino, [[true, 'Yes'], [false, 'No']], :first, :last %>
+  
+      <%= form.label :race, style: "display: block" %>
+      <%= form.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], include_blank: true %>
+  
+      <%= form.label :is_us_citizen, style: "display: block" %>
+      <%= form.collection_radio_buttons :is_us_citizen, [[true, 'Yes'], [false, 'No']], :first, :last %>
+  
+      <%= form.label :is_first_generation_college_student, style: "display: block" %>
+      <%= form.collection_radio_buttons :is_first_generation_college_student, [[true, 'Yes'], [false, 'No']], :first, :last %>
+  
+      <%= form.label :date_of_birth, style: "display: block" %>
+      <%= form.datetime_local_field :date_of_birth %>
+  
+      <%= form.label :phone_number, style: "display: block" %>
+      <%= form.text_field :phone_number %>
+  
+      <%= form.label :bio, style: "display: block" %>
+      <%= form.text_area :bio %>
+  
+      <%= form.label :classification, style: "display: block" %>
+      <%= form.select :classification, ['U1', 'U2', 'U3', 'U4'], include_blank: true %>
+    </div>
+  
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>

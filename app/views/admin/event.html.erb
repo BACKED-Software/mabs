@@ -1,0 +1,10 @@
+<h1><%= @event.eventName %></h1>
+<p><%= @event.eventTime.strftime("%B %d, %Y") %></p>
+
+<p>Total RSVPs: <%= @rsvp_count %></p>
+
+<h2>RSVPs</h2>
+<% @rsvps.each do |rsvp| %>
+  <p><%= rsvp.user.full_name %></p>
+<% end %>
+

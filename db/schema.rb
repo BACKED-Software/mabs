@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_221_040_036) do
+ActiveRecord::Schema[7.0].define(version: 20_240_305_021_214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -37,6 +37,24 @@ ActiveRecord::Schema[7.0].define(version: 20_240_221_040_036) do
     t.text 'sponsor_description'
   end
 
+  create_table 'points', force: :cascade do |t|
+    t.integer 'numPointsAwarded'
+    t.string 'awardedBy'
+    t.string 'awardedTo'
+    t.datetime 'dateOfAward'
+    t.text 'awardDescription'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
+  create_table 'rsvps', force: :cascade do |t|
+    t.string 'user_uid'
+    t.bigint 'event_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['event_id'], name: 'index_rsvps_on_event_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'uid'
     t.string 'email', null: false
@@ -56,6 +74,12 @@ ActiveRecord::Schema[7.0].define(version: 20_240_221_040_036) do
     t.integer 'total_points'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'role'
     t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['uid'], name: 'index_users_on_uid', unique: true
   end
+
+  add_foreign_key 'announcements', 'users', column: 'googleUserID', primary_key: 'uid'
+  add_foreign_key 'rsvps', 'events'
+  add_foreign_key 'rsvps', 'users', column: 'user_uid', primary_key: 'uid', on_delete: :cascade
 end

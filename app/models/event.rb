@@ -11,4 +11,5 @@ class Event < ApplicationRecord
   validates :eventLocation, presence: true
   #   validates :sponsor_title
   #   validates :sponsor_description
+  has_many :rsvps, foreign_key: 'event_id'
 end

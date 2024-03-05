@@ -1,9 +1,18 @@
 <div id="<%= dom_id announcement %>">
-  <p>
-    <strong>ID:</strong> <%= announcement.announcementID %><br>
-    <strong>Created By:</strong> <%= announcement.googleUserID %><br>
-    <strong>Subject:</strong> <%= announcement.subject %><br>
-    <strong>Time:</strong> <%= announcement.dateOfAnnouncement %><br>
-    <strong>Body:</strong> <%= announcement.body %>
-  </p>
+  <div class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
+    <div class="d-flex align-items-start">
+      <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 60px; border-radius: 50%; overflow: hidden; margin-right: 2%">
+        <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' %>
+      </div>
+      <div class="flex-grow-1">
+        <%= link_to announcement_path(announcement) do %>
+          <h5 class="mb"> <%= announcement.subject %></h5>
+        <% end %>
+      </div>
+    </div>
+    <p class="announcement-date text-muted mb-1">Posted on: <%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
+    <p class="announcement-content mb-0">
+      <%= announcement.body %>
+    </p>
+  </div>
 </div>

@@ -1,8 +1,15 @@
 <p style="color: green"><%= notice %></p>
 <%= link_to "Back to list", announcements_path %>
-<%= render @announcement %>
 
-<div class="actions">
-  <%= link_to("Edit", edit_announcement_path(@announcement)) %>
-  <%= link_to("Delete", delete_announcement_path(@announcement))%>
+<div id="<%= dom_id @announcement %>">
+  <%= render @announcement %>
 </div>
+
+<%= require_sign_in do %>
+  <div class="actions">
+    <%= link_to("Edit", edit_announcement_path(@announcement)) %>
+    <%= link_to("Delete", delete_announcement_path(@announcement))%>
+  </div>
+<% end %>
+
+<h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
