@@ -5,6 +5,7 @@ class AnnouncementsController < ApplicationController
   # before_action :authenticate_user!, only: %i[new create edit update delete destroy]
   before_action :set_announcement, only: %i[show edit update destroy]
   before_action :set_user, only: %i[show edit update destroy create index]
+  layout 'authenticated_layout'
 
   # GET /announcements or /announcements.json
   def index

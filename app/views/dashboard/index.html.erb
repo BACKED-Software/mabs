@@ -19,6 +19,9 @@
         <div class="total-points mt-3">
           <h2>Total Points: <span class="points-value">150</span></h2>
         </div>
+        <%= require_sign_in do %>
+          <h2> <%= link_to 'View Leaderboard', leaderboard_index_path %> </h2>
+        <% end %>
       </div>
     </div>
 
@@ -59,7 +62,17 @@
                 <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
               </div>
             </div>
-            <a href="/rsvp?event_id=<%= event.id %>" class="btn btn-primary align-self-start">RSVP</a>
+            <% if user_signed_in? %>
+              <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
+                <div class="rsvp-status text-success">You are attending</div>
+              <% else %> 
+                <%= form_with url: rsvps_path, method: :post do |form| %>
+                  <%= form.hidden_field :user_uid, value: current_user.uid %>
+                  <%= form.hidden_field :event_id, value: event.id %>
+                  <%= form.submit "RSVP" %>
+                <% end %>
+              <% end %>
+            <% end %>
           </div>
         </li>
       <% end %>
