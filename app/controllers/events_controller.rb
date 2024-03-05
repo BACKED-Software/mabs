@@ -5,6 +5,7 @@
 class EventsController < ApplicationController
   # before_action :authenticate_user!, except: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
+  layout 'authenticated_layout'
 
   # GET /events or /events.json
   def index

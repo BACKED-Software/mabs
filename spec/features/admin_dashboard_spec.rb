@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # require 'rails_helper'
 
 # RSpec.describe 'Admin dashboard', type: :feature do
@@ -36,12 +38,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin dashboard', type: :feature do
-    let!(:admin) { create(:admin) }
-    let!(:user) { create(:user) }
+  let!(:admin) { create(:admin) }
+  let!(:user) { create(:user) }
 
   context 'as an admin' do
     before do
-    sign_in admin
+      sign_in admin
       visit admin_tools_path
     end
 

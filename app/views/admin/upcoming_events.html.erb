@@ -1,0 +1,6 @@
+<h1>Upcoming Events</h1>
+
+<% @events.each do |event| %>
+  <h2><%= link_to event.eventName, admin_event_path(event) %></h2>
+  <p><%= event.eventTime.strftime("%B %d, %Y") %></p>
+<% end %>
