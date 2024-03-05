@@ -11,4 +11,6 @@ class Event < ApplicationRecord
   validates :eventLocation, presence: true
   #   validates :sponsor_title
   #   validates :sponsor_description
+  has_many :attendances, foreign_key: "eventID", dependent: :destroy
+  
 end
