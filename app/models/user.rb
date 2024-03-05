@@ -12,6 +12,8 @@ class User < ApplicationRecord
   validates :email, presence: true
   has_many :announcements, foreign_key: 'googleUserID'
 
+  has_many :points, foreign_key: 'awardedTo', primary_key: 'uid'
+
   # Helper method to check if the user is an admin
   def admin?
     is_admin
