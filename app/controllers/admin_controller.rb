@@ -9,6 +9,16 @@ class AdminController < ApplicationController
     # Your admin dashboard code
   end
 
+  def upcoming_events
+    @events = Event.where('"eventTime" > ?', Time.now)
+  end
+
+  def event
+    @event = Event.find(params[:id])
+    @rsvps = @event.rsvps
+    @rsvp_count = @rsvps.count
+  end
+
   private
 
   def check_admin
@@ -17,4 +27,5 @@ class AdminController < ApplicationController
     flash[:alert] = 'You are not authorized to access this page.'
     redirect_to root_path # or any other path you wish to redirect to
   end
+
 end

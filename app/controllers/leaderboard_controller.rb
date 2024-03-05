@@ -3,6 +3,7 @@
 # app/controllers/leaderboard_controller.rb
 class LeaderboardController < ApplicationController
   before_action :authenticate_user!
+  layout 'authenticated_layout'
 
   def index
     session[:user_count] ||= 1

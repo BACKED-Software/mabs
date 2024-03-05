@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   # define the events resources routes
   get '/admin-tools', to: 'admin#index'
+  get '/admin/upcoming_events', to: 'admin#upcoming_events'
+  get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
 
   resources :events do
     # special route for deleting events
@@ -26,6 +28,8 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
+
+  resources :rsvps, only: [:index, :create, :destroy]
 
   resources :users do
     # special route for deleting users

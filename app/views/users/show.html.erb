@@ -20,4 +20,21 @@
   <%= link_to 'Make Admin', make_admin_user_path(@user), method: :patch, data: { confirm: 'Are you sure?' } %>
 <% end %>
 
+<% if user_signed_in? && (current_user == @user) %>
+  <h2>Upcoming Events</h2>
+  <ul>
+    <% @rsvps.each do |rsvp| %>
+      <% event = rsvp.event %>
+      <% puts "RSVP: #{rsvp.inspect}, Event: #{event.inspect}" %>
+      <% if event.eventTime > Time.now %>
+        <li>
+          <%= link_to event.eventName, event_path(event) %>
+          <p><%= event.eventTime.strftime("%B %d, %Y") %></p>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
 <h2> <%= link_to 'Back to Dashboard', root_path %> </h2>
+

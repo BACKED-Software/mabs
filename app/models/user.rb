@@ -10,7 +10,8 @@ class User < ApplicationRecord
   end
 
   validates :email, presence: true
-  has_many :announcements, foreign_key: 'googleUserID'
+  has_many :announcements, foreign_key: 'googleUserID', dependent: :destroy
+  has_many :rsvps, foreign_key: 'user_uid', dependent: :destroy
 
   # Helper method to check if the user is an admin
   def admin?
