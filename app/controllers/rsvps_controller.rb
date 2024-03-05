@@ -8,7 +8,9 @@ class RsvpsController < ApplicationController
     end
 
     def create
-      if Rsvp.exists?(user_uid: @user.uid, event_id: @event.id)
+      if @user.nil? || @event.nil?
+        render json: { error: 'User or Event not found' }, status: :not_found
+      elsif Rsvp.exists?(user_uid: @user.uid, event_id: @event.id)
         render json: { error: 'User has already RSVPed for this event' }, status: :unprocessable_entity
       else
         @rsvp = Rsvp.new(user_uid: @user.uid, event_id: @event.id)
@@ -32,10 +34,16 @@ class RsvpsController < ApplicationController
     def set_user
       uid = params[:user_uid] || params[:rsvp][:user_uid]
       @user = User.find_by!(uid: uid)
+      unless @user
+        render json: { error: 'User not found' }, status: :not_found
+      end
     end
   
     def set_event
       event_id = params[:event_id] || params[:rsvp][:event_id]
       @event = Event.find(event_id)
+      unless @event
+        render json: { error: 'Event not found' }, status: :not_found
+      end
     end
 end
