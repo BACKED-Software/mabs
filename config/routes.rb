@@ -34,6 +34,6 @@ Rails.application.routes.draw do
       patch 'make_admin'
     end
   end
-
+  get 'leaderboard/index'
   get 'dashboard/index'
 end

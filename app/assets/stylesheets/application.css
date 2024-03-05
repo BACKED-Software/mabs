@@ -119,3 +119,41 @@ body {
 .points-value {
     color: #007bff; /* Theme color for the points value */
 }
+
+.user-profile {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.profile {
+    display: flex;
+    align-items: center;
+}
+  
+.rank {
+    margin-right: 10px;
+    font-weight: bold; /* Make rank text bold */
+    color: #333; /* Set color for rank text */
+}
+  
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+  
+.profile p {
+    margin: 0;
+}
+ 
+.full-name {
+    font-size: 16px; /* Set font size for full name */
+    color: #555; /* Set color for full name */
+}
+  
+.total-points {
+    font-size: 14px; /* Set font size for total points */
+    color: #777; /* Set color for total points */
+}
