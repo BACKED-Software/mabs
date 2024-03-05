@@ -1,0 +1,309 @@
+Inspecting 69 files
+C...CC.C.CCC....CCCCCC.....C........C....CCCCCCCCCC.CCCCCCCC..C.C....
+
+Offenses:
+
+Gemfile:81:3: C: [Correctable] Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem launchy should appear before rubocop.
+  gem 'launchy'
+  ^^^^^^^^^^^^^
+app/controllers/admin_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AdminController.
+class AdminController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^
+app/controllers/admin_controller.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class AdminController < ApplicationController
+^
+app/controllers/announcements_controller.rb:30:3: C: Metrics/MethodLength: Method has too many lines. [11/10]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/dashboard_controller.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class DashboardController.
+class DashboardController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:4:10: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  layout "dashboard_layout"
+         ^^^^^^^^^^^^^^^^^^
+app/controllers/users/omniauth_callbacks_controller.rb:4:3: C: Style/Documentation: Missing top-level documentation comment for class Users::OmniauthCallbacksController.
+  class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/sessions_controller.rb:4:3: C: Style/Documentation: Missing top-level documentation comment for class Users::SessionsController.
+  class SessionsController < Devise::SessionsController
+  ^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/admin_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module AdminHelper.
+module AdminHelper
+^^^^^^^^^^^^^^^^^^
+app/helpers/admin_helper.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+module AdminHelper
+^
+app/mailers/application_mailer.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class ApplicationMailer.
+class ApplicationMailer < ActionMailer::Base
+^^^^^^^^^^^^^^^^^^^^^^^
+app/models/announcement.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class Announcement.
+class Announcement < ApplicationRecord
+^^^^^^^^^^^^^^^^^^
+app/models/application_record.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class ApplicationRecord.
+class ApplicationRecord < ActiveRecord::Base
+^^^^^^^^^^^^^^^^^^^^^^^
+app/models/event.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class Event.
+class Event < ApplicationRecord
+^^^^^^^^^^^
+app/models/user.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class User.
+class User < ApplicationRecord
+^^^^^^^^^^
+app/models/user.rb:11:36: C: [Correctable] Layout/SpaceInsideHashLiteralBraces: Space inside } missing.
+  enum role: { student: 0, admin: 1}
+                                   ^
+bin/bundle:24:3: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for cli_arg_version is too high. [9/7]
+  def cli_arg_version ...
+  ^^^^^^^^^^^^^^^^^^^
+bin/bundle:24:3: C: Metrics/MethodLength: Method has too many lines. [11/10]
+  def cli_arg_version ...
+  ^^^^^^^^^^^^^^^^^^^
+bin/bundle:24:3: C: Metrics/PerceivedComplexity: Perceived complexity for cli_arg_version is too high. [9/8]
+  def cli_arg_version ...
+  ^^^^^^^^^^^^^^^^^^^
+bin/bundle:91:3: C: Metrics/MethodLength: Method has too many lines. [12/10]
+  def activate_bundler ...
+  ^^^^^^^^^^^^^^^^^^^^
+bin/bundle:104:121: C: Layout/LineLength: Line is too long. [198/120]
+    warn "Activating bundler (#{bundler_requirement}) failed:\n#{gem_error.message}\n\nTo install the version of bundler this project requires, run `gem install bundler -v '#{bundler_requirement}'`"
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/application.rb:12:3: C: Style/Documentation: Missing top-level documentation comment for class McabsTracker::Application.
+  class Application < Rails::Application
+  ^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:18:121: C: Layout/LineLength: Line is too long. [154/120]
+  # config.secret_key = 'd7a48b201dba5515c31f0a3b923af69d95494516fe8c0b83bb09c3cde8d96306a6a5a3aa40c413c3cb4d787d9e42befc168efade00ad0511a8ee9ef1714dbd71'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:130:121: C: Layout/LineLength: Line is too long. [150/120]
+  # config.pepper = '8eec50cabeb07c71dcb0e823ce5b4dba1ec05d0ecd64feea9fcb9b98b13f08ecaf011c077de28a180d19690fff45b8316f29d4591e53cbb511e2fcb52d4ac8d4'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/routes.rb:11:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+config/routes.rb:13:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+config/routes.rb:20:1: C: [Correctable] Layout/TrailingWhitespace: Trailing whitespace detected.
+config/routes.rb:28:27: C: [Correctable] Style/SymbolArray: Use %i or %I for an array of symbols.
+  resources :admin, only: [:index, :create, :update]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240206000557_create_events.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class CreateEvents.
+class CreateEvents < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^
+db/migrate/20240209223121_create_announcements.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class CreateAnnouncements.
+class CreateAnnouncements < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240209233157_rename_column_in_announcement_table.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class RenameColumnInAnnouncementTable.
+class RenameColumnInAnnouncementTable < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240210204106_change_primary_key_for_announcements.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class ChangePrimaryKeyForAnnouncements.
+class ChangePrimaryKeyForAnnouncements < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240212193529_add_sponsors_to_events.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class AddSponsorsToEvents.
+class AddSponsorsToEvents < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240212204008_change_sponsor_fields_in_events.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class ChangeSponsorFieldsInEvents.
+class ChangeSponsorFieldsInEvents < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240221040036_devise_create_users.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class DeviseCreateUsers.
+class DeviseCreateUsers < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240221040036_devise_create_users.rb:4:3: C: Metrics/AbcSize: Assignment Branch Condition size for change is too high. [<1, 19, 0> 19.03/17]
+  def change ...
+  ^^^^^^^^^^
+db/migrate/20240221040036_devise_create_users.rb:4:3: C: Metrics/MethodLength: Method has too many lines. [20/10]
+  def change ...
+  ^^^^^^^^^^
+db/migrate/20240222175813_add_role_to_users.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddRoleToUsers.
+class AddRoleToUsers < ActiveRecord::Migration[7.0]
+^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240222175813_add_role_to_users.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+class AddRoleToUsers < ActiveRecord::Migration[7.0]
+^
+db/schema.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+# This file is auto-generated from the current state of the database. Instead
+^
+db/schema.rb:13:1: C: Metrics/BlockLength: Block has too many lines. [42/25]
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_175813) do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:13:43: C: [Correctable] Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_175813) do
+                                          ^^^^^^^^^^^^^^^^^
+db/schema.rb:15:20: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  enable_extension "plpgsql"
+                   ^^^^^^^^^
+db/schema.rb:17:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  create_table "announcements", primary_key: "announcementID", force: :cascade do |t|
+               ^^^^^^^^^^^^^^^
+db/schema.rb:17:46: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  create_table "announcements", primary_key: "announcementID", force: :cascade do |t|
+                                             ^^^^^^^^^^^^^^^^
+db/schema.rb:18:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "googleUserID"
+             ^^^^^^^^^^^^^^
+db/schema.rb:19:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "subject"
+           ^^^^^^^^^
+db/schema.rb:20:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "dateOfAnnouncement"
+               ^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:21:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "body"
+           ^^^^^^
+db/schema.rb:22:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "created_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:23:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "updated_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:26:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  create_table "events", force: :cascade do |t|
+               ^^^^^^^^
+db/schema.rb:27:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "eventLocation"
+           ^^^^^^^^^^^^^^^
+db/schema.rb:28:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "eventInfo"
+           ^^^^^^^^^^^
+db/schema.rb:29:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "eventName"
+             ^^^^^^^^^^^
+db/schema.rb:30:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "eventTime"
+               ^^^^^^^^^^^
+db/schema.rb:31:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.integer "eventPoints"
+              ^^^^^^^^^^^^^
+db/schema.rb:32:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "created_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:33:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "updated_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:34:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "sponsor_title"
+             ^^^^^^^^^^^^^^^
+db/schema.rb:35:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "sponsor_description"
+           ^^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:38:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  create_table "users", force: :cascade do |t|
+               ^^^^^^^
+db/schema.rb:39:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "uid"
+             ^^^^^
+db/schema.rb:40:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "email", null: false
+             ^^^^^^^
+db/schema.rb:41:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.boolean "is_admin", default: false
+              ^^^^^^^^^^
+db/schema.rb:42:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "full_name"
+             ^^^^^^^^^^^
+db/schema.rb:43:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "middle_initial", limit: 1
+             ^^^^^^^^^^^^^^^^
+db/schema.rb:44:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "gender"
+             ^^^^^^^^
+db/schema.rb:45:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.boolean "is_hispanic_or_latino"
+              ^^^^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:46:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "race"
+             ^^^^^^
+db/schema.rb:47:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.boolean "is_us_citizen"
+              ^^^^^^^^^^^^^^^
+db/schema.rb:48:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.boolean "is_first_generation_college_student"
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:49:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "date_of_birth"
+               ^^^^^^^^^^^^^^^
+db/schema.rb:50:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "phone_number"
+             ^^^^^^^^^^^^^^
+db/schema.rb:51:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "avatar_url"
+             ^^^^^^^^^^^^
+db/schema.rb:52:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.text "bio"
+           ^^^^^
+db/schema.rb:53:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.string "classification"
+             ^^^^^^^^^^^^^^^^
+db/schema.rb:54:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.integer "total_points"
+              ^^^^^^^^^^^^^^
+db/schema.rb:55:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "created_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:56:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.datetime "updated_at", null: false
+               ^^^^^^^^^^^^
+db/schema.rb:57:15: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.integer "role"
+              ^^^^^^
+db/schema.rb:58:14: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.index ["email"], name: "index_users_on_email", unique: true
+             ^^^^^^^
+db/schema.rb:58:30: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    t.index ["email"], name: "index_users_on_email", unique: true
+                             ^^^^^^^^^^^^^^^^^^^^^^
+db/schema.rb:60:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+spec/factories/users.rb:8:18: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    avatar_url { "https://static.tvtropes.org/pmwiki/pub/images/Rickrolls.jpg" }
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/features/announcement_integration_spec.rb:6:1: C: Metrics/BlockLength: Block has too many lines. [64/25]
+RSpec.describe 'Announcements Integration', type: :feature do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/features/dashboard_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+require 'rails_helper'
+^
+spec/features/dashboard_spec.rb:3:1: C: Metrics/BlockLength: Block has too many lines. [31/25]
+RSpec.describe 'Dashboard Integration', type: :feature do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/features/event_integration_spec.rb:7:1: C: Metrics/BlockLength: Block has too many lines. [79/25]
+RSpec.describe 'Events Integration', type: :feature do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/features/google_oauth_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+require 'rails_helper'
+^
+spec/features/google_oauth_spec.rb:8:5: C: [Correctable] Layout/LeadingCommentSpace: Missing space after #.
+    #click_link 'Sign in with Google'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/features/google_oauth_spec.rb:10:5: C: [Correctable] Layout/LeadingCommentSpace: Missing space after #.
+    #save_and_open_page
+    ^^^^^^^^^^^^^^^^^^^
+spec/features/google_oauth_spec.rb:18:4: C: [Correctable] Layout/TrailingEmptyLines: Final newline missing.
+end
+   
+spec/helpers/admin_helper_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+require 'rails_helper'
+^
+spec/models/announcement_spec.rb:6:1: C: Metrics/BlockLength: Block has too many lines. [27/25]
+RSpec.describe Announcement, type: :model do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/models/event_spec.rb:5:1: C: Metrics/BlockLength: Block has too many lines. [33/25]
+RSpec.describe Event, type: :model do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+spec/requests/admin_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+require 'rails_helper'
+^
+spec/requests/admin_spec.rb:3:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+RSpec.describe "Admins", type: :request do
+               ^^^^^^^^
+spec/requests/admin_spec.rb:4:12: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+  describe "GET /index" do
+           ^^^^^^^^^^^^
+spec/requests/admin_spec.rb:5:8: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+    it "returns http success" do
+       ^^^^^^^^^^^^^^^^^^^^^^
+spec/requests/admin_spec.rb:6:11: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+      get "/admin/index"
+          ^^^^^^^^^^^^^^
+spec/requests/admin_spec.rb:10:1: C: [Correctable] Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body end.
+spec/views/admin/index.html.erb_spec.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+require 'rails_helper'
+^
+spec/views/admin/index.html.erb_spec.rb:3:16: C: [Correctable] Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols.
+RSpec.describe "admin/index.html.erb", type: :view do
+               ^^^^^^^^^^^^^^^^^^^^^^
+
+69 files inspected, 104 offenses detected, 69 offenses autocorrectable

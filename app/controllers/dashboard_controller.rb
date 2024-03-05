@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DashboardController < ApplicationController
+  layout 'authenticated_layout'
+
   def index
     @events = Event.all
     @announcements = Announcement.order(dateOfAnnouncement: :desc)
