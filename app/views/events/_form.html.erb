@@ -14,18 +14,27 @@
   <div>
     <%= form.label :eventName, style: "display: block" %>
     <%= form.text_field :eventName %>
+    
     <%= form.label :eventLocation, style: "display: block" %>
     <%= form.text_area :eventLocation %>
+
     <%= form.label :eventInfo, style: "display: block" %>
     <%= form.text_field :eventInfo %>
+
     <%= form.label :eventTime, style: "display: block" %>
     <%= form.datetime_local_field :eventTime %>
+
+    <%= form.label :eventPoints, style: "display: block" %>
+    <%= form.text_field :eventPoints %>
 
     <%= form.label :sponsor_title, style: "display: block" %>
     <%= form.text_field :sponsor_title %>
 
     <%= form.label :sponsor_description, style: "display: block" %>
     <%= form.text_area :sponsor_description %>
+
+    <%= form.label :password, style: "display: block" %>
+    <%= form.text_field :password %>
   </div>
   
 
