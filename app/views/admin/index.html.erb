@@ -1,7 +1,12 @@
-<h1>Admin Dashboard</h1>
-<%# <p>Find me in app/views/admin/index.html.erb</p> %>
+<% content_for(:title, 'Admin Tools') %>
 
-<%# <% @users.each do |user| %>
+<div class="container mt-5">
+  <h1>Admin Tools will go here</h1>
+</div>
+
+<h1>Admin Dashboard</h1>
+
+ <% @users.each do |user| %>
     <%= form_with(model: user, url: admin_path(user), method: :patch, local: true) do |f| %>
         <p>
         <%= user.email %> | <%= user.role %>
@@ -11,7 +16,7 @@
         </p>
     <% end %>
     <%= link_to 'Remove User', admin_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
-  <% end %> %>
+  <% end %> 
 
   
 
@@ -44,3 +49,4 @@
     <% end %>
   </tbody>
 </table>
+

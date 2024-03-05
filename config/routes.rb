@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
   
   # define the events resources routes
-  
+  get '/admin-tools', to: 'admin#index'
+
   resources :events do
     # special route for deleting events
     member do
@@ -20,14 +21,19 @@ Rails.application.routes.draw do
   
   # define the announcements resources routes
   resources :announcements do
-    # special route for deleting events
+    # special route for deleting announcements
     member do
       get 'delete'
     end
   end
-  resources :admin, only: [:index, :update, :destroy]
-  # get 'admin/index'
-  # post 'admin/users', to: 'admin#create', as: 'admin_users'
-  # patch '/admin/users/:id', to: 'admin#update', as: 'admin_user'
-  resources :users
+
+  resources :users do
+    # special route for deleting users
+    member do
+      get 'delete'
+      patch 'make_admin'
+    end
+  end
+
+  get 'dashboard/index'
 end

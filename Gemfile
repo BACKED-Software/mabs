@@ -77,8 +77,8 @@ group :test do
   gem 'webdrivers'
 
   gem 'brakeman'
-  gem 'rubocop'
   gem 'launchy'
+  gem 'rubocop'
 end
 
 # gems for authentication
@@ -92,3 +92,5 @@ gem 'dotenv-rails'
 
 gem 'factory_bot_rails'
 gem 'faker'
+
+gem 'rails-controller-testing'
