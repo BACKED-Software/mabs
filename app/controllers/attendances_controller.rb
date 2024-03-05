@@ -20,7 +20,7 @@ class AttendancesController < ApplicationController
 
     respond_to do |format|
       if @attendance.save
-        format.html { redirect_to(attendance_path, notice: 'Attendance was successfully checked in.') }
+        format.html { redirect_to(attendances_path, notice: 'Attendance was successfully checked in.') }
         format.json { render(:show, status: :created, location: @attendance) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
