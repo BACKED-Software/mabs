@@ -32,7 +32,7 @@ class AnnouncementsController < ApplicationController
     @announcement = @user.announcements.new(announcement_params)
     @announcement.googleUserID = @user.uid
     @announcement.dateOfAnnouncement = DateTime.now
-
+  
     respond_to do |format|
       if @announcement.save
         format.html { redirect_to(announcements_path, notice: 'announcement was successfully created.') }

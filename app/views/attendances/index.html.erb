@@ -6,8 +6,16 @@
   </header>
   <%= link_to "Back to Home", "/dashboard/index" %><br><br>
   <div id="events">
-  <h1>Events</h1>
-
+  <h1>Events Attended</h1>
+  <% @attendances.each do |attendance| %>
+    <p>
+      <strong>Name:</strong> <%= current_user.full_name %><br>
+      <strong>Event Name:</strong> <%= Event.find(attendance.eventID).eventName  %><br>
+      <strong>Time:</strong> <%= attendance.timeOfCheckIn %><br>
+      <strong>Points:</strong> <%= attendance.pointsAwarded %><br>
+    </p>
+    <br>
+  <% end %>
   <%= form_tag do %>
     <label for="event">Select an event:</label>
     <%= select_tag 'event', options_from_collection_for_select(@events, 'id', 'eventName') %>
