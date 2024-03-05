@@ -1,7 +1,6 @@
 <% content_for(:title, 'Admin Dashboard - User Management') %>
 
-<div class="container mt-5">
-  
+<div class="container mt-5">  
   <h1>User Management</h1>
   
   <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
@@ -33,4 +32,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= render 'admin_nonevent_points_manager' %>
 </div>

@@ -19,6 +19,9 @@
         <div class="total-points mt-3">
           <h2>Total Points: <span class="points-value">150</span></h2>
         </div>
+        <%= require_sign_in do %>
+          <h2> <%= link_to 'View Leaderboard', leaderboard_index_path %> </h2>
+        <% end %>
       </div>
     </div>
 
