@@ -43,27 +43,50 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_021214) do
     t.index ["event_id"], name: "index_rsvps_on_event_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "uid"
-    t.string "email", null: false
-    t.boolean "is_admin", default: false
-    t.string "full_name"
-    t.string "middle_initial", limit: 1
-    t.string "gender"
-    t.boolean "is_hispanic_or_latino"
-    t.string "race"
-    t.boolean "is_us_citizen"
-    t.boolean "is_first_generation_college_student"
-    t.datetime "date_of_birth"
-    t.string "phone_number"
-    t.string "avatar_url"
-    t.text "bio"
-    t.string "classification"
-    t.integer "total_points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["uid"], name: "index_users_on_uid", unique: true
+  create_table 'events', force: :cascade do |t|
+    t.text 'eventLocation'
+    t.text 'eventInfo'
+    t.string 'eventName'
+    t.datetime 'eventTime'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'eventPoints'
+    t.string 'sponsor_title'
+    t.text 'sponsor_description'
+  end
+
+  create_table 'points', force: :cascade do |t|
+    t.integer 'numPointsAwarded'
+    t.string 'awardedBy'
+    t.string 'awardedTo'
+    t.datetime 'dateOfAward'
+    t.text 'awardDescription'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'PointID'
+  end
+
+  create_table 'users', force: :cascade do |t|
+    t.string 'uid'
+    t.string 'email', null: false
+    t.boolean 'is_admin', default: false
+    t.string 'full_name'
+    t.string 'middle_initial', limit: 1
+    t.string 'gender'
+    t.boolean 'is_hispanic_or_latino'
+    t.string 'race'
+    t.boolean 'is_us_citizen'
+    t.boolean 'is_first_generation_college_student'
+    t.datetime 'date_of_birth'
+    t.string 'phone_number'
+    t.string 'avatar_url'
+    t.text 'bio'
+    t.string 'classification'
+    t.integer 'total_points'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['uid'], name: 'index_users_on_uid', unique: true
   end
 
   add_foreign_key "announcements", "users", column: "googleUserID", primary_key: "uid"

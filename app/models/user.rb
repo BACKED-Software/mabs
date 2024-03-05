@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :announcements, foreign_key: 'googleUserID', dependent: :destroy
   has_many :rsvps, foreign_key: 'user_uid', dependent: :destroy
 
+  has_many :points, foreign_key: 'awardedTo', primary_key: 'uid'
+
   # Helper method to check if the user is an admin
   def admin?
     is_admin
