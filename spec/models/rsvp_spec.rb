@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/controllers/rsvps_controller_spec.rb
 require 'rails_helper'
 
@@ -22,9 +24,9 @@ RSpec.describe RsvpsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Rsvp' do
-        expect {
+        expect do
           post :create, params: { rsvp: valid_attributes }
-        }.to change(Rsvp, :count).by(1)
+        end.to change(Rsvp, :count).by(1)
       end
 
       it 'assigns a newly created rsvp as @rsvp' do

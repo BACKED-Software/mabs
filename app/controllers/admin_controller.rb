@@ -7,7 +7,7 @@ class AdminController < ApplicationController
 
   def index
     @users = User.all
-    @users = @users.where("email LIKE ?", "%#{params[:search]}%") if params[:search].present?
+    @users = @users.where('email LIKE ?', "%#{params[:search]}%") if params[:search].present?
   end
 
   def promote_to_admin
@@ -19,7 +19,7 @@ class AdminController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to admin_index_path, notice: '#{user.email} was successfully updated.'
+      redirect_to admin_index_path, notice: "#{user.email} was successfully updated."
     else
       render :index, status: :unprocessable_entity
     end
@@ -53,5 +53,4 @@ class AdminController < ApplicationController
     flash[:alert] = 'You are not authorized to access this page.'
     redirect_to root_path # or any other path you wish to redirect to
   end
-
 end

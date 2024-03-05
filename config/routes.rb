@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   # dashboard route
   root to: 'dashboard#index'
-  
+
   # define the events resources routes
   get '/admin-tools', to: 'admin#index'
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
-  
+
   # define the announcements resources routes
   resources :announcements do
     # special route for deleting announcements
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rsvps, only: [:index, :create, :destroy]
+  resources :rsvps, only: %i[index create destroy]
 
   resources :users do
     # special route for deleting users
