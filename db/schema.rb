@@ -43,18 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_021214) do
     t.index ["event_id"], name: "index_rsvps_on_event_id"
   end
 
-  create_table 'events', force: :cascade do |t|
-    t.text 'eventLocation'
-    t.text 'eventInfo'
-    t.string 'eventName'
-    t.datetime 'eventTime'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer 'eventPoints'
-    t.string 'sponsor_title'
-    t.text 'sponsor_description'
-  end
-
   create_table 'points', force: :cascade do |t|
     t.integer 'numPointsAwarded'
     t.string 'awardedBy'
@@ -90,6 +78,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_021214) do
   end
 
   add_foreign_key "announcements", "users", column: "googleUserID", primary_key: "uid"
+<<<<<<< HEAD
   add_foreign_key "rsvps", "events"
   add_foreign_key "rsvps", "users", column: "user_uid", primary_key: "uid", on_delete: :cascade
+=======
+>>>>>>> 16938791904272099bb48c945e5086706bed25b3
 end

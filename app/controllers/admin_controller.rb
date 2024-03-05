@@ -6,7 +6,33 @@ class AdminController < ApplicationController
   layout 'authenticated_layout'
 
   def index
-    # Your admin dashboard code
+    @users = User.all
+    @users = @users.where("email LIKE ?", "%#{params[:search]}%") if params[:search].present?
+  end
+
+  def promote_to_admin
+    user = User.find(params[:id])
+    user.update!(is_admin: true)
+    redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to admin_index_path, notice: '#{user.email} was successfully updated.'
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def delete
+    @user = User.find(params[:id])
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_index_path, notice: "#{user.email} was successfully removed."
   end
 
   def upcoming_events

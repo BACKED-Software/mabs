@@ -6,6 +6,12 @@ FactoryBot.define do
     email { Faker::Internet.email }
     full_name { Faker::Name.name }
     avatar_url { 'https://static.tvtropes.org/pmwiki/pub/images/Rickrolls.jpg' }
-    # Add any other attributes you need for your user model
+  end
+
+  factory :admin, parent: :user do
+    sequence(:uid) { |n| "admin#{n}" }
+    email { Faker::Internet.email }
+    full_name { Faker::Name.name }
+    is_admin { true }
   end
 end
