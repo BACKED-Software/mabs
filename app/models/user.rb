@@ -8,7 +8,6 @@ class User < ApplicationRecord
   end
 
   validates :email, presence: true
-  enum role: { student: 0, admin: 1}
   has_many :announcements, foreign_key: 'googleUserID'
 
   # Helper method to check if the user is an admin

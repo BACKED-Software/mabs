@@ -11,6 +11,16 @@ Rails.application.routes.draw do
   
   # define the events resources routes
   get '/admin-tools', to: 'admin#index'
+  patch '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_Admin'
+  delete '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
+
+  resources :admin do
+    member do
+      # get 'make_admin'
+      # patch 'update'
+      # delete 'destroy'
+    end
+  end
 
   resources :events do
     # special route for deleting events
