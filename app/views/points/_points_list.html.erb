@@ -1,0 +1,32 @@
+<h2>User: <%= @user.email %></h2>
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, id: "flash_#{name}" %>
+<% end %>
+<%= form_with(url: save_changes_points_path, method: :post, id: 'pointsForm', local: false) do |form| %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Points Awarded</th>
+      <th>Awarded By</th>
+      <th>Date of Award</th>
+      <th>Description</th>
+      <th>Actions</th> <!-- Added Actions column for the delete button -->
+    </tr>
+    </thead>
+    <tbody>
+    <% @points.each_with_index do |point, index| %>
+      <tr data-point-id="<%= point.id %>">
+        <%= hidden_field_tag "points[#{index}][id]", point.id %>
+        <td><%= text_field_tag "points[#{index}][numPointsAwarded]", point.numPointsAwarded, class: 'form-control' %></td>
+        <td><%= text_field_tag "points[#{index}][awardedBy]", point.awardedBy, class: 'form-control' %></td>
+        <td><%= date_field_tag "points[#{index}][dateOfAward]", point.dateOfAward.strftime("%Y-%m-%d"), class: 'form-control' %></td>
+        <td><%= text_field_tag "points[#{index}][awardDescription]", point.awardDescription, class: 'form-control' %></td>
+        <td>
+          <%= link_to("Delete", delete_point_path(point), class: 'delete-point-link') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= submit_tag 'Save Changes', class: 'btn btn-primary' %>
+<% end %>

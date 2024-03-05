@@ -34,6 +34,20 @@ Rails.application.routes.draw do
       patch 'make_admin'
     end
   end
+
+  post 'award_points', to: 'points#award', as: 'award_points'
+
+  get 'manage_points', to: 'points#manage', as: 'manage_points'
+
+  # config/routes.rb
+  post 'points/save_changes', to: 'points#save_changes', as: :save_changes_points
+
+  resources :points do
+    member do
+      get 'delete'
+    end
+  end
+
   get 'leaderboard/index'
   get 'dashboard/index'
 end
