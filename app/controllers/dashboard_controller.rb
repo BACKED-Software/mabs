@@ -7,6 +7,10 @@ class DashboardController < ApplicationController
     @events = Event.all
     @announcements = Announcement.order(dateOfAnnouncement: :desc)
     @user = current_user
+    if @user
+      @total_points = @user.total_points
+    end
+
     # @most_recent_announcement = Announcement.order(dateOfAnnouncement: :desc).first
 
     # if @most_recent_announcement
