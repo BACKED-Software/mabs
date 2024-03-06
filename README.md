@@ -1,4 +1,4 @@
-```markdown
+
 # MCABS App Tracker README
 
 This README provides the necessary steps to set up and run the MCABS (Medical Cannabis Access Barrier Solutions) App Tracker, a Ruby on Rails application. The application is designed to track and manage patient access to medical cannabis, ensuring efficient monitoring and support.
