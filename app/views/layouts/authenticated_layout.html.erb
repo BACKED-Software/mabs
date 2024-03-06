@@ -34,10 +34,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/admin-tools">Admin Tools</a>
         </li>
-        <!-- Add more navigation items here -->
+        <li class="nav-item">
+          <%= link_to "Check In", attendances_path, class: "nav-link"%>
+        </li>
       </ul>
-
-
       <% if user_signed_in? && @current_user.present? %>
         <a class="d-flex align-items-center" data-bs-toggle="offcanvas" href="#userOffcanvas" role="button" aria-controls="userOffcanvas">
           <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
@@ -46,9 +46,7 @@
         </a>
       <%else %>
         <%= link_to 'Sign In', new_user_session_path %>
-    <% end %>
-
-
+      <% end %>
 
     </div>
   </div>
