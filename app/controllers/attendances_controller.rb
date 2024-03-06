@@ -1,5 +1,6 @@
-class AttendancesController < ApplicationController
+# frozen_string_literal: true
 
+class AttendancesController < ApplicationController
   before_action :set_attendance, only: %i[show edit]
   before_action :set_user, only: %i[show edit create index]
   before_action :set_event, only: %i[show edit create]
@@ -19,10 +20,9 @@ class AttendancesController < ApplicationController
     redirect_to(attendance_path, notice: 'Attendance was successfully deleted.')
   end
 
-
   def create
-    if Attendance.exists?(eventID: @event.id, googleUserID: @user.uid) 
-      flash[:alert] = "You have already checked in for this event"
+    if Attendance.exists?(eventID: @event.id, googleUserID: @user.uid)
+      flash[:alert] = 'You have already checked in for this event'
       redirect_to attendances_path
     else
       @attendance = Attendance.new(attendance_params)
@@ -30,7 +30,7 @@ class AttendancesController < ApplicationController
       @attendance.eventID = @event.id
       @attendance.pointsAwarded = @event.eventPoints
       @attendance.googleUserID = @user.uid
-    
+
       respond_to do |format|
         if @attendance.save
           format.html { redirect_to(attendances_path, notice: 'Attendance was successfully checked in.') }
@@ -55,14 +55,14 @@ class AttendancesController < ApplicationController
   end
 
   def set_event
-    @event = Event.find(params["event"])
+    @event = Event.find(params['event'])
   end
 
   def attendance_params
     params.permit(
-      :eventID, 
-      :googleUserID, 
-      :timeOfCheckIn, 
+      :eventID,
+      :googleUserID,
+      :timeOfCheckIn,
       :pointsAwarded
     )
   end

@@ -12,6 +12,5 @@ class Event < ApplicationRecord
   #   validates :sponsor_title
   #   validates :sponsor_description
   has_many :rsvps, foreign_key: 'event_id'
-  has_many :attendances, foreign_key: "eventID", dependent: :destroy
-  
+  has_many :attendances, foreign_key: 'eventID', dependent: :destroy
 end
