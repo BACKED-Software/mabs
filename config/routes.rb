@@ -49,6 +49,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :attendances do
+    member do
+      get 'delete'
+    end
+  end
+
   post 'award_points', to: 'points#award', as: 'award_points'
 
   get 'manage_points', to: 'points#manage', as: 'manage_points'
