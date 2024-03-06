@@ -157,3 +157,76 @@ body {
     font-size: 14px; /* Set font size for total points */
     color: #777; /* Set color for total points */
 }
+
+.points-summary {
+    background-color: #ffffff; /* White background for the panel */
+    border-radius: 10px; /* Rounded corners for the panel */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    color: #333333; /* Darker text for better readability */
+}
+
+.points-summary h4 {
+    color: #007bff; /* Bootstrap primary color for the heading */
+}
+
+.btn-primary, .btn-info {
+    margin: 0 5px; /* Spacing between buttons */
+}
+
+/* Additional styles for the buttons to make them modern and appealing */
+.btn-primary, .btn-info {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px; /* Rounded edges for buttons */
+    font-weight: bold;
+}
+
+/* Hover effect for buttons */
+.btn-primary:hover, .btn-info:hover {
+    transform: scale(1.05); /* Slight increase in size */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow for 3D effect */
+}
+
+
+.user-panel {
+    position: fixed;
+    right: -250px; /* Adjust width accordingly */
+    top: 0;
+    width: 250px; /* Adjust width accordingly */
+    height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    transition: right 0.3s ease;
+}
+
+.user-panel.open {
+    right: 0;
+}
+
+.user-panel-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: #f1f1f1;
+    text-align: center;
+}
+
+.offcanvas-footer {
+    padding: 10px 0;
+    border-top: 1px solid #eaeaea;
+}
+
+.user-info h6 {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.user-info p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.btn-settings {
+    margin-top: 15px;
+}

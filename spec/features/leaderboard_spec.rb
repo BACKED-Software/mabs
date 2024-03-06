@@ -67,7 +67,7 @@ RSpec.describe 'Leaderboard', type: :feature do
 
   it 'allows viewing next users' do
     visit leaderboard_index_path
-    expect(page).to have_content(user1.full_name, count: 1) # user1 is displayed by default since they are logged in
+    expect(page).to have_content(user1.full_name, count: 2) #Will find twice since user name is also in off-canvas for profile, user1 is displayed by default since they are logged in
     expect(page).to have_content(user2.full_name) # user2 has most points
     expect(page).not_to have_content(user3.full_name)
     expect(page).not_to have_content(user4.full_name)

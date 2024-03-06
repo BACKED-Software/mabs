@@ -39,7 +39,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rsvps, only: %i[index create destroy]
 
   resources :users do
     # special route for deleting users
@@ -67,6 +66,10 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
+
+  get 'points_history', to: 'users#points_history', as: 'points_history'
+
+  resources :rsvps, only: %i[index create destroy]
 
   get 'leaderboard/index'
   get 'dashboard/index'
