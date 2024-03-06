@@ -34,33 +34,58 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/admin-tools">Admin Tools</a>
         </li>
-
-        <li class="nav-item">
-          <% if user_signed_in? %>
-            <!-- Display sign-out button if the user is signed in -->
-            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-          <% else %>
-            <!-- Display sign-in button if the user is not signed in -->
-            <%= link_to 'Sign In', new_user_session_path %>
-          <% end %>
-        </li>
         <!-- Add more navigation items here -->
       </ul>
-      <a>
-        <% if user_signed_in? && @current_user.present? %>
+
+
+      <% if user_signed_in? && @current_user.present? %>
+        <a class="d-flex align-items-center" data-bs-toggle="offcanvas" href="#userOffcanvas" role="button" aria-controls="userOffcanvas">
           <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
             <%= image_tag @current_user.avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' if @current_user.avatar_url.present? %>
           </div>
-        <% end %>
+        </a>
+      <%else %>
+        <%= link_to 'Sign In', new_user_session_path %>
+    <% end %>
 
-      </a>
+
 
     </div>
-  </div></nav>
+  </div>
+</nav>
+
+<!-- Offcanvas Panel -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="userOffcanvasLabel">Profile</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <% if user_signed_in? && @current_user.present? %>
+      <!-- User Profile Info -->
+      <div class="user-info text-center">
+        <%= image_tag @current_user.avatar_url, alt: "User Avatar", class: "img-fluid rounded-circle", style: 'width: 80px; height: 80px;' if @current_user.avatar_url.present? %>
+        <h6 class="mt-2"><%= @current_user.full_name %></h6>
+        <p><%= @current_user.email %></p>
+        <%= link_to 'Settings', dashboard_index_url, class: 'btn btn-primary btn-settings' %>
+      </div>
+      <!-- Sign Out Button -->
+      <div class="text-center mt-4">
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="offcanvas-footer mt-auto text-center">
+    <small>Produced by <b>BACKeD Software</b></small>
+  </div>
+</div>
+
+
 
       <%= yield %>
 
   <%= yield(:extra_js) %>
+
   </body>
 </html>
 
