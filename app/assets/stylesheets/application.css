@@ -15,15 +15,6 @@
  */
 
 
-.top-bar {
-    background-color: maroon;
-    color: white;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
-
 a {
 
     font-size: x-large;
