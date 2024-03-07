@@ -45,6 +45,26 @@ class AdminController < ApplicationController
     @rsvp_count = @rsvps.count
   end
 
+  def demographics
+    @users = User.all
+    apply_filters
+
+    # prepare data for charts or tables here
+    @gender_distribution = @users.group(:gender).count
+    @ethnicity_distribution = @users.group(:is_hispanic_or_latino).count
+    @race_distribution = @users.group(:race).count
+    @us_citizen_distribution = @users.group(:is_us_citizen).count
+    @first_generation_college_student_distribution = @users.group(:is_first_generation_college_student).count
+    @classification_distribution = @users.group(:classification).count
+
+    respond_to do |format|
+      format.html # For the webpage
+      format.json { render json: @users } 
+      format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
+    end
+
+  end
+
   private
 
   def check_admin
@@ -53,4 +73,15 @@ class AdminController < ApplicationController
     flash[:alert] = 'You are not authorized to access this page.'
     redirect_to root_path # or any other path you wish to redirect to
   end
+
+  def apply_filters
+    @users = @users.by_gender(params[:gender])
+                   .by_race(params[:race])
+                   .by_us_citizen(params[:is_us_citizen])
+                   .by_first_generation_college_student(params[:is_first_generation_college_student])
+                   .by_hispanic_or_latino(params[:is_hispanic_or_latino])
+                   .by_classification(params[:classification])
+    # Extend with additional filters as needed
+  end
+
 end
