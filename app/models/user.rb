@@ -33,7 +33,7 @@ class User < ApplicationRecord
   # end
 
   def self.to_csv
-    attributes = %w{email full_name gender is_hispanic_or_latino race date_of_birth}
+    attributes = %w{email full_name gender is_hispanic_or_latino race is_us_citizen is_first_generation_college_student classification}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -45,10 +45,15 @@ class User < ApplicationRecord
   end
 
   scope :by_gender, ->(gender) { where(gender: gender) if gender.present? }
+  
   scope :by_race, ->(race) { where(race: race) if race.present? }
+  
   scope :by_us_citizen, ->(is_us_citizen) { where(is_us_citizen: is_us_citizen) if !is_us_citizen.nil? }
+  
   scope :by_first_generation_college_student, ->(is_first_generation) { where(is_first_generation_college_student: is_first_generation) if !is_first_generation.nil? }
+  
   scope :by_hispanic_or_latino, ->(is_hispanic_or_latino) { where(is_hispanic_or_latino: is_hispanic_or_latino) if !is_hispanic_or_latino.nil? }
+  
   scope :by_classification, ->(classification) { where(classification: classification) if classification.present? }
   
 end

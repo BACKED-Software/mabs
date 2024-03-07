@@ -59,7 +59,7 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       format.html # For the webpage
-      format.json { render json: @users } 
+      format.json { render json: @users} 
       format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
     end
 

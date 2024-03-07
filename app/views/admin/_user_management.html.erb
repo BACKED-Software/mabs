@@ -23,7 +23,7 @@
           <td><%= user.is_admin ? 'Admin' : 'User' %></td>
           <td>
             <%= link_to 'Promote to Admin', make_admin_user_path(user), method: :patch, data: { confirm: 'Are you sure?' } unless user.is_admin %>
-            <%= link_to 'Remove User', remove_user_admin_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Remove User', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>
       <% end %>

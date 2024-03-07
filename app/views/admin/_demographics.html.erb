@@ -1,0 +1,47 @@
+<%= content_for :title, "Demographic Statistics" %>
+<div class="container mt-5">
+  <h1>Demographic Statistics</h1>
+  
+  <%= form_with url: admin_demographics_path, method: :get, local: true do |form| %>
+
+    # <%= form.label :gender, 'Filter by Gender:' %>
+    <%= form.select :gender, options_for_select(['', 'Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'], selected: params[:gender]), include_blank: true %>
+    
+    <%= form.label :is_hispanic_or_latino, 'Filter by Ethnicity (Hispanic or Latino):' %>
+    <%= form.select :is_hispanic_or_latino, options_for_select(['', 'Yes', 'No'], selected: params[:is_hispanic_or_latino]), include_blank: true %>
+
+    <%= form.label :race, 'Filter by Race:' %>
+    <%= form.select :gender, options_for_select(['', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], selected: params[:race]), include_blank: true %>
+
+    <%= form.label :is_us_citizen, 'Filter by US Citizen:' %>
+    <%= form.select :is_us_citizen, options_for_select(['', 'Yes', 'No'], selected: params[:is_us_citizen]), include_blank: true %>
+
+    <%= form.label :is_first_generation_college_student, 'Filter by First Generation College Student:' %>
+
+    <%= form.select :classification, options_for_select(['', 'U1', 'U2', 'U3', 'U4'], selected: params[:classification]), include_blank: true %>
+
+    <%= form.submit 'Filter' %>
+  <% end %>
+
+  <section class="statistics">
+    <h2> Gender Distribution </h2>
+    <%= pie_chart @gender_distribution, id: 'gender-distribution-chart', label: 'Gender Distribution'%>
+
+    <h2> Ethnicity Distribution </h2>
+    <%= pie_chart @ethnicity_distribution, id: 'ethnicity-distribution-chart', label: 'Hispanic or Latino Distribution' %>
+
+    <h2> Race Distribution </h2>
+    <%= pie_chart @race_distribution, id: 'race-distribution-chart', label: 'Race Distribution' %>
+
+    <h2> US Citizen Distribution </h2>
+    <%= pie_chart @us_citizen_distribution, id: 'us-citizen-distribution-chart', label: 'US Citizen Distribution' %>
+
+    <h2> First Generation College Student Distribution </h2>
+    <%= pie_chart @first_generation_college_student_distribution, id: 'first-generation-college-student-distribution-chart', label: 'First Generation College Student Distribution' %>
+
+    <h2> Classification Distribution </h2>
+    <%= pie_chart @classification_distribution, id: 'classification-distribution-chart', label: 'Classification Distribution' %>
+  </section>
+
+  <h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
+</div>
