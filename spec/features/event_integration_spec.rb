@@ -7,7 +7,7 @@ require 'rails_helper'
 RSpec.describe 'Events Integration', type: :feature do
   before do
     @user = create(:user)
-    Event.create(
+    @event = Event.create(
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
@@ -15,6 +15,23 @@ RSpec.describe 'Events Integration', type: :feature do
       sponsor_title: 'Sample Title',
       sponsor_description: 'Sample Description'
     )
+  end
+
+  it 'updates an existing event' do
+    visit event_path(@event)
+    click_link 'Edit'
+    fill_in 'event[eventLocation]', with: 'Updated Location'
+    click_button 'Update Event'
+    visit event_path(@event)
+    expect(page).to have_content('Updated Location')
+  end
+
+  it 'fails to update an event' do
+    visit event_path(@event)
+    click_link 'Edit'
+    fill_in 'event[eventName]', with: ''
+    click_button 'Update Event'
+    expect(page).to have_content("Eventname can't be blank")
   end
 
   it 'displays the events index page' do
