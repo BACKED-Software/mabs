@@ -23,8 +23,7 @@ class AttendancesController < ApplicationController
 
   def create
     if Attendance.exists?(eventID: @event.id, googleUserID: @user.uid)
-      flash[:alert] = 'You have already checked in for this event'
-      redirect_to attendances_path
+      redirect_to(attendances_path, notice: 'You have already checked in for this event')
     else
       @attendance = Attendance.new(attendance_params)
       @attendance.timeOfCheckIn = DateTime.now
