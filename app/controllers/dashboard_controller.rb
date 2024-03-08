@@ -9,6 +9,8 @@ class DashboardController < ApplicationController
     @user = current_user
     if @user
       @total_points = @user.total_points
+      @attendance_history = Attendance.where(googleUserID: @user.uid).order(created_at: :desc).limit(1)
+      @points_history = Point.where(awardedTo: @user.uid).order(created_at: :desc).limit(1)
     end
 
     # @most_recent_announcement = Announcement.order(dateOfAnnouncement: :desc).first
