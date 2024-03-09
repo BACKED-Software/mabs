@@ -44,6 +44,20 @@ RSpec.describe Event, type: :model do
     expect { event.destroy }.to change(described_class, :count).by(-1)
   end
 
+  describe 'associations' do
+    it 'destroys associated rsvps when destroyed' do
+      event = create(:event)
+      user = create(:user)
+      rsvp1 = create(:rsvp, event: event, user: user)
+      rsvp2 = create(:rsvp, event: event, user: user)
+
+      expect { event.destroy }.to change { Rsvp.count }.by(-2)
+
+      expect(Rsvp.where(id: rsvp1.id)).not_to exist
+      expect(Rsvp.where(id: rsvp2.id)).not_to exist
+    end
+  end
+
   # it 'is not valid without a title' do
   #   event.sponsor_title = nil
   #   expect(event).to_not be_valid
