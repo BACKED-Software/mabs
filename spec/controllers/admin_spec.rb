@@ -34,14 +34,14 @@ RSpec.describe AdminController, type: :controller do
       sign_in admin
     end
 
-    # it "filters users by gender" do
-    #   get :demographics, params: { gender: 'Man' }, format: :html
-    #   expect(assigns(:users)).to include(user)
-    # end
+    it "filters users by gender" do
+      get :demographics, params: { gender: 'Man' }, format: :html
+      expect(assigns(:users)).to include(user)
+    end
     
-    # it "filters users by is_hispanic_or_latino" do
-    #   get :demographics, params: { is_hispanic_or_latino: 'true' }, format: :html
-    #   expect(assigns(:users)).to include(user)
-    # end
+    it "filters users by is_hispanic_or_latino" do
+      get :demographics, params: { is_hispanic_or_latino: 'true' }, format: :html
+      expect(assigns(:users)).to include(user)
+    end
   end
 end

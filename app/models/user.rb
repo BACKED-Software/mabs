@@ -20,20 +20,8 @@ class User < ApplicationRecord
     is_admin
   end
 
-  # def self.group_by_age
-  #   select("DATE_PART('year', AGE(date_of_birth)) as age").group("age")
-  # end
-  
-  # def self.gender_distribution
-  #   group(:gender).count
-  # end
-
-  # def self.ethnicity_distribution
-  #   group(:is_hispanic_or_latino).count
-  # end
-
   def self.to_csv
-    attributes = %w{email full_name gender is_hispanic_or_latino race is_us_citizen is_first_generation_college_student classification}
+    attributes = %w{gender is_hispanic_or_latino race is_us_citizen is_first_generation_college_student classification}
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
