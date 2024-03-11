@@ -25,6 +25,33 @@
             <a href="<%= leaderboard_index_path %>" class="btn btn-info">View Leaderboard</a>
           <% end %>
         </div>
+        <% if @points_history.present? or @attendance_history.present? %>
+        <div class="pointHistory mt-3 text-muted">
+          <h4>Recent Points</h4>
+          <ul class="list-unstyled mt-3">
+            <% @points_history.each do |point| %>
+              <li class="point-history-item d-flex justify-content-between align-items-center">
+                <div class="point-history-details text-start">
+                  <p class="mb-0"><%= point.dateOfAward.in_time_zone.strftime("%m/%y") %> - <%= point.awardDescription %></p>
+                </div>
+                <div class="point-history-points text-end text-primary">
+                  <p class="mb-0"><%= point.numPointsAwarded %></p>
+                </div>
+              </li>
+            <% end %>
+            <% @attendance_history.each do |attendance| %>
+              <li class="point-history-item d-flex justify-content-between align-items-center">
+                <div class="point-history-details text-start">
+                  <p class="mb-0"><%= attendance.created_at.in_time_zone.strftime("%m/%y") %> - Attendance to <%= Event.find(attendance.eventID).eventName %></p>
+                </div>
+                <div class="point-history-points text-end text-primary">
+                  <p class="mb-0"><%= attendance.pointsAwarded %></p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
       </div>
     </div>
       <!-- Announcement Column -->
