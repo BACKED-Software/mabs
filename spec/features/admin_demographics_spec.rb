@@ -45,3 +45,23 @@ RSpec.describe "Non-Admin tries to view Demographic Statistics", type: :request 
       expect(response).to redirect_to(new_user_session_path)
     end
   end
+
+RSpec.describe "Admin exports Demographic Statistics", type: :request do
+  let!(:admin) { create(:user, is_admin: true) }
+
+  it "exports to CSV" do
+    sign_in admin
+    get export_demographics_path
+    expect(response.headers['Content-Type']).to eq('text/csv')
+  end
+end
+
+# RSpec.describe "Admin deletes a user", type: :request do
+#   let!(:admin) { create(:user, is_admin: true) }
+
+#   it "deletes a user" do
+#     sign_in admin
+#     delete destroy_user_path(user)
+#     expect(response).to redirect_to(admin_demographics_path)
+#   end
+# end
