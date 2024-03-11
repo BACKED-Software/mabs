@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'csv'
 
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]

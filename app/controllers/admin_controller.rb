@@ -50,12 +50,12 @@ class AdminController < ApplicationController
     apply_filters
 
     # prepare data for charts or tables here
-    @gender_distribution = @users.group(:gender).count
-    @ethnicity_distribution = @users.group(:is_hispanic_or_latino).count
-    @race_distribution = @users.group(:race).count
-    @us_citizen_distribution = @users.group(:is_us_citizen).count
-    @first_generation_college_student_distribution = @users.group(:is_first_generation_college_student).count
-    @classification_distribution = @users.group(:classification).count
+    @gender_distribution = User.group(:gender).count
+    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count
+    @race_distribution = User.group(:race).count
+    @us_citizen_distribution = User.group(:is_us_citizen).count
+    @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count
+    @classification_distribution = User.group(:classification).count
 
     respond_to do |format|
       format.html # For the webpage
@@ -63,6 +63,10 @@ class AdminController < ApplicationController
       format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
     end
 
+  end
+
+  def export_demographics
+    send_data User.to_csv, filename: "export-of-user-demographics-#{Date.today}.csv"
   end
 
   private
