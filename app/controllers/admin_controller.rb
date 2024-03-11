@@ -7,13 +7,24 @@ class AdminController < ApplicationController
 
   def index
     @users = User.all
-    @users = @users.where('email LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    @users = User.all.order(is_admin: :desc, full_name: :asc)
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @users = @users.where('full_name LIKE ? OR email LIKE ?', search_term, search_term)
+    end
+    
   end
 
   def promote_to_admin
     user = User.find(params[:id])
     user.update!(is_admin: true)
     redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
+  end
+
+  def demote_to_user
+    user = User.find(params[:id])
+    user.update!(is_admin: false)
+    redirect_to admin_index_path, notice: "#{user.email} has been demoted to user."
   end
 
   def update
