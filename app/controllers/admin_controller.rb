@@ -90,6 +90,13 @@ class AdminController < ApplicationController
   end
 
   def apply_filters
+  #   @users = User.all
+  # @users = @users.by_gender(params[:gender]) if params[:gender].present?
+  # @users = @users.by_race(params[:race]) if params[:race].present?
+  # @users = @users.by_us_citizen(params[:is_us_citizen]) if params[:is_us_citizen].present?
+  # @users = @users.by_first_generation_college_student(params[:is_first_generation_college_student]) if params[:is_first_generation_college_student].present?
+  # @users = @users.by_hispanic_or_latino(params[:is_hispanic_or_latino]) if params[:is_hispanic_or_latino].present?
+  # @users = @users.by_classification(params[:classification]) if params[:classification].present?
     @users = @users.by_gender(params[:gender])
                    .by_race(params[:race])
                    .by_us_citizen(params[:is_us_citizen])
