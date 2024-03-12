@@ -1,16 +1,5 @@
 <%# app/views/points/_admin_nonevent_points_manager.html.erb %>
 
-<% if flash[:notice] %>
-  <div class="alert alert-success" role="alert">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-<% if flash[:alert] %>
-  <div class="alert alert-danger" role="alert">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-
 <%# Bootstrap Accordion for managing user points %>
 <div class="accordion" id="pointsAccordion">
   <%# Accordion Item for Awarding Points %>
@@ -76,6 +65,9 @@
       </div>
     </div>
   </div>
+
+
+  <%# Accordion Item for Recalculating All Event Points %>
 </div>
 
 <%# Modal for Managing User Points %>
