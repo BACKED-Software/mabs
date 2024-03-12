@@ -1,65 +1,76 @@
 <%= content_for :title, "Demographic Statistics" %>
 <div class="container mt-5">
 
-<%= @gender_distribution.inspect %>
-
-<%= bar_chart({ 'a' => 3, 'b' => 4, 'c' => 5 }) %>
   <h1>Demographic Statistics</h1>
 
   <%= form_with url: admin_demographics_path, method: :get, local: true, class: "row g-3" do |form| %>
     
-    <div class="col-md-4">
-      <%= form.label :gender, 'Filter by Gender:' %>
-      <%= form.select :gender, options_for_select(['', 'Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'], selected: params[:gender]), include_blank: true, class: "form-select" %>
-    </div>
-    
-    <div class="col-md-4">
-      <%= form.label :is_hispanic_or_latino, 'Filter by Ethnicity (Hispanic or Latino):' %>
-      <%= form.select :is_hispanic_or_latino, options_for_select(['', 'Yes', 'No'], selected: params[:is_hispanic_or_latino]), include_blank: true, class: "form-select" %>
+  <div class="col-md-4">
+    <%= form.label :chart_type, 'Select Chart to Display:' %>
+    <%= form.select :chart_type, options_for_select(
+      {
+        'Gender Distribution' => 'gender',
+        'Ethnicity Distribution' => 'ethnicity',
+        'Race Distribution' => 'race',
+        'US Citizen Distribution' => 'us_citizen',
+        'First Generation College Student Distribution' => 'first_generation',
+        'Classification Distribution' => 'classification'
+      }, selected: params[:chart_type]
+    ), include_blank: 'Select a chart...', class: "form-select" %>
+  </div>
+
+  <div class="col-md-4 d-flex align-items-end">
+    <%= form.submit 'Show Chart', class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+
+<section class="statistics">
+  <% case params[:chart_type] %>
+  <% when 'gender' %>
+    <h2>Gender Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @gender_distribution, xtitle: "Gender", ytitle: "Population", id: 'gender-distribution-chart', title: 'Gender Distribution' %>
     </div>
 
-    <div class="col-md-4">
-      <%= form.label :race, 'Filter by Race:' %>
-      <%= form.select :race, options_for_select(['', 'American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], selected: params[:race]), include_blank: true, class: "form-select" %>
+  <% when 'ethnicity' %>
+    <h2>Ethnicity Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @ethnicity_distribution, xtitle: "Ethnicity", ytitle: "Population", id: 'ethnicity-distribution-chart', title: 'Hispanic or Latino Distribution' %>
     </div>
 
-    <div class="col-md-4">
-      <%= form.label :is_us_citizen, 'Filter by US Citizen:' %>
-      <%= form.select :is_us_citizen, options_for_select(['', 'Yes', 'No'], selected: params[:is_us_citizen]), include_blank: true, class: "form-select" %>
+  <% when 'race' %>
+    <h2>Race Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @race_distribution, xtitle: "Race", ytitle: "Population", id: 'race-distribution-chart', title: 'Race Distribution' %>
     </div>
 
-    <div class="col-md-4">
-      <%= form.label :is_first_generation_college_student, 'Filter by First Generation College Student:' %>
-      <%= form.select :classification, options_for_select(['', 'U1', 'U2', 'U3', 'U4'], selected: params[:classification]), include_blank: true, class: "form-select" %>
+  <% when 'us_citizen' %>
+    <h2>US Citizen Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @us_citizen_distribution, xtitle: "Status", ytitle: "Population", id: 'us-citizen-distribution-chart', title: 'US Citizen Distribution' %>
     </div>
-    
-    <div class="col-md-4 d-flex align-items-end">
-      <%= form.submit 'Filter', class: "btn btn-primary" %>
+
+  <% when 'first_generation' %>
+    <h2>First Generation College Student Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @first_generation_college_student_distribution, xtitle: "Status", ytitle: "Population", id: 'first-generation-college-student-distribution-chart', title: 'First Generation College Student Distribution' %>
     </div>
+
+  <% when 'classification' %>
+    <h2>Classification Distribution</h2>
+    <div class="chart-container">
+    <%= bar_chart @classification_distribution, xtitle: "Class Year", ytitle: "Population", id: 'classification-distribution-chart', title: 'Classification Distribution' %>
+    </div>
+
+  <% else %>
+    <p>Please select a chart to display.</p>
   <% end %>
+</section>
 
-
-  <section class="statistics">
-    <h2> Gender Distribution </h2>
-    <%= bar_chart @gender_distribution, id: 'gender-distribution-chart', label: 'Gender Distribution'%>
-
-    <h2> Ethnicity Distribution </h2>
-    <%= bar_chart @ethnicity_distribution, id: 'ethnicity-distribution-chart', label: 'Hispanic or Latino Distribution' %>
-
-    <h2> Race Distribution </h2>
-    <%= bar_chart @race_distribution, id: 'race-distribution-chart', label: 'Race Distribution' %>
-
-    <h2> US Citizen Distribution </h2>
-    <%= bar_chart @us_citizen_distribution, id: 'us-citizen-distribution-chart', label: 'US Citizen Distribution' %>
-
-    <h2> First Generation College Student Distribution </h2>
-    <%= bar_chart @first_generation_college_student_distribution, id: 'first-generation-college-student-distribution-chart', label: 'First Generation College Student Distribution' %>
-
-    <h2> Classification Distribution </h2>
-    <%= bar_chart @classification_distribution, id: 'classification-distribution-chart', label: 'Classification Distribution' %>
-  </section>
 
   <h2> <%= link_to 'Download Demographic Data', export_demographics_path, method: :get %> </h2>
+  <h2> <%= link_to 'Back to Admin Dashboard', admin_tools_path %> </h2>
 
   <h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
 </div>

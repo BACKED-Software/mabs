@@ -230,3 +230,8 @@ body {
 .btn-settings {
     margin-top: 15px;
 }
+
+.chart-container {
+    max-width: 100px;
+    margin: auto;
+  }

@@ -96,4 +96,4 @@ gem 'faker'
 gem 'rails-controller-testing'
 
 gem 'chartkick'
-gem 'chart_js'
+# gem 'chart_js'

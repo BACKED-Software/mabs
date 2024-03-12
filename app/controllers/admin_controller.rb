@@ -61,17 +61,21 @@ class AdminController < ApplicationController
     apply_filters
 
     # prepare data for charts or tables here
-    @gender_distribution = User.group(:gender).count
-    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count
-    @race_distribution = User.group(:race).count
-    @us_citizen_distribution = User.group(:is_us_citizen).count
-    @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count
-    @classification_distribution = User.group(:classification).count
+    @gender_distribution = User.group(:gender).count.except(nil)
+    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @race_distribution = User.group(:race).count.except(nil)
+    @us_citizen_distribution = User.group(:is_us_citizen).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
+    @classification_distribution = User.group(:classification).count.except(nil)
 
     respond_to do |format|
       format.html # For the webpage
       format.json { render json: @users} 
       format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
+
+    rescue StandardError => e
+      flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+      redirect_to admin_tools_path
     end
 
   end
@@ -90,13 +94,6 @@ class AdminController < ApplicationController
   end
 
   def apply_filters
-  #   @users = User.all
-  # @users = @users.by_gender(params[:gender]) if params[:gender].present?
-  # @users = @users.by_race(params[:race]) if params[:race].present?
-  # @users = @users.by_us_citizen(params[:is_us_citizen]) if params[:is_us_citizen].present?
-  # @users = @users.by_first_generation_college_student(params[:is_first_generation_college_student]) if params[:is_first_generation_college_student].present?
-  # @users = @users.by_hispanic_or_latino(params[:is_hispanic_or_latino]) if params[:is_hispanic_or_latino].present?
-  # @users = @users.by_classification(params[:classification]) if params[:classification].present?
     @users = @users.by_gender(params[:gender])
                    .by_race(params[:race])
                    .by_us_citizen(params[:is_us_citizen])
