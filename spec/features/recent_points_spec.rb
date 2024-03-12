@@ -36,7 +36,7 @@ RSpec.describe "User's history", type: :feature do
 
   it 'shows the most recent attendance' do
     visit root_path
-    expect(page).to have_content(@attendance.created_at.strftime("%m/%y"))
+    expect(page).to have_content(@attendance.created_at.strftime("%m/%d"))
     expect(page).to have_content("Attendance to #{@attendance.event.eventName}")
     expect(page).to have_content(@attendance.pointsAwarded)
   end
