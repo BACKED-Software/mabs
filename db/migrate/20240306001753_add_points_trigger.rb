@@ -32,6 +32,7 @@ class AddPointsTrigger < ActiveRecord::Migration[7.0]
       FOR EACH ROW
       EXECUTE FUNCTION update_user_total_points();
     SQL
+
   end
 
   def down

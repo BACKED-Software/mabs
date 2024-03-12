@@ -67,10 +67,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'points_history', to: 'users#points_history', as: 'points_history'
-
   resources :rsvps, only: %i[index create destroy]
 
   get 'leaderboard/index'
   get 'dashboard/index'
+
+  post 'recalculate_points', to: 'admin#recalculate_points'
+
 end
