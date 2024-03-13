@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   
   get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
-  # delete '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
+  get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
   get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
 
   resources :admin do

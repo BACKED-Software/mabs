@@ -49,9 +49,9 @@
                 <td><%= user.full_name %></td>
                 <td><%= user.is_admin ? 'Admin' : 'User' %> </td>
                 <td>
-                  <%= link_to 'Promote to Admin', promote_to_admin_path(user), method: :get, data: { confirm: 'Are you sure?' } unless user.is_admin %> 
-                  <%= link_to 'Demote to User', demote_to_user_path(user), method: :get, data: { confirm: 'Are you sure?' } if user.is_admin %>
-                 | <%= link_to 'Remove User', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Promote to Admin', promote_to_admin_path(user), method: :get, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" unless user.is_admin %> 
+                  <%= link_to 'Demote to User', demote_to_user_path(user), method: :get, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" if user.is_admin %>
+                 | <%= link_to 'Remove User', destroy_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
                 </td>
               </tr>
             <% end %>

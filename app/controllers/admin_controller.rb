@@ -18,13 +18,13 @@ class AdminController < ApplicationController
   def promote_to_admin
     user = User.find(params[:id])
     user.update!(is_admin: true)
-    redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
+    redirect_to admin_index_path, notice: "#{@user.email} has been promoted to admin."
   end
 
   def demote_to_user
     user = User.find(params[:id])
     user.update!(is_admin: false)
-    redirect_to admin_index_path, notice: "#{user.email} has been demoted to user."
+    redirect_to admin_index_path, notice: "#{@user.email} has been demoted to user."
   end
 
   def update
@@ -43,7 +43,7 @@ class AdminController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_index_path, notice: "#{user.email} was successfully removed."
+    redirect_to admin_index_path, notice: "#{@user.email} was successfully removed."
   end
 
   def upcoming_events

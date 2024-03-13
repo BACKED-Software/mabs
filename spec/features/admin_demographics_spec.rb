@@ -14,20 +14,42 @@ RSpec.feature 'Admin views demographics', type: :feature do
     expect(page).to have_content('Demographic Statistics')
   end
 
-  scenario 'filters demographics by gender' do
-    select 'Man', from: 'gender'
-    click_button 'Filter'
-
+  scenario 'displays gender distribution chart' do
+    select 'Gender Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+  
     expect(page).to have_css('#gender-distribution-chart', visible: true)
-    # Check for specific content or chart data reflecting the filter, depending on your implementation
+  end
+  
+  scenario 'displays ethnicity distribution chart' do
+    select 'Ethnicity Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+  
+    expect(page).to have_css('#ethnicity-distribution-chart', visible: true)
   end
 
-  scenario 'filters demographics by ethnicity' do
-    select 'Yes', from: 'is_hispanic_or_latino'
-    click_button 'Filter'
+  scenario 'displays race distribution chart' do
+    select 'Race Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+    expect(page).to have_css('#race-distribution-chart', visible: true)
+  end
 
-    expect(page).to have_css('#ethnicity-distribution-chart', visible: true)
-    # Check for specific content or chart data reflecting the filter
+  scenario 'US Citizen distribution chart' do
+    select 'US Citizen Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+    expect(page).to have_css('#us-citizen-distribution-chart', visible: true)
+  end
+
+  scenario 'First Generation College Student distribution chart' do
+    select 'First Generation College Student Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+    expect(page).to have_css('#first-generation-college-student-distribution-chart', visible: true)
+  end
+
+  scenario 'Classification distribution chart' do
+    select 'Classification Distribution', from: 'chart_type'
+    click_button 'Show Chart'
+    expect(page).to have_css('#classification-distribution-chart', visible: true)
   end
 end
 
@@ -56,12 +78,14 @@ RSpec.describe "Admin exports Demographic Statistics", type: :request do
   end
 end
 
-# RSpec.describe "Admin deletes a user", type: :request do
-#   let!(:admin) { create(:user, is_admin: true) }
+RSpec.describe "Admin deletes a user", type: :request do
+  let!(:admin) { create(:user, is_admin: true) }
+  let!(:user1) { create(:user) }
 
-#   it "deletes a user" do
-#     sign_in admin
-#     delete destroy_user_path(user)
-#     expect(response).to redirect_to(admin_demographics_path)
-#   end
-# end
+  it "deletes a user" do
+    sign_in admin
+    get destroy_user_path(user1)
+    expect(response).to redirect_to(admin_index_path)
+    expect(User.exists?(user1.id)).to be_falsey
+  end
+end

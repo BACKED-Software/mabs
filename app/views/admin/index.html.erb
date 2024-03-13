@@ -2,10 +2,12 @@
 
 <div class="container mt-5">
 
-  <%= link_to 'Upcoming Events', admin_upcoming_events_path %>
+  <%= link_to 'Upcoming Events', admin_upcoming_events_path , class: "btn btn-primary"%>
+  <%= link_to 'Demographics', admin_demographics_path , class: "btn btn-primary"%>
 
   <%= render 'admin_nonevent_points_manager' %>
   <%= render 'user_management' %>
 
-  <%= link_to 'Demographics', admin_demographics_path %>
+  <br>
+  
 </div>
