@@ -221,7 +221,30 @@ body {
 .btn-settings {
     margin-top: 15px;
 }
+.points-history-container {
+    max-height: 400px; /* Adjust based on your preference */
+    overflow-y: auto; /* Enables scrolling if the list is long */
+}
 
+.point-details h6 {
+    font-size: 1rem; /* Adjust the size as needed */
+    color: #333; /* Dark text color for better readability */
+}
+
+.point-details p {
+    font-size: 0.9rem; /* Slightly smaller font size for the description */
+    color: #666; /* Lighter text color for the description */
+}
+
+.list-group-item {
+    border-left: 3px solid #007bff; /* Adds a left border to each list item */
+    margin-bottom: 0.5rem; /* Adds space between list items */
+    background-color: #f8f9fa; /* Light background for the list items */
+}
+
+.badge {
+    font-size: 0.9rem; /* Adjust the badge font size */
+}
 .chart-container {
     max-width: 100px;
     margin: auto;

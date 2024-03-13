@@ -1,13 +1,36 @@
 <% content_for(:title, 'Admin Tools') %>
 
+
 <div class="container mt-5">
 
   <%= link_to 'Upcoming Events', admin_upcoming_events_path , class: "btn btn-primary"%>
   <%= link_to 'Demographics', admin_demographics_path , class: "btn btn-primary"%>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <h1>User Management</h1>
+
+  <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
+    <%= form.label :search, "Search Users:" %>
+    <%= form.text_field :search %>
+    <%= form.submit "Search" %>
+  <% end %>
+
+
 
   <%= render 'admin_nonevent_points_manager' %>
   <%= render 'user_management' %>
 
   <br>
   
+  <%= render 'admin_points_maintenance' %>
 </div>
