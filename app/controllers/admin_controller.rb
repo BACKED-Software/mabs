@@ -82,6 +82,7 @@ class AdminController < ApplicationController
 
   def export_demographics
     send_data User.to_csv, filename: "export-of-user-demographics-#{Date.today}.csv"
+  end
 
   def recalculate_points
     RecalculateUserPointsJob.perform_later
@@ -107,7 +108,4 @@ class AdminController < ApplicationController
                    .by_classification(params[:classification])
     # Extend with additional filters as needed
   end
-
-
-
 end
