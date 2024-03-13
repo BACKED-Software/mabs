@@ -8,7 +8,7 @@ class PointsController < ApplicationController
   end
 
   def show
-    redirect_to(admin)
+    redirect_to(admin_index_path)
   end
 
   def new
@@ -61,6 +61,8 @@ class PointsController < ApplicationController
       render js: "alert('User not found');"
     end
   end
+
+
 
   def set_point; end
 

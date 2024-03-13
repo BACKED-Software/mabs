@@ -45,6 +45,11 @@ class AdminController < ApplicationController
     @rsvp_count = @rsvps.count
   end
 
+  def recalculate_points
+    RecalculateUserPointsJob.perform_later
+    redirect_to admin_index_path, notice: 'Recalculation of points has been initiated.'
+  end
+
   private
 
   def check_admin
@@ -53,4 +58,6 @@ class AdminController < ApplicationController
     flash[:alert] = 'You are not authorized to access this page.'
     redirect_to root_path # or any other path you wish to redirect to
   end
+
+
 end

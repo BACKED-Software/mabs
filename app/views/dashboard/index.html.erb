@@ -21,37 +21,36 @@
         </div>
         <div class="actions mt-4">
           <%= require_sign_in do %>
-            <a href="<%= points_history_path %>" class="btn btn-primary">View Point History</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">View Point History</button>
             <a href="<%= leaderboard_index_path %>" class="btn btn-info">View Leaderboard</a>
           <% end %>
+
         </div>
-        <% if @points_history.present? or @attendance_history.present? %>
-        <div class="pointHistory mt-3 text-muted">
-          <h4>Recent Points</h4>
-          <ul class="list-unstyled mt-3">
-            <% @points_history.each do |point| %>
-              <li class="point-history-item d-flex justify-content-between align-items-center">
-                <div class="point-history-details text-start">
-                  <p class="mb-0"><%= point.dateOfAward.in_time_zone.strftime("%m/%y") %> - <%= point.awardDescription %></p>
-                </div>
-                <div class="point-history-points text-end text-primary">
-                  <p class="mb-0"><%= point.numPointsAwarded %></p>
-                </div>
-              </li>
-            <% end %>
-            <% @attendance_history.each do |attendance| %>
-              <li class="point-history-item d-flex justify-content-between align-items-center">
-                <div class="point-history-details text-start">
-                  <p class="mb-0"><%= attendance.created_at.in_time_zone.strftime("%m/%y") %> - Attendance to <%= Event.find(attendance.eventID).eventName %></p>
-                </div>
-                <div class="point-history-points text-end text-primary">
-                  <p class="mb-0"><%= attendance.pointsAwarded %></p>
-                </div>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+        <hr/>
+        <% if @two_most_recent_records.present? %>
+          <div class="pointHistory mt-3 text-muted">
+            <h6>Recently Awarded Points</h6>
+            <ul class="list-unstyled mt-3">
+              <% @two_most_recent_records.each do |record| %>
+                <li class="point-history-item d-flex justify-content-between align-items-center">
+                  <div class="point-history-details text-start">
+                    <% if record.type == 'Attendance' %>
+                      <p class="mb-0"><%= record.date.strftime('%m/%d') %> - Attendance to
+                        <%= record.event ? record.event.eventName : 'Unknown Event' %></p>
+                    <% else %>
+                      <p class="mb-0"><%= record.date.strftime('%m/%d') %> - <%= record.awardDescription %></p>
+                    <% end %>
+                  </div>
+
+                  <div class="point-history-points text-end text-primary">
+                    <p class="mb-0"><%= record.points %></p>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
+
       </div>
     </div>
       <!-- Announcement Column -->
@@ -62,7 +61,7 @@
         </div>
         <div class="announcement-list">
           <% @announcements.each do |announcement| %>
-            <div class="announcement bg-info-subtle shadow-lg rounded p-3 mb-3">
+            <div class="announcement bg-info-subtle shadow-md rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
                 <div class="avatar rounded-circle overflow-hidden pr-5" style="width: 40px; height: 40px;">
                   <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "img-fluid" %>
@@ -111,6 +110,23 @@
     </ul>
   </div>
 
+
+  <div class="modal fade" id="pointsHistoryModal" tabindex="-1" aria-labelledby="pointsHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pointsHistoryModalLabel">Points History</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'points_history', user: @user %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -162,6 +178,10 @@
               }
           }
       });
+
+
+
+
   </script>
 
 <% end %>
