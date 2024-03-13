@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
+  layout 'authenticated_layout'
   before_action :set_attendance, only: %i[show edit]
   before_action :set_user, only: %i[show edit create index]
   before_action :set_event, only: %i[show edit create]
@@ -11,7 +12,7 @@ class AttendancesController < ApplicationController
 
   def index
     @events = Event.all
-    @attendances = Attendance.all
+    @attendances = Attendance.where(googleUserID: @user.uid)
   end
 
   def destroy
@@ -22,8 +23,7 @@ class AttendancesController < ApplicationController
 
   def create
     if Attendance.exists?(eventID: @event.id, googleUserID: @user.uid)
-      flash[:alert] = 'You have already checked in for this event'
-      redirect_to attendances_path
+      redirect_to(attendances_path, notice: 'You have already checked in for this event')
     else
       @attendance = Attendance.new(attendance_params)
       @attendance.timeOfCheckIn = DateTime.now
