@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -245,7 +247,46 @@ body {
 .badge {
     font-size: 0.9rem; /* Adjust the badge font size */
 }
+
+.header {
+    font-family: 'Roboto', sans-serif; /* Use a web-friendly font */
+    color: #333; /* A dark grey for good readability */
+    font-size: 24px; /* Adjust size as needed */
+    font-weight: 500; /* Medium weight for emphasis */
+    margin-top: 40px; /* Add space above your headers */
+    margin-bottom: 20px; /* Add space below your headers */
+    padding-bottom: 10px; /* Optional: add some padding at the bottom */
+    border-bottom: 2px solid #eee; /* Optional: add a subtle line under headers for definition */
+}
+
 .chart-container {
-    max-width: 100px;
+    max-width: 100vw;
     margin: auto;
   }
+
+
+.modal-header {
+}
+.modal-title {
+    font-weight: bold;
+}
+.modal-body {
+    background-color: #f0f2f5;
+}
+.detail-icon {
+    color: #0056b3;
+    margin-right: 8px;
+}
+.rsvp-header {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #0056b3;
+}
+.list-group-item {
+    background-color: #f0f2f5;
+    border: none;
+}
+.list-group-item:hover {
+    background-color: #e2e6ea;
+}
