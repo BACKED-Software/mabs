@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
 
   def index
     @events = Event.all
-    @announcements = Announcement.order(dateOfAnnouncement: :desc)
+    @announcements = Announcement.order(dateOfAnnouncement: :desc).limit(2)
     @user = current_user
     if @user
       @total_points = @user.total_points
