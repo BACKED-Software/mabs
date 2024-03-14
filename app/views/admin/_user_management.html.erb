@@ -1,31 +1,63 @@
 <h1>User Management</h1>
   
-  <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
-    <%= form.label :search, "Search Users:" %>
-    <%= form.text_field :search %>
-    <%= form.submit "Search" %>
-  <% end %>
+<div class="accordion" id="userManagementAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingUserSearch">
+      <button class="accordion-button <%= 'collapsed' if params[:search].present? %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUserSearch" aria-expanded="<%= 'false' if params[:search].present? %>" aria-controls="collapseUserSearch">
+
+        Search Users
+
+      </button>
+    </h2>
+    <div id="collapseUserSearch" class="accordion-collapse collapse <%= 'show' unless params[:search].present? %>" aria-labelledby="headingUserSearch" data-bs-parent="#userManagementAccordion">
+      <div class="accordion-body">
+        <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
+          <div class="mb-3">
+            <%= form.label :search, "Enter User Email or Name:" %>
+            <%= form.text_field :search, class: 'form-control', value: params[:search] %>
+          </div>
+          <%= form.submit "Search", class: 'btn btn-primary' %>
+          <%= link_to 'Clear Search', admin_tools_path, class: 'btn btn-secondary ml-2' if params[:search].present? %>
+        <% end %>
+      </div>
+    </div>
+  </div>
   
-  <table class="table mt-3">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Full Name</th>
-        <th>Role</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.email %></td>
-          <td><%= user.full_name %></td>
-          <td><%= user.is_admin ? 'Admin' : 'User' %></td>
-          <td>
-            <%= link_to 'Promote to Admin', make_admin_user_path(user), method: :patch, data: { confirm: 'Are you sure?' } unless user.is_admin %>
-            <%= link_to 'Remove User', remove_user_admin_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingUserList">
+    <button class="accordion-button <%= 'collapsed' unless params[:search].present? %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUserList" aria-expanded="<%= 'true' if params[:search].present? %>" aria-controls="collapseUserList">
+
+        User List
+
+      </button>
+    </h2>
+    <div id="collapseUserList" class="accordion-collapse collapse <%= 'show' if params[:search].present? %>" aria-labelledby="headingUserList" data-bs-parent="#userManagementAccordion">
+      <div class="accordion-body">
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Full Name</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.email %></td>
+                <td><%= user.full_name %></td>
+                <td><%= user.is_admin ? 'Admin' : 'User' %> </td>
+                <td>
+                  <%= link_to 'Promote to Admin', promote_to_admin_path(user), method: :get, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" unless user.is_admin %> 
+                  <%= link_to 'Demote to User', demote_to_user_path(user), method: :get, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" if user.is_admin %>
+                 | <%= link_to 'Remove User', destroy_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

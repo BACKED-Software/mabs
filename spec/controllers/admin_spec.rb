@@ -25,4 +25,23 @@ RSpec.describe AdminController, type: :controller do
       expect(assigns(:rsvp_count)).to eq(event.rsvps.count)
     end
   end
+
+  describe "GET #demographics" do
+    let!(:admin) { create(:user, is_admin: true) }
+    let!(:user) { create(:user, gender: 'Man', is_hispanic_or_latino: true) }
+
+    before do
+      sign_in admin
+    end
+
+    it "filters users by gender" do
+      get :demographics, params: { gender: 'Man' }, format: :html
+      expect(assigns(:users)).to include(user)
+    end
+    
+    it "filters users by is_hispanic_or_latino" do
+      get :demographics, params: { is_hispanic_or_latino: 'true' }, format: :html
+      expect(assigns(:users)).to include(user)
+    end
+  end
 end

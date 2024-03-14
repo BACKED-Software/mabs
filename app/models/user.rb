@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'csv'
 
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]
@@ -19,4 +20,29 @@ class User < ApplicationRecord
   def admin?
     is_admin
   end
+
+  def self.to_csv
+    attributes = %w{gender is_hispanic_or_latino race is_us_citizen is_first_generation_college_student classification}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.find_each do |user|
+        csv << attributes.map { |attr| user.send(attr) }
+      end
+    end
+  end
+
+  scope :by_gender, ->(gender) { where(gender: gender) if gender.present? }
+  
+  scope :by_race, ->(race) { where(race: race) if race.present? }
+  
+  scope :by_us_citizen, ->(is_us_citizen) { where(is_us_citizen: is_us_citizen) if !is_us_citizen.nil? }
+  
+  scope :by_first_generation_college_student, ->(is_first_generation) { where(is_first_generation_college_student: is_first_generation) if !is_first_generation.nil? }
+  
+  scope :by_hispanic_or_latino, ->(is_hispanic_or_latino) { where(is_hispanic_or_latino: is_hispanic_or_latino) if !is_hispanic_or_latino.nil? }
+  
+  scope :by_classification, ->(classification) { where(classification: classification) if classification.present? }
+  
 end

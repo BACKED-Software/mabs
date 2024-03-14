@@ -221,7 +221,6 @@ body {
 .btn-settings {
     margin-top: 15px;
 }
-
 .points-history-container {
     max-height: 400px; /* Adjust based on your preference */
     overflow-y: auto; /* Enables scrolling if the list is long */
@@ -246,3 +245,7 @@ body {
 .badge {
     font-size: 0.9rem; /* Adjust the badge font size */
 }
+.chart-container {
+    max-width: 100px;
+    margin: auto;
+  }

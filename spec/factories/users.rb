@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :admin, parent: :user do
-    sequence(:uid) { |n| "admin#{n}" }
+    sequence(:uid) { |n| "uid#{n}" }
     email { Faker::Internet.email }
     full_name { Faker::Name.name }
     is_admin { true }
