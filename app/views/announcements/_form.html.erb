@@ -1,6 +1,6 @@
-<%= form_with(model: announcement) do |form| %>
+<%= form_with(model: announcement, local: true) do |form| %>
   <% if announcement.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger" role="alert">
       <h2><%= pluralize(announcement.errors.count, "error") %> prohibited this announcement from being saved:</h2>
 
       <ul>
@@ -11,14 +11,17 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :subject, "Subject", style: "display: block" %>
-    <%= form.text_field :subject %>
-    <%= form.label :body, "Body", style: "display: block" %>
-    <%= form.text_area :body %>
+  <div class="mb-3">
+    <%= form.label :subject, "Subject" %>
+    <%= form.text_field :subject, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.label :body, "Body" %>
+    <%= form.rich_text_area :body, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
