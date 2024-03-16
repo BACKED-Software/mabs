@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get '/admin-tools', to: 'admin#index'
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
   get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
-  get '/admin/demographics', to: 'admin#demographics', as: 'admin_demographics'
+  get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
   
   get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'

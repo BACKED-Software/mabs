@@ -12,19 +12,28 @@ class AdminController < ApplicationController
       search_term = "%#{params[:search]}%"
       @users = @users.where('full_name LIKE ? OR email LIKE ?', search_term, search_term)
     end
-    
+    @events = Event.where('"eventTime" > ?', Time.now)
+
+
+    # prepare data for charts or tables here
+    @gender_distribution = User.group(:gender).count.except(nil)
+    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @race_distribution = User.group(:race).count.except(nil)
+    @us_citizen_distribution = User.group(:is_us_citizen).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
+    @classification_distribution = User.group(:classification).count.except(nil)
   end
 
   def promote_to_admin
     user = User.find(params[:id])
     user.update!(is_admin: true)
-    redirect_to admin_index_path, notice: "#{@user.email} has been promoted to admin."
+    redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
   end
 
   def demote_to_user
     user = User.find(params[:id])
     user.update!(is_admin: false)
-    redirect_to admin_index_path, notice: "#{@user.email} has been demoted to user."
+    redirect_to admin_index_path, notice: "#{user.email} has been demoted to user."
   end
 
   def update
@@ -44,10 +53,6 @@ class AdminController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to admin_index_path, notice: "#{@user.email} was successfully removed."
-  end
-
-  def upcoming_events
-    @events = Event.where('"eventTime" > ?', Time.now)
   end
 
   def event
