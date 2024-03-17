@@ -1,4 +1,6 @@
-RSpec.describe "Users combined history", type: :feature do
+# frozen_string_literal: true
+
+RSpec.describe 'Users combined history', type: :feature do
   before do
     @user = create(:user)
     sign_in @user
@@ -6,7 +8,10 @@ RSpec.describe "Users combined history", type: :feature do
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now
+      eventTime: DateTime.tomorrow.change(hour: 8, min: 0, sec: 0),
+      eventPoints: 10,
+      sponsor_title: 'Sample Title',
+      sponsor_description: 'Sample Description'
     )
     @point = Point.create(
       awardedBy: @user.uid,
@@ -19,7 +24,7 @@ RSpec.describe "Users combined history", type: :feature do
       googleUserID: @user.uid,
       eventID: @event.id,
       timeOfCheckIn: DateTime.now,
-      pointsAwarded: 5
+      pointsAwarded: 10
     )
     visit root_path
   end
@@ -27,7 +32,7 @@ RSpec.describe "Users combined history", type: :feature do
   it 'shows the correct badge and details for point records' do
     within('.pointHistoryModal') do
       expect(page).to have_css('.badge.text-bg-dark')
-      expect(page).to have_content(@point.dateOfAward.strftime("%m/%d"))
+      expect(page).to have_content(@point.dateOfAward.strftime('%m/%d'))
       expect(page).to have_content(@point.awardDescription)
       expect(page).to have_content(@point.numPointsAwarded)
     end
@@ -36,11 +41,9 @@ RSpec.describe "Users combined history", type: :feature do
   it 'shows the correct badge and details for attendance records' do
     within('.pointHistoryModal') do
       expect(page).to have_css('.badge.bg-success')
-      expect(page).to have_content(@attendance.timeOfCheckIn.in_time_zone.strftime("%m/%d"))
-      expect(page).to have_content("Attendance to " + @event.eventName)
+      expect(page).to have_content(@attendance.timeOfCheckIn.in_time_zone.strftime('%m/%d'))
+      expect(page).to have_content("Attendance to #{@event.eventName}")
       expect(page).to have_content(@attendance.pointsAwarded)
     end
   end
-
-
 end
