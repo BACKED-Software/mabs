@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe RsvpsController, type: :controller do
-  let(:user) { create(:user) }
+  let(:user) { create(:admin) }
   let(:event) { create(:event) }
   let(:valid_attributes) { { user_uid: user.uid, event_id: event.id } }
   let(:invalid_attributes) { { user_uid: nil, event_id: nil } }

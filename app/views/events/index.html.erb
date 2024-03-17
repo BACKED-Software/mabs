@@ -1,9 +1,10 @@
 <body>
-  <p><%= notice %></p>
   <h1>
     Events
   </h1>
-  <%= link_to "New Event", new_event_path %><br><br>
+  <% if user_signed_in? && @current_user.is_admin == true %>
+    <%= link_to "New Event", new_event_path %><br><br>
+  <% end %>
   <div id="events">
     <% @events.each do |event| %>
       <%= link_to event do %>

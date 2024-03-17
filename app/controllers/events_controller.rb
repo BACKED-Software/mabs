@@ -5,6 +5,8 @@
 class EventsController < ApplicationController
   # before_action :authenticate_user!, except: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_user
+  before_action :check_admin, only: %i[new create edit update delete destroy] # Custom filter to check for admin status
   layout 'authenticated_layout'
 
   # GET /events or /events.json
@@ -66,6 +68,17 @@ class EventsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def set_user
+    @user = current_user
+  end
+
+  def check_admin
+    return if current_user&.admin?
+
+    flash[:alert] = 'You are not authorized to access this page.'
+    redirect_to events_path # or any other path you wish to redirect to
   end
 
   # Only allow a list of trusted parameters through.

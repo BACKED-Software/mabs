@@ -5,7 +5,7 @@
   <%= render @announcement %>
 </div>
 
-<%= require_sign_in do %>
+<% if user_signed_in? && @user.is_admin == true %>
   <div class="actions">
     <%= link_to("Edit", edit_announcement_path(@announcement)) %>
     <%= link_to("Delete", delete_announcement_path(@announcement))%>

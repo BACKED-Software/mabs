@@ -2,7 +2,7 @@
 
 <h1>Announcements</h1>
 
-<%= require_sign_in do %>
+<% if user_signed_in? && @user.is_admin == true %>
   <%= link_to "Create New Announcement", new_announcement_path %><br><br>
 <% end %>
 

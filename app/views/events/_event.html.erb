@@ -7,6 +7,8 @@
     <strong>Points:</strong> <%= event.eventPoints %><br>
     <strong>Sponsor Title:</strong> <%= event.sponsor_title %><br>
     <strong>Sponsor Description:</strong> <%= event.sponsor_description %><br>
-    <strong>Password:</strong> <%= event.password %><br>
+    <% if user_signed_in? && @current_user.is_admin == true %>
+      <strong>Password:</strong> <%= event.password %><br>
+    <% end %>
   </p>
 </div>

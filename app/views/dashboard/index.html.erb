@@ -1,13 +1,4 @@
 <% content_for(:title, 'Dashboard') %>
-<!-- Flash Messages -->
-<% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
-      <%= msg %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
-<% end %>
 
 <div class="container mt-5 mb-5">
   <div class="row">
@@ -94,8 +85,22 @@
               </div>
             </div>
             <% if user_signed_in? %>
+              <% if DateTime.now >= event.eventTime - 15*60 %>
+                <% if Attendance.exists?(googleUserID: current_user.uid, eventID: event.id) %>
+                  <div class="attendance-status text-success">You are Checked in</div>
+                <% else %>
+                  <%= form_with url: attendances_path, method: :post do |form| %>
+                    <%= form.hidden_field :event_id, value: event.id %>
+                    <%= form.label :password, "Enter Password:", style: "display: block" %>
+                    <%= form.text_field :password %>
+                    <%= form.submit "Check In" %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <div class="attendance-status text-success">Check in starts in <%= distance_of_time_in_words(DateTime.now, event.eventTime-15*60) %></div>
+              <% end %>
               <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
-                <div class="rsvp-status text-success">You are attending</div>
+                <div class="rsvp-status text-success">You are RSVP'd</div>
               <% else %>
                 <%= form_with url: rsvps_path, method: :post do |form| %>
                   <%= form.hidden_field :user_uid, value: current_user.uid %>
@@ -108,6 +113,7 @@
         </li>
       <% end %>
     </ul>
+    <a href="<%= events_path %>" class="view-all-events btn btn-link">View All Events</a>
   </div>
 
 
@@ -148,6 +154,19 @@
 
       .view-all-announcements {
           position: sticky;
+          bottom: 0;
+          z-index: 1000;
+          width: 100%;
+          text-align: center;
+          margin: 0px 0; /* Adjust as needed */
+          background: none;
+          text-decoration: underline;
+          border: none;
+          padding: 5px;
+          cursor: pointer;
+      }
+
+      .view-all-events {
           bottom: 0;
           z-index: 1000;
           width: 100%;
