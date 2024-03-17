@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   validates :eventTime, presence: true
   validates :eventLocation, presence: true
   validate :event_time_in_future
-  
+
   #   validates :sponsor_title
   #   validates :sponsor_description
   has_many :rsvps, foreign_key: 'event_id', dependent: :destroy

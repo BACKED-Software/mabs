@@ -74,7 +74,7 @@ class EventsController < ApplicationController
   def set_user
     @user = current_user
   end
-  
+
   # Only allow a list of trusted parameters through.
   def event_params
     params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :eventPoints, :sponsor_title,

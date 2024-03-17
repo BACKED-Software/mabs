@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateUserTotalPointsFunction < ActiveRecord::Migration[7.0]
   def up
     execute <<-SQL
@@ -19,10 +21,7 @@ class UpdateUserTotalPointsFunction < ActiveRecord::Migration[7.0]
       END;
       $$ LANGUAGE plpgsql;
     SQL
-
-
   end
 
-  def down
-  end
+  def down; end
 end
