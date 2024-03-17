@@ -1,18 +1,21 @@
-<div id="<%= dom_id announcement %>">
-  <div class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
-    <div class="d-flex align-items-start">
-      <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 60px; border-radius: 50%; overflow: hidden; margin-right: 2%">
-        <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' %>
-      </div>
-      <div class="flex-grow-1">
-        <%= link_to announcement_path(announcement) do %>
-          <h5 class="mb"> <%= announcement.subject %></h5>
-        <% end %>
+<div id="<%= dom_id announcement %>" class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
+  <div class="d-flex flex-row align-items-start mb-2">
+    <!-- User Avatar -->
+    <div class="me-3">
+      <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>
+    </div>
+    <!-- Announcement Title and Body -->
+    <div class="flex-grow-1">
+      <%= link_to announcement_path(announcement), class: "text-decoration-none" do %>
+        <h4 class="mb-1" style="color: #0056b3;"> <%= announcement.subject %></h4>
+      <% end %>
+      <div id="announcement-content-<%= announcement.id %>">
+        <%= announcement.body %>
       </div>
     </div>
-    <p class="announcement-date text-muted mb-1">Posted on: <%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
-    <p class="announcement-content mb-0">
-      <%= announcement.body %>
-    </p>
+  </div>
+  <!-- Announcement Date -->
+  <div>
+    <p class="announcement-date text-muted mb-0">Posted on: <%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
   </div>
 </div>

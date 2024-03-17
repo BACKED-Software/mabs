@@ -1,11 +1,6 @@
 <% content_for(:title, 'Admin Tools') %>
 
-
-<div class="container mt-5">
-
-  <%= link_to 'Upcoming Events', admin_upcoming_events_path , class: "btn btn-primary"%>
-  <%= link_to 'Demographics', admin_demographics_path , class: "btn btn-primary"%>
-
+<div class="container pt-5 pb-5">
   <% if flash[:notice] %>
     <div class="alert alert-success" role="alert">
       <%= flash[:notice] %>
@@ -17,10 +12,32 @@
     </div>
   <% end %>
 
-  <%= render 'admin_nonevent_points_manager' %>
+  <div class="alert alert-warning">
+    <h4 class="alert-heading">Please Proceed with Caution</h4>
+    <p>
+      This section is intended for administrative use. Exercise caution when making modifications to the system and user data.
+    </p>
+  </div>
+
+  <h2 class="header"> Manage Application Users </h2>
   <%= render 'user_management' %>
 
-  <br>
-  
+  <h2 class="header mt-4"> Manage Non-Event Points </h2>
+  <%= render 'admin_nonevent_points_manager' %>
+
+
+  <h2 class="header mt-4"> Event Management </h2>
+  <%= render 'upcoming_events' %>
+
+  <h2 class="header mt-4"> Demographic Statistics </h2>
+  <%= render 'demographics',
+             gender_distribution: @gender_distribution,
+             ethnicity_distribution: @ethnicity_distribution,
+             race_distribution: @race_distribution,
+             us_citizen_distribution: @us_citizen_distribution,
+             first_generation_college_student_distribution: @first_generation_college_student_distribution,
+             classification_distribution: @classification_distribution %>
+
+  <h2 class="header mt-4"> Maintenance </h2>
   <%= render 'admin_points_maintenance' %>
 </div>
