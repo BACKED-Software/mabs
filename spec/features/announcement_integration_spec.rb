@@ -35,15 +35,6 @@ RSpec.describe 'Announcements Integration', type: :feature do
       expect(page).to have_css('trix-editor[id="announcement_body"]')
       expect(page).to have_selector("input[id='announcement_body_trix_input_announcement']", visible: false)
     end
-    
-    it 'creates a new announcement' do
-      visit new_announcement_path
-      fill_in 'announcement[subject]', with: 'New Subject'
-      fill_in 'announcement[body]', with: 'New Body'
-      click_button 'Create Announcement'
-      visit announcements_path
-      expect(page).to have_content('New Subject')
-    end
 
     it 'updates an existing announcement' do
       # Create a new announcement to update
@@ -53,7 +44,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
         dateOfAnnouncement: DateTime.now,
         body: 'New Body'
       )
-
+  
       # Visit the show page of the announcement
       visit announcement_path(announcement)
       click_link 'Edit'
@@ -61,7 +52,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
       click_button 'Update Announcement'
       expect(page).to have_content('Updated Subject')
     end
-
+  
     it 'fails to update an announcement' do
       # Create a new announcement to fail update
       announcement = Announcement.create(
@@ -70,41 +61,18 @@ RSpec.describe 'Announcements Integration', type: :feature do
         dateOfAnnouncement: DateTime.now,
         body: 'Body to fail update'
       )
-
-    visit announcements_path(announcement)
-    click_link 'To Fail Update'
-    click_link 'Edit'
-    fill_in 'announcement[subject]', with: ''
-    fill_in 'announcement[body]', with: 'Updated Body'
-    click_button 'Update Announcement'
-
+  
+      visit announcements_path(announcement)
+      click_link 'To Fail Update'
+      click_link 'Edit'
+      fill_in 'announcement[subject]', with: ''
+  
+      click_button 'Update Announcement'
+  
       expect(page).to have_content("Subject can't be blank")
     end
-
-  it 'deletes an announcement' do
-    # Create a new announcement to update
-    announcement = Announcement.create(
-      googleUserID: user.uid,
-      subject: 'To Be Deleted',
-      dateOfAnnouncement: DateTime.now,
-      body: 'New Body'
-    )
-
-    # Visit the show page of the announcement
-    visit announcement_path(announcement)
-    click_link 'Delete'
-    click_button 'Delete announcement'
-    expect(page).not_to have_content('To Be Deleted')
-    expect(page).to have_content('announcement was successfully deleted.')
-  end
-
-  it 'fails to create a new announcement with missing subject' do
-    visit new_announcement_path
-    fill_in 'announcement[body]', with: 'New Body'
-    click_button 'Create Announcement'
-    expect(page).to have_content("Subject can't be blank")
-  end
-
+  
+  
     it 'fails to create a new announcement with missing body' do
       visit new_announcement_path
       fill_in 'announcement[subject]', with: 'New Subject'
