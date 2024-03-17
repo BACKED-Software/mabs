@@ -77,10 +77,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_14_194901) do
     t.datetime "eventTime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "eventPoints"
     t.string "sponsor_title"
     t.text "sponsor_description"
     t.string "password"
+    t.integer "eventPoints"
   end
 
   create_table "points", force: :cascade do |t|
@@ -91,7 +91,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_14_194901) do
     t.text "awardDescription"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "PointID"
   end
 
   create_table "rsvps", force: :cascade do |t|

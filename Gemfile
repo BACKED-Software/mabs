@@ -101,3 +101,4 @@ gem 'rails-controller-testing'
 gem 'chartkick'
 # gem 'chart_js'
 gem 'whenever', require: false
+gem 'simple_calendar'

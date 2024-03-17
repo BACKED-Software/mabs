@@ -5,11 +5,13 @@
 class EventsController < ApplicationController
   # before_action :authenticate_user!, except: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_user
   layout 'authenticated_layout'
 
   # GET /events or /events.json
   def index
     @events = Event.all
+    @start_date = params[:start_date] ? Date.parse(params[:start_date]) : Date.today
   end
 
   # GET /events/1 or /events/1.json
@@ -68,6 +70,11 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = current_user
+  end
+  
   # Only allow a list of trusted parameters through.
   def event_params
     params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :eventPoints, :sponsor_title,
