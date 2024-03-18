@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
         expect(Announcement.where(googleUserID: user.uid)).to be_empty
         expect(Announcement.find(announcement.id).googleUserID).to be_nil
       end
-  
+
       it 'nullifies associated attendances' do
         user = create(:user)
         attendance = create(:attendance, googleUserID: user.uid)
@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
         expect(Attendance.where(googleUserID: user.uid)).to be_empty
         expect(Attendance.find(attendance.id).googleUserID).to be_nil
       end
-  
+
       it 'deletes associated points' do
         user = create(:user)
         create(:point, awardedTo: user.uid)
@@ -45,7 +45,7 @@ RSpec.describe User, type: :model do
         expect(User.where(uid: user.uid)).to be_empty
         expect(Point.where(awardedTo: user.uid)).to be_empty
       end
-  
+
       it 'deletes associated rsvps' do
         user = create(:user)
         create(:rsvp, user_uid: user.uid)
@@ -53,7 +53,7 @@ RSpec.describe User, type: :model do
         expect(User.where(uid: user.uid)).to be_empty
         expect(Rsvp.where(user_uid: user.uid)).to be_empty
       end
-  
+
       it 'handles all associations correctly when deleted' do
         user = create(:user)
         announcement = create(:announcement, googleUserID: user.uid)
@@ -69,6 +69,6 @@ RSpec.describe User, type: :model do
         expect(Point.where(awardedTo: user.uid)).to be_empty
         expect(Rsvp.where(user_uid: user.uid)).to be_empty
       end
-    end 
+    end
   end
 end

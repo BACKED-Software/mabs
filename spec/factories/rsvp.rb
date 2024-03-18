@@ -6,4 +6,3 @@ FactoryBot.define do
     event_id { create(:event).id }
   end
 end
-  
