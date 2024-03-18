@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe RecalculateUserPointsJob, type: :job do
@@ -7,12 +9,14 @@ RSpec.describe RecalculateUserPointsJob, type: :job do
       Event.create!(
         eventInfo: 'Information about the event',
         eventName: 'Event Name',
-        eventTime: Time.current,  # Adjust if your app requires a specific time format
+        eventTime: DateTime.tomorrow.change(hour: 8, min: 0, sec: 0), # Adjust if your app requires a specific time format
         eventLocation: 'Event Location'
       )
     end
-    let!(:point) { Point.create!(awardedTo: user.uid, numPointsAwarded: 10, awardedBy: 'Admin', dateOfAward: Date.today) }
-    let!(:attendance) { Attendance.create!(googleUserID: user.uid, pointsAwarded: 5, event: event) }
+    let!(:point) do
+      Point.create!(awardedTo: user.uid, numPointsAwarded: 10, awardedBy: 'Admin', dateOfAward: Date.today)
+    end
+    let!(:attendance) { Attendance.create!(googleUserID: user.uid, pointsAwarded: 5, event:) }
 
     it 'correctly recalculates the total points for a user' do
       # Trigger the job

@@ -19,7 +19,7 @@ RSpec.describe AdminController, type: :controller do
     end
   end
 
-  describe "GET #admin" do
+  describe 'GET #admin' do
     let!(:admin) { create(:user, is_admin: true) }
     let!(:user) { create(:user, gender: 'Man', is_hispanic_or_latino: true) }
 
@@ -27,12 +27,12 @@ RSpec.describe AdminController, type: :controller do
       sign_in admin
     end
 
-    it "filters users by gender" do
+    it 'filters users by gender' do
       get :index, params: { gender: 'Man' }, format: :html
       expect(assigns(:users)).to include(user)
     end
-    
-    it "filters users by is_hispanic_or_latino" do
+
+    it 'filters users by is_hispanic_or_latino' do
       get :index, params: { is_hispanic_or_latino: 'true' }, format: :html
       expect(assigns(:users)).to include(user)
     end

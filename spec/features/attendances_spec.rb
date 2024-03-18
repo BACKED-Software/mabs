@@ -16,7 +16,7 @@ RSpec.feature 'Attendances Integration', type: :feature do
       googleUserID: user.uid,
       eventID: event.id,
       pointsAwarded: event.eventPoints,
-      timeOfCheckIn: DateTime.now,
+      timeOfCheckIn: DateTime.now
     )
   end
 

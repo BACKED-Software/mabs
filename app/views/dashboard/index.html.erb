@@ -95,14 +95,16 @@
       <% @events.sort_by(&:eventTime).each do |event| %>
         <li class="event mb-3 p-3 bg-light rounded">
           <div class="d-flex justify-content-between">
-            <div>
-              <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
-              <div class="event-details">
-                <h5 class="event-title mb-1"><%= event.eventName %></h5>
-                <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
-                <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+            <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link" >
+              <div>
+                <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
+                <div class="event-details">
+                  <h5 class="event-title mb-1"><%= event.eventName %></h5>
+                  <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
+                  <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+                </div>
               </div>
-            </div>
+            </a>
             <% if user_signed_in? %>
               <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
                 <div class="rsvp-status text-success">You are attending</div>

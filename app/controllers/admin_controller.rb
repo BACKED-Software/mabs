@@ -14,10 +14,11 @@ class AdminController < ApplicationController
     end
     @events = Event.where('"eventTime" > ?', Time.now)
 
-
     # prepare data for charts or tables here
     @gender_distribution = User.group(:gender).count.except(nil)
-    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys do |key|
+      key ? 'Yes' : 'No'
+    end
     @race_distribution = User.group(:race).count.except(nil)
     @us_citizen_distribution = User.group(:is_us_citizen).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
     @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
@@ -67,7 +68,9 @@ class AdminController < ApplicationController
 
     # prepare data for charts or tables here
     @gender_distribution = User.group(:gender).count.except(nil)
-    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
+    @ethnicity_distribution = User.group(:is_hispanic_or_latino).count.except(nil).transform_keys do |key|
+      key ? 'Yes' : 'No'
+    end
     @race_distribution = User.group(:race).count.except(nil)
     @us_citizen_distribution = User.group(:is_us_citizen).count.except(nil).transform_keys { |key| key ? 'Yes' : 'No' }
     @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
@@ -75,14 +78,12 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       format.html # For the webpage
-      format.json { render json: @users} 
+      format.json { render json: @users }
       format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
-
     rescue StandardError => e
       flash[:error] = "There was a problem retrieving statistics: #{e.message}"
       redirect_to admin_tools_path
     end
-
   end
 
   def export_demographics
@@ -92,7 +93,6 @@ class AdminController < ApplicationController
   def recalculate_points
     RecalculateUserPointsJob.perform_later
     redirect_to admin_index_path, notice: 'Recalculation of points has been initiated.'
-
   end
 
   private
