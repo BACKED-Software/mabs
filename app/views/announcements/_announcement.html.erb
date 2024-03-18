@@ -2,7 +2,10 @@
   <div class="d-flex flex-row align-items-start mb-2">
     <!-- User Avatar -->
     <div class="me-3">
-      <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>
+      <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
+      <% if announcement_user.present? %>
+        <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>
+      <% end %>    
     </div>
     <!-- Announcement Title and Body -->
     <div class="flex-grow-1">
