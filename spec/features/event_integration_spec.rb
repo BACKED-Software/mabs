@@ -7,27 +7,54 @@ require 'rails_helper'
 RSpec.describe 'Events Integration', type: :feature do
   before do
     @user = create(:user)
+    sign_in @user
+    event_time = DateTime.tomorrow.change(hour: 8, min: 0, sec: 0)
     @event = Event.create(
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now,
+      eventTime: event_time,
       sponsor_title: 'Sample Title',
       sponsor_description: 'Sample Description'
     )
   end
 
+  it 'displays the event details page' do
+    visit events_path
+    event_button_name = @event.eventName.present? ? @event.eventName : 'Event Name Missing'
+    event_button_name += ' - ' if @event.eventName.present?
+    event_button_name += @event.eventTime.strftime('%I:%M %p')
+    click_button event_button_name
+
+    # Wait for the modal to appear
+    expect(page).to have_selector('.modal', visible: true)
+
+    expect(page).to have_content('Sample Location')
+    expect(page).to have_content('Sample Info')
+    # Add more assertions as needed
+  end
+
   it 'updates an existing event' do
-    visit event_path(@event)
+    visit events_path
+    event_time_string = @event.eventTime.strftime('%I:%M %p')
+    event_button_name = @event.eventName.to_s
+    event_button_name += " - #{event_time_string}" if @event.eventName
+    click_button event_button_name
+    expect(page).to have_selector('.modal', visible: true)
     click_link 'Edit'
-    fill_in 'event[eventLocation]', with: 'Updated Location'
+    fill_in 'event[eventName]', with: 'Updated Name'
     click_button 'Update Event'
-    visit event_path(@event)
-    expect(page).to have_content('Updated Location')
+    visit events_path
+    expect(page).to have_content('Updated Name')
   end
 
   it 'fails to update an event' do
-    visit event_path(@event)
+    visit events_path
+    event_time_string = @event.eventTime.strftime('%I:%M %p')
+    event_button_name = @event.eventName.to_s
+    event_button_name += " - #{event_time_string}" if @event.eventName
+    click_button event_button_name
+    expect(page).to have_selector('.modal', visible: true)
     click_link 'Edit'
     fill_in 'event[eventName]', with: ''
     click_button 'Update Event'
@@ -40,25 +67,45 @@ RSpec.describe 'Events Integration', type: :feature do
     # Add more assertions as needed
   end
 
-  it 'displays the event details page' do
-    visit events_path
-    click_link 'Sample Event'
-    expect(page).to have_content('Sample Location')
-    expect(page).to have_content('Sample Info')
-    # Add more assertions as needed
+  it 'checks the presence of the Trix editor' do
+    visit new_event_path
+    expect(page).to have_css('trix-editor[id="event_eventInfo"]')
+    expect(page).to have_selector("input[id='event_eventInfo_trix_input_event']", visible: false)
+  end
+
+  it 'fills in the Trix editor field' do
+    visit new_event_path
+
+    # Set content in the Trix editor field
+    trix_input_field = find("input[id='event_eventInfo_trix_input_event']", visible: false)
+    trix_input_field.set('New Info')
+
+    # Ensure content is set correctly
+    expect(page).to have_css('trix-editor[id="event_eventInfo"]')
+    expect(page).to have_selector("input[id='event_eventInfo_trix_input_event']", visible: false)
   end
 
   it 'creates a new event with valid inputs if logged in' do
     login_as(@user, scope: :user)
-    sleep 1
     visit new_event_path
-    fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
+
+    # Fill in the form fields
     fill_in 'event[eventName]', with: 'New Event'
-    fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
+    fill_in 'event[eventLocation]', with: 'New Location'
+    fill_in 'event[eventTime]', with: '2023-01-01T12:00' # Adjust format to match datetime-local field
+
+    # Fill in the Trix editor
+    trix_input_field = find("input[id='event_eventInfo_trix_input_event']", visible: false)
+    trix_input_field.set('New Info')
+
     fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+
+    # Fill in the Trix editor for sponsor description
+    trix_input_field = find("input[id='event_sponsor_description_trix_input_event']", visible: false)
+    trix_input_field.set('New Description')
+
     click_button 'Create Event'
+
     visit events_path
     expect(page).to have_content('New Event')
     # Add more assertions as needed
@@ -67,11 +114,15 @@ RSpec.describe 'Events Integration', type: :feature do
   it 'fails to create a new event with missing location if logged in' do
     login_as(@user, scope: :user)
     visit new_event_path
-    fill_in 'event[eventInfo]', with: 'New Info'
+    # Set content in the Trix editor field
+    trix_input_field = find("input[id='event_eventInfo_trix_input_event']", visible: false)
+    trix_input_field.set('New Info')
     fill_in 'event[eventName]', with: 'New Event'
     fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
     fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+    # Fill in the Trix editor for sponsor description
+    trix_input_field = find("input[id='event_sponsor_description_trix_input_event']", visible: false)
+    trix_input_field.set('New Description')
     click_button 'Create Event'
     expect(page).to have_content("Eventlocation can't be blank")
     # Add more assertions as needed
@@ -84,7 +135,9 @@ RSpec.describe 'Events Integration', type: :feature do
     fill_in 'event[eventName]', with: 'New Event'
     fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
     fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+    # Fill in the Trix editor for sponsor description
+    trix_input_field = find("input[id='event_sponsor_description_trix_input_event']", visible: false)
+    trix_input_field.set('New Description')
     click_button 'Create Event'
     expect(page).to have_content("Eventinfo can't be blank")
     # Add more assertions as needed
@@ -94,10 +147,14 @@ RSpec.describe 'Events Integration', type: :feature do
     login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
+    # Set content in the Trix editor field
+    trix_input_field = find("input[id='event_eventInfo_trix_input_event']", visible: false)
+    trix_input_field.set('New Info')
     fill_in 'event[eventTime]', with: '2023-01-01 12:00:00'
     fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+    # Fill in the Trix editor for sponsor description
+    trix_input_field = find("input[id='event_sponsor_description_trix_input_event']", visible: false)
+    trix_input_field.set('New Description')
     click_button 'Create Event'
     expect(page).to have_content("Eventname can't be blank")
     # Add more assertions as needed
@@ -107,10 +164,14 @@ RSpec.describe 'Events Integration', type: :feature do
     login_as(@user, scope: :user)
     visit new_event_path
     fill_in 'event[eventLocation]', with: 'New Location'
-    fill_in 'event[eventInfo]', with: 'New Info'
+    # Set content in the Trix editor field
+    trix_input_field = find("input[id='event_eventInfo_trix_input_event']", visible: false)
+    trix_input_field.set('New Info')
     fill_in 'event[eventName]', with: 'New Event'
     fill_in 'event[sponsor_title]', with: 'Event Sponsor'
-    fill_in 'event[sponsor_description]', with: 'Event Sponsor Description'
+    # Fill in the Trix editor for sponsor description
+    trix_input_field = find("input[id='event_sponsor_description_trix_input_event']", visible: false)
+    trix_input_field.set('New Description')
     click_button 'Create Event'
     expect(page).to have_content("Eventtime can't be blank")
     # Add more assertions as needed

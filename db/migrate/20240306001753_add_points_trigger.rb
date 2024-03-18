@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPointsTrigger < ActiveRecord::Migration[7.0]
   def up
     # Create a function to calculate total points
@@ -32,12 +34,11 @@ class AddPointsTrigger < ActiveRecord::Migration[7.0]
       FOR EACH ROW
       EXECUTE FUNCTION update_user_total_points();
     SQL
-
   end
 
   def down
-    execute "DROP TRIGGER IF EXISTS update_points_after_insert_or_update ON points;"
-    execute "DROP TRIGGER IF EXISTS update_points_after_delete ON points;"
-    execute "DROP FUNCTION IF EXISTS update_user_total_points;"
+    execute 'DROP TRIGGER IF EXISTS update_points_after_insert_or_update ON points;'
+    execute 'DROP TRIGGER IF EXISTS update_points_after_delete ON points;'
+    execute 'DROP FUNCTION IF EXISTS update_user_total_points;'
   end
 end

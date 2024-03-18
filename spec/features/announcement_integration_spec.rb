@@ -69,7 +69,6 @@ RSpec.describe 'Announcements Integration', type: :feature do
     expect(page).to have_content("Subject can't be blank")
   end
 
-
   it 'fails to create a new announcement with missing body' do
     visit new_announcement_path
     fill_in 'announcement[subject]', with: 'New Subject'

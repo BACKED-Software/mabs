@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
   get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
   get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
-  
+
   get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
   get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
@@ -46,7 +46,6 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
-
 
   resources :users do
     # special route for deleting users
@@ -81,5 +80,4 @@ Rails.application.routes.draw do
   get 'dashboard/index'
 
   post 'recalculate_points', to: 'admin#recalculate_points'
-
 end
