@@ -2,6 +2,7 @@
 
 class AttendancesController < ApplicationController
   layout 'authenticated_layout'
+  before_action :authenticate_user!
   before_action :set_attendance, only: %i[show edit]
   before_action :set_user, only: %i[show edit create index]
   before_action :set_event, only: %i[show edit create]
