@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_google(email:, full_name:, uid:, avatar_url:)
-    return nil unless email =~ /@tamu.edu\z/
+    #return nil unless email =~ /@tamu.edu\z/
 
     create_with(uid:, full_name:, avatar_url:, total_points: 0).find_or_create_by!(email:)
   end
@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :announcements, foreign_key: 'googleUserID', dependent: :nullify
   has_many :rsvps, foreign_key: 'user_uid', dependent: :destroy
   has_many :attendances, foreign_key: 'googleUserID', dependent: :nullify
-  has_many :points, foreign_key: 'awardedTo', primary_key: 'uid'
+  has_many :points, foreign_key: 'awardedTo', primary_key: 'uid', dependent: :destroy
 
   # Helper method to check if the user is an admin
   def admin?

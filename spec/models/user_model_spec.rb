@@ -17,5 +17,57 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe 'deleting a user' do
+      it 'nullifies associated announcements' do
+        user = create(:user)
+        announcement = create(:announcement, googleUserID: user.uid)
+        user.destroy
+        expect(User.where(uid: user.uid)).to be_empty
+        expect(Announcement.where(googleUserID: user.uid)).to be_empty
+        expect(Announcement.find(announcement.id).googleUserID).to be_nil
+      end
+  
+      it 'nullifies associated attendances' do
+        user = create(:user)
+        attendance = create(:attendance, googleUserID: user.uid)
+        user.destroy
+        expect(User.where(uid: user.uid)).to be_empty
+        expect(Attendance.where(googleUserID: user.uid)).to be_empty
+        expect(Attendance.find(attendance.id).googleUserID).to be_nil
+      end
+  
+      it 'deletes associated points' do
+        user = create(:user)
+        create(:point, awardedTo: user.uid)
+        user.destroy
+        expect(User.where(uid: user.uid)).to be_empty
+        expect(Point.where(awardedTo: user.uid)).to be_empty
+      end
+  
+      it 'deletes associated rsvps' do
+        user = create(:user)
+        create(:rsvp, user_uid: user.uid)
+        user.destroy
+        expect(User.where(uid: user.uid)).to be_empty
+        expect(Rsvp.where(user_uid: user.uid)).to be_empty
+      end
+  
+      it 'handles all associations correctly when deleted' do
+        user = create(:user)
+        announcement = create(:announcement, googleUserID: user.uid)
+        attendance = create(:attendance, googleUserID: user.uid)
+        create(:point, awardedTo: user.uid)
+        create(:rsvp, user_uid: user.uid)
+        user.destroy
+        expect(User.where(uid: user.uid)).to be_empty
+        expect(Announcement.where(googleUserID: user.uid)).to be_empty
+        expect(Announcement.find(announcement.id).googleUserID).to be_nil
+        expect(Attendance.where(googleUserID: user.uid)).to be_empty
+        expect(Attendance.find(attendance.id).googleUserID).to be_nil
+        expect(Point.where(awardedTo: user.uid)).to be_empty
+        expect(Rsvp.where(user_uid: user.uid)).to be_empty
+      end
+    end 
   end
   
