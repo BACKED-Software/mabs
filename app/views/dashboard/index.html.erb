@@ -63,12 +63,12 @@
           <% @announcements.each do |announcement| %>
             <div class="announcement bg-info-subtle shadow-md rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
-                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">
-                  <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
-                  <%if announcement_user.present? %>
+              <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
+              <%if announcement_user.present? %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
                     <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "img-fluid" %>
-                  <% end %>
                 </div>
+              <% end %>
                 <h5 class="mb-0 flex-grow-1"><%= announcement.subject %></h5>
               </div>
               <p class="text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>

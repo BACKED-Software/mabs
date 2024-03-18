@@ -1,12 +1,12 @@
 <div id="<%= dom_id announcement %>" class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
   <div class="d-flex flex-row align-items-start mb-2">
     <!-- User Avatar -->
-    <div class="me-3">
-      <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
-      <% if announcement_user.present? %>
-        <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>
-      <% end %>    
-    </div>
+    <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
+    <% if announcement_user.present? %>
+      <div class="me-3">
+          <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>   
+      </div>
+    <% end %> 
     <!-- Announcement Title and Body -->
     <div class="flex-grow-1">
       <%= link_to announcement_path(announcement), class: "text-decoration-none" do %>
