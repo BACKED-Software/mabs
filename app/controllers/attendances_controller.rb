@@ -2,6 +2,7 @@
 
 class AttendancesController < ApplicationController
   layout 'authenticated_layout'
+
   before_action :set_user
   before_action :set_event, except: :index
   before_action :check_admin, only: :index

@@ -1,28 +1,3 @@
-
-# MCABS App Tracker README
-
-This README provides the necessary steps to set up and run the MCABS (Medical Cannabis Access Barrier Solutions) App Tracker, a Ruby on Rails application. The application is designed to track and manage patient access to medical cannabis, ensuring efficient monitoring and support.
-
-## Ruby Version
-
-Ensure you have Ruby 3.3.0 installed on your system. You can check your Ruby version by running:
-
-```bash
-ruby -v
-```
-
-If you do not have the correct version, you can install Ruby 3.3.0 using a Ruby version manager like `rbenv` or `rvm`.
-
-## System Dependencies
-
-Before setting up the MCABS App Tracker, you need to install several system dependencies:
-
-- Ruby 3.3.0
-- Rails 7
-- A database system (e.g., PostgreSQL, MySQL, SQLite)
-- Node.js (for Webpacker)
-- Yarn (for managing JavaScript packages)
-
 ## Configuration
 
 1. Clone the repository:
@@ -80,10 +55,6 @@ Or, if you are using RSpec:
 rspec
 ```
 
-## Services
-
-If your application uses services like job queues, cache servers, or search engines, document how to set up and use these services here.
-
 ## Deployment Instructions
 
 1. Ensure all your changes are committed and pushed to the repository.
@@ -95,6 +66,3 @@ If your application uses services like job queues, cache servers, or search engi
 - Always check the `Gemfile` for any additional gems you might need to install.
 - For more detailed information on Rails deployment, consult the [Rails Guides](https://guides.rubyonrails.org/).
 
-With this README, your team members or contributors should have a clear understanding of how to get the MCABS App Tracker up and running.
-```
-This markdown content is ready to be added to your README.md file for the MCABS App Tracker Ruby on Rails application.
