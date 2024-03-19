@@ -8,7 +8,7 @@ RSpec.describe Event, type: :model do
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now,
+      eventTime: DateTime.tomorrow.change(hour: 8, min: 0, sec: 0),
       sponsor_title: 'Sample Sponsor',
       sponsor_description: 'Sample Description'
       # sponsor: Sponsor.create(name: "Sample Sponsor")
@@ -48,8 +48,8 @@ RSpec.describe Event, type: :model do
     it 'destroys associated rsvps when destroyed' do
       event = create(:event)
       user = create(:user)
-      rsvp1 = create(:rsvp, event: event, user: user)
-      rsvp2 = create(:rsvp, event: event, user: user)
+      rsvp1 = create(:rsvp, event:, user:)
+      rsvp2 = create(:rsvp, event:, user:)
 
       expect { event.destroy }.to change { Rsvp.count }.by(-2)
 

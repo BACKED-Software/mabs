@@ -1,14 +1,33 @@
 <div id="<%= dom_id event %>">
-  <p>
-    <strong>Name:</strong> <%= event.eventName %><br>
-    <strong>Location:</strong> <%= event.eventLocation %><br>
-    <strong>Time:</strong> <%= event.eventTime %><br>
-    <strong>Info:</strong> <%= event.eventInfo %><br>
-    <strong>Points:</strong> <%= event.eventPoints %><br>
-    <strong>Sponsor Title:</strong> <%= event.sponsor_title %><br>
-    <strong>Sponsor Description:</strong> <%= event.sponsor_description %><br>
-    <% if user_signed_in? && @current_user.is_admin == true %>
-      <strong>Password:</strong> <%= event.password %><br>
-    <% end %>
-  </p>
+  <div class="d-flex justify-content-between">
+    <div>
+      <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
+      <div class="event-details">
+        <h5 class="event-title mb-1"><%= event.eventName %></h5>
+        <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
+        <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+      </div>
+    </div>
+    <div class="col-md-6">
+    <div class="event-info ml-3">
+          <div class="mb-2">
+              <strong>Info:</strong> <%= raw event.eventInfo %>
+          </div>
+          <div class="mb-2">
+              <strong>Points:</strong> <%= event.eventPoints %>
+          </div>
+          <div class="mb-2">
+              <strong>Sponsor Title:</strong> <%= event.sponsor_title %>
+          </div>
+          <div class="mb-2">
+              <strong>Sponsor Description:</strong> <%= raw event.sponsor_description %>
+          </div>
+          <div>
+            <% if user_signed_in? && @current_user.is_admin == true %>
+              <strong>Password:</strong> <%= event.password %>
+            <% end %>  
+          </div>
+      </div>
+      </div>
+  </div>
 </div>

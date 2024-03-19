@@ -8,10 +8,9 @@ RSpec.describe 'Users', type: :request do
   it 'displays the user' do
     get user_path(user)
     expect(response).to have_http_status(200)
-    expect(response.body).to match(Regexp.new(Regexp.escape(user.full_name).gsub("'", "&#39;")))
+    expect(response.body).to match(Regexp.new(Regexp.escape(user.full_name).gsub("'", '&#39;')))
     expect(response.body).to include(user.email)
   end
-
 
   describe 'GET /users' do
     it 'displays all users' do

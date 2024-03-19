@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "User's history", type: :feature do
-
   before do
     @user = create(:user)
     sign_in @user
@@ -9,7 +10,7 @@ RSpec.describe "User's history", type: :feature do
       eventLocation: 'Sample Location',
       eventInfo: 'Sample Info',
       eventName: 'Sample Event',
-      eventTime: DateTime.now,
+      eventTime: DateTime.tomorrow.change(hour: 8, min: 0, sec: 0),
       sponsor_title: 'Sample Title',
       sponsor_description: 'Sample Description'
     )
@@ -36,7 +37,7 @@ RSpec.describe "User's history", type: :feature do
 
   it 'shows the most recent attendance' do
     visit root_path
-    expect(page).to have_content(@attendance.created_at.strftime("%m/%d"))
+    expect(page).to have_content(@attendance.created_at.strftime('%m/%d'))
     expect(page).to have_content("Attendance to #{@attendance.event.eventName}")
     expect(page).to have_content(@attendance.pointsAwarded)
   end
@@ -57,7 +58,7 @@ RSpec.describe "User's history", type: :feature do
       Attendance.delete_all
       visit root_path
     end
-    
+
     it 'does not show any attendances' do
       within('.pointHistory') do
         expect(page).not_to have_content(@attendance.event.eventName)
@@ -70,7 +71,7 @@ RSpec.describe "User's history", type: :feature do
       Attendance.delete_all
       visit root_path
     end
-  
+
     it 'shows points but not attendances' do
       within('.pointHistory') do
         expect(page).to have_content(@point.awardDescription)
@@ -78,13 +79,13 @@ RSpec.describe "User's history", type: :feature do
       end
     end
   end
-  
+
   context 'when there is attendance but no points' do
     before do
       Point.delete_all
       visit root_path
     end
-  
+
     it 'shows attendances but not points' do
       within('.pointHistory') do
         expect(page).to have_content(@attendance.event.eventName)

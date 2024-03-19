@@ -62,8 +62,6 @@ class PointsController < ApplicationController
     end
   end
 
-
-
   def set_point; end
 
   def save_changes

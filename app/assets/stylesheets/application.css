@@ -15,14 +15,176 @@
  *
  *= require_tree .
  *= require_self
+ *= require simple_calendar
  */
 
+ /* Style for the overall calendar */
+ .simple-calendar {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Style for individual days */
+  .simple-calendar .day {
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Style for weekdays (0 for Sunday, 1 for Monday, etc.) */
+  .simple-calendar .wday-0 { /* Sunday */
+    color: red;
+  }
+  .simple-calendar .wday-1 { /* Monday */
+    color: blue;
+  }
+  /* Continue for other weekdays as needed */
+  
+  /* Style for today's date */
+  .simple-calendar .today {
+    background-color: #ffc;
+  }
+  
+  /* Style for past dates */
+  .simple-calendar .past {
+    color: #999;
+  }
+  
+  /* Style for future dates */
+  .simple-calendar .future {
+    color: #333;
+  }
+  
+  /* Style for the start date of a range */
+  .simple-calendar .start-date {
+    font-weight: bold;
+  }
+  
+  /* Style for previous month's dates */
+  .simple-calendar .prev-month {
+    color: #bbb;
+  }
+  
+  /* Style for next month's dates */
+  .simple-calendar .next-month {
+    color: #bbb;
+  }
+  
+  /* Style for dates within the current month */
+  .simple-calendar .current-month {
+    /* No additional styling */
+  }
+  
+  /* Style for dates with events */
+  .simple-calendar .has-events {
+    width: 20%;
+  }
 
+  /* Style for calendar date */
+.simple-calendar .calendar-date {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+  }
+  .simple-calendar .calendar-col {
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+  }
+  /* Style for calendar events */
+.simple-calendar .calendar-events {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+  }
+  
+  /* Style for events list */
+  .simple-calendar .calendar-events ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style for individual event */
+  .simple-calendar .calendar-events li {
+    margin: 0;
+    margin-left: 0%;
+    padding: 0;
+    margin-bottom: 1%;
+  }
+  
+  /* Style for event button */
+  .simple-calendar .calendar-events li button {
+    width: 100%;
+    margin: 0;
+  }
+  
+  /* Style for calendar heading */
+.simple-calendar .calendar-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for calendar heading */
+.simple-calendar .calendar-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for calendar title */
+  .simple-calendar .calendar-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for navigation links */
+  .simple-calendar nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .simple-calendar nav a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Style for today's navigation link */
+  .simple-calendar nav a:nth-child(2) {
+    background-color: #ffc;
+  }
+  
+  /* Style for navigation links on hover */
+  .simple-calendar nav a:hover {
+    background-color: #e0e0e0;
+  }
+  
+  
 a {
 
     font-size: x-large;
     color:black;
     font-weight: bold;
+}
+
+.event-link{
+    font-size: initial;
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .flash__alert   { color: red; }
