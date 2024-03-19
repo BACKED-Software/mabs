@@ -106,15 +106,14 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <div class="attendance-status text-success">Check in starts in <%= distance_of_time_in_words(DateTime.now, event.eventTime-15*60) %></div>
-              <% end %>
-              <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
-                <div class="rsvp-status text-success">You are RSVP'd</div>
-              <% else %>
-                <%= form_with url: rsvps_path, method: :post do |form| %>
-                  <%= form.hidden_field :user_uid, value: current_user.uid %>
-                  <%= form.hidden_field :event_id, value: event.id %>
-                  <%= form.submit "RSVP" %>
+                <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
+                  <div class="rsvp-status text-success">You are RSVP'd, Check in starts in <%= distance_of_time_in_words(DateTime.now, event.eventTime-15*60) %></div>
+                <% else %>
+                  <%= form_with url: rsvps_path, method: :post do |form| %>
+                    <%= form.hidden_field :user_uid, value: current_user.uid %>
+                    <%= form.hidden_field :event_id, value: event.id %>
+                    <%= form.submit "RSVP" %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>

@@ -8,7 +8,7 @@ RSpec.describe 'Attendances Integration', type: :feature do
   let!(:admin) { create(:admin) }
   let!(:user) { create(:user) }
   let!(:event) { create(:event, eventName: 'Test Event') }
-  let!(:event2) { create(:event, eventName: 'Test Event 2', eventTime: DateTime.now, password: 'pass') }
+  let!(:event2) { create(:event, eventName: 'Test Event 2', eventTime: Time.now + 1*60, password: 'pass') }
   let!(:attendance) { create(:attendance, eventID: event.id, googleUserID: user.uid) }
   before do
     Attendance.create(
@@ -57,8 +57,9 @@ RSpec.describe 'Attendances Integration', type: :feature do
       expect(page).to have_content('You are Checked in')
     end
 
-    it 'see event check in us not available yet' do
-      expect(page).to have_content('Check in starts in about 24 hours')
+    it 'see event check in is not available yet' do
+      click_button 'RSVP'
+      expect(page).to have_content('Check in starts in')
     end
   end
 end

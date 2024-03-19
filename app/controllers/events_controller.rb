@@ -72,6 +72,17 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def set_user
+    @user = current_user
+  end
+
+  def check_admin
+    return if current_user&.admin?
+
+    flash[:alert] = 'You are not authorized to access this page.'
+    redirect_to root_path # or any other path you wish to redirect to
+  end
+
   # Only allow a list of trusted parameters through.
   def event_params
     params.require(:event).permit(:eventLocation, :eventInfo, :eventName, :eventTime, :eventPoints, :sponsor_title,
