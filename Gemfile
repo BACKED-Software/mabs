@@ -91,7 +91,6 @@ gem 'omniauth-rails_csrf_protection'
 # gem for .env file
 gem 'dotenv-rails'
 
-gem 'factory_bot_rails'
 gem 'faker'
 
 gem 'rails-controller-testing'

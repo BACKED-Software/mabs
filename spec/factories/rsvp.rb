@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :rsvp do
-    sequence(:user_uid) { |n| "user_#{n}" }
-    association :event
+    user_uid { create(:user).uid }
+    event_id { create(:event).id }
   end
 end
