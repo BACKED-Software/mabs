@@ -68,6 +68,10 @@
                 <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
                     <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "img-fluid" %>
                 </div>
+              <% else %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
+                  <%= image_tag 'deleted_profile.jpg', alt: "User Avatar", class: "img-fluid" %>
+                </div>
               <% end %>
                 <h5 class="mb-0 flex-grow-1"><%= announcement.subject %></h5>
               </div>
