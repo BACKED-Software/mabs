@@ -2,7 +2,7 @@
 <!-- Flash Messages -->
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+    <div class="alert alert-<%= name == 'success' ? 'success' : 'danger' %> alert-dismissible fade show m-4" role="alert">
       <%= msg %>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -63,9 +63,16 @@
           <% @announcements.each do |announcement| %>
             <div class="announcement bg-info-subtle shadow-md rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
-                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">
-                  <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "img-fluid" %>
+              <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
+              <%if announcement_user.present? %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
+                    <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "img-fluid" %>
                 </div>
+              <% else %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
+                  <%= image_tag 'deleted_profile.jpg', alt: "User Avatar", class: "img-fluid" %>
+                </div>
+              <% end %>
                 <h5 class="mb-0 flex-grow-1"><%= announcement.subject %></h5>
               </div>
               <p class="text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
