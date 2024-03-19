@@ -2,7 +2,7 @@
 <!-- Flash Messages -->
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+    <div class="alert alert-<%= name == 'success' ? 'success' : 'danger' %> alert-dismissible fade show m-4" role="alert">
       <%= msg %>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -21,10 +21,36 @@
         </div>
         <div class="actions mt-4">
           <%= require_sign_in do %>
-            <a href="<%= points_history_path %>" class="btn btn-primary">View Point History</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">View Point History</button>
             <a href="<%= leaderboard_index_path %>" class="btn btn-info">View Leaderboard</a>
           <% end %>
+
         </div>
+        <hr/>
+        <% if @two_most_recent_records.present? %>
+          <div class="pointHistory mt-3 text-muted">
+            <h6>Recently Awarded Points</h6>
+            <ul class="list-unstyled mt-3">
+              <% @two_most_recent_records.each do |record| %>
+                <li class="point-history-item d-flex justify-content-between align-items-center">
+                  <div class="point-history-details text-start">
+                    <% if record.type == 'Attendance' %>
+                      <p class="mb-0"><%= record.date.strftime('%m/%d') %> - Attendance to
+                        <%= record.event ? record.event.eventName : 'Unknown Event' %></p>
+                    <% else %>
+                      <p class="mb-0"><%= record.date.strftime('%m/%d') %> - <%= record.awardDescription %></p>
+                    <% end %>
+                  </div>
+
+                  <div class="point-history-points text-end text-primary">
+                    <p class="mb-0"><%= record.points %></p>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
       </div>
     </div>
       <!-- Announcement Column -->
@@ -35,18 +61,32 @@
         </div>
         <div class="announcement-list">
           <% @announcements.each do |announcement| %>
-            <div class="announcement bg-info-subtle shadow-lg rounded p-3 mb-3">
+            <div class="announcement bg-info-subtle shadow-md rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
-                <div class="avatar rounded-circle overflow-hidden pr-5" style="width: 40px; height: 40px;">
-                  <%= image_tag User.find_by(uid: announcement.googleUserID).avatar_url, alt: "User Avatar", class: "img-fluid" %>
+              <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
+              <%if announcement_user.present? %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
+                    <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "img-fluid" %>
                 </div>
-                <h5 class="pl-4 mb-0"><%= announcement.subject %></h5>
+              <% else %>
+                <div class="avatar rounded-circle overflow-hidden me-3" style="width: 40px; height: 40px;">                  
+                  <%= image_tag 'deleted_profile.jpg', alt: "User Avatar", class: "img-fluid" %>
+                </div>
+              <% end %>
+                <h5 class="mb-0 flex-grow-1"><%= announcement.subject %></h5>
               </div>
               <p class="text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
-              <p class="mb-0"><%= truncate_with_link(announcement.body, 100, announcement_path(announcement)) %></p>
+
+              <div id="announcement-content-<%= announcement.id %>" class="line-clamp">
+                <%= announcement.body %>
+              </div>
+              <a href="#" class="text-muted read-more-link" style="font-size: 14px;" onclick="toggleContent('<%= announcement.id %>'); return false;">Read more</a>
             </div>
           <% end %>
+
         </div>
+
+
         <a href="<%= announcements_url %>" class="view-all-announcements btn btn-link">View All Announcements</a>
       </div>
     </div>
@@ -59,14 +99,16 @@
       <% @events.sort_by(&:eventTime).each do |event| %>
         <li class="event mb-3 p-3 bg-light rounded">
           <div class="d-flex justify-content-between">
-            <div>
-              <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
-              <div class="event-details">
-                <h5 class="event-title mb-1"><%= event.eventName %></h5>
-                <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
-                <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+            <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link" >
+              <div>
+                <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
+                <div class="event-details">
+                  <h5 class="event-title mb-1"><%= event.eventName %></h5>
+                  <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
+                  <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+                </div>
               </div>
-            </div>
+            </a>
             <% if user_signed_in? %>
               <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
                 <div class="rsvp-status text-success">You are attending</div>
@@ -84,6 +126,23 @@
     </ul>
   </div>
 
+
+  <div class="modal fade" id="pointsHistoryModal" tabindex="-1" aria-labelledby="pointsHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pointsHistoryModalLabel">Points History</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'points_history', user: @user %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -135,6 +194,14 @@
               }
           }
       });
+
+
+      function toggleContent(announcementId) {
+          const contentDiv = document.getElementById(`announcement-content-${announcementId}`);
+          contentDiv.classList.toggle('line-clamp');
+      }
+
+
   </script>
 
 <% end %>

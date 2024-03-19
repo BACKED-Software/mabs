@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+@import "actiontext.css";
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -12,23 +15,176 @@
  *
  *= require_tree .
  *= require_self
+ *= require simple_calendar
  */
 
+ /* Style for the overall calendar */
+ .simple-calendar {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Style for individual days */
+  .simple-calendar .day {
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Style for weekdays (0 for Sunday, 1 for Monday, etc.) */
+  .simple-calendar .wday-0 { /* Sunday */
+    color: red;
+  }
+  .simple-calendar .wday-1 { /* Monday */
+    color: blue;
+  }
+  /* Continue for other weekdays as needed */
+  
+  /* Style for today's date */
+  .simple-calendar .today {
+    background-color: #ffc;
+  }
+  
+  /* Style for past dates */
+  .simple-calendar .past {
+    color: #999;
+  }
+  
+  /* Style for future dates */
+  .simple-calendar .future {
+    color: #333;
+  }
+  
+  /* Style for the start date of a range */
+  .simple-calendar .start-date {
+    font-weight: bold;
+  }
+  
+  /* Style for previous month's dates */
+  .simple-calendar .prev-month {
+    color: #bbb;
+  }
+  
+  /* Style for next month's dates */
+  .simple-calendar .next-month {
+    color: #bbb;
+  }
+  
+  /* Style for dates within the current month */
+  .simple-calendar .current-month {
+    /* No additional styling */
+  }
+  
+  /* Style for dates with events */
+  .simple-calendar .has-events {
+    width: 20%;
+  }
 
-.top-bar {
-    background-color: maroon;
-    color: white;
-    padding: 10px;
+  /* Style for calendar date */
+.simple-calendar .calendar-date {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+  }
+  .simple-calendar .calendar-col {
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+  }
+  /* Style for calendar events */
+.simple-calendar .calendar-events {
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+  }
+  
+  /* Style for events list */
+  .simple-calendar .calendar-events ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style for individual event */
+  .simple-calendar .calendar-events li {
+    margin: 0;
+    margin-left: 0%;
+    padding: 0;
+    margin-bottom: 1%;
+  }
+  
+  /* Style for event button */
+  .simple-calendar .calendar-events li button {
+    width: 100%;
+    margin: 0;
+  }
+  
+  /* Style for calendar heading */
+.simple-calendar .calendar-heading {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    overflow: hidden;
-}
-
+    margin-bottom: 10px;
+  }
+  
+  /* Style for calendar heading */
+.simple-calendar .calendar-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for calendar title */
+  .simple-calendar .calendar-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for navigation links */
+  .simple-calendar nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .simple-calendar nav a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Style for today's navigation link */
+  .simple-calendar nav a:nth-child(2) {
+    background-color: #ffc;
+  }
+  
+  /* Style for navigation links on hover */
+  .simple-calendar nav a:hover {
+    background-color: #e0e0e0;
+  }
+  
+  
 a {
 
     font-size: x-large;
     color:black;
     font-weight: bold;
+}
+
+.event-link{
+    font-size: initial;
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .flash__alert   { color: red; }
@@ -229,4 +385,93 @@ body {
 
 .btn-settings {
     margin-top: 15px;
+}
+.points-history-container {
+    max-height: 400px; /* Adjust based on your preference */
+    overflow-y: auto; /* Enables scrolling if the list is long */
+}
+
+.point-details h6 {
+    font-size: 1rem; /* Adjust the size as needed */
+    color: #333; /* Dark text color for better readability */
+}
+
+.point-details p {
+    font-size: 0.9rem; /* Slightly smaller font size for the description */
+    color: #666; /* Lighter text color for the description */
+}
+
+.list-group-item {
+    border-left: 3px solid #007bff; /* Adds a left border to each list item */
+    margin-bottom: 0.5rem; /* Adds space between list items */
+    background-color: #f8f9fa; /* Light background for the list items */
+}
+
+.badge {
+    font-size: 0.9rem; /* Adjust the badge font size */
+}
+
+.header {
+    font-family: 'Roboto', sans-serif; /* Use a web-friendly font */
+    color: #333; /* A dark grey for good readability */
+    font-size: 24px; /* Adjust size as needed */
+    font-weight: 500; /* Medium weight for emphasis */
+    margin-top: 40px; /* Add space above your headers */
+    margin-bottom: 20px; /* Add space below your headers */
+    padding-bottom: 10px; /* Optional: add some padding at the bottom */
+    border-bottom: 2px solid #eee; /* Optional: add a subtle line under headers for definition */
+}
+
+.chart-container {
+    max-width: 100vw;
+    margin: auto;
+  }
+
+
+.modal-header {
+}
+.modal-title {
+    font-weight: bold;
+}
+.modal-body {
+    background-color: #f0f2f5;
+}
+.detail-icon {
+    color: #0056b3;
+    margin-right: 8px;
+}
+.rsvp-header {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #0056b3;
+}
+.list-group-item {
+    background-color: #f0f2f5;
+    border: none;
+}
+.list-group-item:hover {
+    background-color: #e2e6ea;
+}
+
+.read-more-link:hover {
+    text-decoration: underline;
+}
+
+.line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Adjust the number of lines as per requirement */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: 'Roboto', sans-serif; /* Google's Material Design font */
+    color: #202124; /* Almost black but slightly softer, common in Google's designs */
+    font-size: 2rem; /* Size that balances readability with information hierarchy */
+    font-weight: 400; /* Normal weight to avoid heaviness */
+    margin-bottom: 0.5rem; /* Reduced bottom margin for a tighter layout */
+    padding-bottom: 0.25rem; /* Subtle padding at the bottom */
+    border-bottom: 1px solid #e0e0e0; /* Light grey bottom border for a touch of separation */
+    letter-spacing: normal; /* Default spacing to maintain readability */
 }

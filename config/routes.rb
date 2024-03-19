@@ -13,14 +13,22 @@ Rails.application.routes.draw do
   get '/admin-tools', to: 'admin#index'
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
   get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
-  patch '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_Admin'
-  delete '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
+  get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
+
+  get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
+  get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
+  get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
+  get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
 
   resources :admin do
     member do
       # get 'make_admin'
       # patch 'update'
       # delete 'destroy'
+      get 'delete'
+      get 'promote_to_admin'
+      get 'demote_to_user'
+      # get 'export_demographics'
     end
   end
 
@@ -38,7 +46,6 @@ Rails.application.routes.draw do
       get 'delete'
     end
   end
-
 
   resources :users do
     # special route for deleting users
@@ -67,10 +74,10 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'points_history', to: 'users#points_history', as: 'points_history'
-
   resources :rsvps, only: %i[index create destroy]
 
   get 'leaderboard/index'
   get 'dashboard/index'
+
+  post 'recalculate_points', to: 'admin#recalculate_points'
 end

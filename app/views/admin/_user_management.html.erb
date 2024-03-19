@@ -1,31 +1,58 @@
-<h1>User Management</h1>
-  
-  <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
-    <%= form.label :search, "Search Users:" %>
-    <%= form.text_field :search %>
-    <%= form.submit "Search" %>
-  <% end %>
-  
-  <table class="table mt-3">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Full Name</th>
-        <th>Role</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.email %></td>
-          <td><%= user.full_name %></td>
-          <td><%= user.is_admin ? 'Admin' : 'User' %></td>
-          <td>
-            <%= link_to 'Promote to Admin', make_admin_user_path(user), method: :patch, data: { confirm: 'Are you sure?' } unless user.is_admin %>
-            <%= link_to 'Remove User', remove_user_admin_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<div class="accordion" id="userManagementAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="userManagementHeader">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#userManagementBody" aria-expanded="false" aria-controls="userManagementBody">
+        User Management
+      </button>
+    </h2>
+    <div id="userManagementBody" class="accordion-collapse collapse" aria-labelledby="userManagementHeader" data-bs-parent="#userManagementAccordion">
+      <div class="accordion-body">
+        <%= form_with url: admin_tools_path, method: :get, local: true, class: "row g-3 align-items-center" do |form| %>
+          <div class="col-auto">
+            <%= form.label :search, "Search Users:", class: "col-form-label", for: "search_users" %>
+          </div>
+          <div class="col-auto">
+            <%= form.text_field :search, id: "search_users", class: "form-control form-control-sm", aria: { label: "Search" }, placeholder: "Enter email" %>
+          </div>
+          <div class="col-auto">
+            <%= form.submit "Search", class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+
+
+
+
+      <div class="table-responsive">
+          <table class="table table-striped mt-3 rounded-3">
+            <thead>
+            <tr>
+              <th>Email</th>
+              <th>Full Name</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.email %></td>
+                <td><%= user.full_name %></td>
+                <td><%= user.is_admin ? 'Admin' : 'User' %></td>
+                <td>
+                  <% if user.is_admin %>
+                  <%=  link_to 'Demote to User', demote_to_user_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-secondary", data: { confirm: 'Are you sure?' }  %>
+                    <%  else %>
+                  <%=  link_to 'Promote to Admin', promote_to_admin_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-primary", data: { confirm: 'Are you sure?' }  %>
+                  <%  end %>
+
+                  <%= link_to 'Remove User', user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>

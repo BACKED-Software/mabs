@@ -1,0 +1,25 @@
+<%# app/views/points/_admin_nonevent_points_manager.html.erb %>
+
+<div class="accordion" id="pointsAccordion">
+  <%# Accordion Item for Awarding Points %>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingAwardPoints">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRecalculatePoints" aria-expanded="false" aria-controls="collapseRecalculatePoints">
+        Recalculate Points
+      </button>
+    </h2>
+
+    <div id="collapseRecalculatePoints" class="accordion-collapse collapse" aria-labelledby="headingRecalculatePoints" data-bs-parent="#pointsAccordion">
+      <div class="accordion-body">
+        <div class="alert mb-3">
+          <strong>About this action:</strong>
+          <div class="alert-info">          This will initiate the recalculation of total points for all users. This is a proccess that automatically occurs every day at 12:00 AM. This is only necessary if you need to recalculate points before the scheduled time or would like to manually trigger it.
+          </div>
+        </div>
+        <%= button_to recalculate_points_path, method: :post, class: "btn btn-primary", form: { class: "d-inline" } do %>
+          Recalculate Points
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

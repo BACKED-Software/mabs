@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'capybara/rspec'
+
 require 'simplecov'
 SimpleCov.start
 # frozen_string_literal: true
@@ -20,6 +22,17 @@ SimpleCov.start
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  Capybara.javascript_driver = :selenium_chrome_headless
+  # or :selenium_chrome to see the browser
+
+  # Use JavaScript driver for tests tagged with :js
+  config.before(:each, type: :feature, js: true) do
+    Capybara.current_driver = Capybara.javascript_driver
+  end
+
+  config.after(:each, type: :feature, js: true) do
+    Capybara.use_default_driver
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

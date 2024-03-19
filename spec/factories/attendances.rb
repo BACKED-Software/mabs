@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :attendance do
-    eventID { 1 }
-    googleUserID { 'MyText' }
-    timeOfCheckIn { '2024-02-29 16:27:06' }
-    pointsAwarded { 1 }
+    eventID { create(:event).id }
+    googleUserID { create(:user).uid }
+    timeOfCheckIn { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
+    pointsAwarded { Faker::Number.between(from: 1, to: 10) }
   end
 end

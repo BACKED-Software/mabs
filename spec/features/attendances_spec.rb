@@ -6,9 +6,19 @@ require 'rails_helper'
 
 RSpec.feature 'Attendances Integration', type: :feature do
   let(:user) { create(:user) }
+  let(:existing_user) { User.find_by(uid: user.uid) }
   let!(:event) { create(:event, eventName: 'Test Event') }
   let!(:event2) { create(:event, eventName: 'Test Event 2') }
   let!(:attendance) { create(:attendance, eventID: event.id, googleUserID: user.uid) }
+  before do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    Attendance.create(
+      googleUserID: user.uid,
+      eventID: event.id,
+      pointsAwarded: event.eventPoints,
+      timeOfCheckIn: DateTime.now
+    )
+  end
 
   scenario 'user views attended events' do
     login_as(user, scope: :user)
@@ -47,6 +57,6 @@ RSpec.feature 'Attendances Integration', type: :feature do
     click_button 'Submit'
 
     expect(page).to have_content('You have already checked in for this event')
-    expect(Attendance.count).to eq(2) # Ensure no new records were created
+    expect(Attendance.count).to eq(3) # Ensure no new records were created
   end
 end
