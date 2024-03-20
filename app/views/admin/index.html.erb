@@ -1,17 +1,6 @@
 <% content_for(:title, 'Admin Tools') %>
 
 <div class="container pt-5 pb-5">
-  <% if flash[:notice] %>
-    <div class="alert alert-success" role="alert">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
-  <% if flash[:alert] %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
-
   <div class="alert alert-warning">
     <h4 class="alert-heading">Please Proceed with Caution</h4>
     <p>
