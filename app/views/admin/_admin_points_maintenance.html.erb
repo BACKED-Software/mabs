@@ -21,5 +21,36 @@
         <% end %>
       </div>
     </div>
+
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingBackup">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBackup" aria-expanded="false" aria-controls="collapseBackup">
+        Backup Database
+      </button>
+    </h2>
+
+    <div id="collapseBackup" class="accordion-collapse collapse" aria-labelledby="headingBackup" data-bs-parent="#pointsAccordion">
+      <div class="accordion-body">
+        <div class="alert mb-3">
+          <strong>About this action:</strong>
+          <div class="alert-info">
+          Perform a backup of the database. This will create a backup of the database and store it in the backups folder. This is a good practice to perform routinely. Click backup database to perform a backup now. Click list backups to view the list of backups and download them locally.
+          </div>
+        </div>
+        <div class="buttons-row mb-3">
+          <%= button_to 'Backup Database', backup_database_path, method: :post, class: "btn btn-warning" %>
+          <%= link_to 'List Backups', list_backups_path, class: "btn btn-primary" %>
+        </div>
+        <%= form_with(url: import_backup_path, method: :post, local: true, multipart: true, class: "mt-4") do |form| %>
+          <div class="mb-3">
+            <%= form.label :backup_file, "Upload Backup File:", class: "form-label" %>
+            <%= form.file_field :backup_file, accept: '.sql', class: "form-control" %>
+          </div>
+          <%= form.submit "Import Backup", class: "btn btn-success" %>
+        <% end %>
+
+      </div>
+    </div>
   </div>
 </div>
