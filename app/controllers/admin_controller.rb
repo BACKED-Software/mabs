@@ -95,6 +95,107 @@ class AdminController < ApplicationController
     redirect_to admin_index_path, notice: 'Recalculation of points has been initiated.'
   end
 
+  def backup_database
+    job_id = DatabaseBackupJob.perform_later
+    flash[:notice] = "Backup job submitted with job ID #{job_id}"
+    redirect_to admin_index_path
+  end
+
+  def list_backups
+    backup_dir = Rails.root.join('private', 'db_backups')
+    @backup_files = Dir.glob("#{backup_dir}/*.sql").map do |file_path|
+      {
+        name: File.basename(file_path),
+        size: File.size(file_path),
+        created_at: File.ctime(file_path)
+      }
+    end
+  end
+
+
+  def download_backup
+    file_name = params[:file_name]
+    file_path = "#{Rails.root}/private/db_backups/#{file_name}"
+
+    # Security check to ensure only backup files can be downloaded
+    if File.exist?(file_path) && file_path.start_with?("#{Rails.root}/private/db_backups/")
+      send_file file_path, type: 'application/sql', disposition: 'attachment', filename: file_name
+    else
+      redirect_to list_backups_path, alert: 'File does not exist.'
+    end
+  end
+
+  def delete_backup
+    file_name = params[:file_name]
+    backup_file_path = Rails.root.join('private', 'db_backups', file_name)
+
+    # Security: Ensure the path is within the expected backup directory to prevent directory traversal attacks
+    if backup_file_path.to_s.start_with?(Rails.root.join('private', 'db_backups').to_s) && File.exist?(backup_file_path)
+      File.delete(backup_file_path)
+      flash[:notice] = "#{file_name} has been successfully deleted."
+    else
+      flash[:alert] = "File not found or invalid."
+    end
+
+    redirect_to list_backups_path
+  end
+
+  def import_backup
+    uploaded_file = params[:backup_file]
+
+    if uploaded_file.present?
+      # Generate a unique filename
+      timestamp = Time.now.utc.strftime('%Y%m%d%H%M%S')
+      file_name = "db_backup_#{timestamp}.sql"
+      file_path = Rails.root.join('tmp', file_name)
+
+      # Save the uploaded file to the server filesystem
+      File.open(file_path, 'wb') do |file|
+        file.write(uploaded_file.read)
+      end
+
+      Rails.logger.info "Importing database from file: #{file_path}"
+      Rails.logger.info "File content: #{File.read(file_path).lines.first(10)}"
+
+      # Database configuration
+      database_name = Rails.configuration.database_configuration[Rails.env]["database"]
+      username = ENV['DATABASE_USER'] || Rails.configuration.database_configuration[Rails.env]["username"]
+      password = ENV['DATABASE_PASSWORD'] || Rails.configuration.database_configuration[Rails.env]["password"]
+      host = 'localhost' # or another host if your DB isn't on localhost
+
+      # Build the pg_restore command
+      command = "PGPASSWORD=#{password} pg_restore --username=#{username} --dbname=#{database_name} --clean --host=#{host} #{file_path}"
+
+      Rails.logger.info "Executing command: #{command}"
+
+      # Execute the command and capture standard error output
+      output = `#{command} 2>&1`
+      success = $?.success?
+
+      # Log pg_restore output
+      Rails.logger.info "pg_restore output: #{output}"
+
+      # Handle success or failure
+      if success
+        flash[:notice] = "Database successfully imported to #{database_name}."
+      else
+        flash[:alert] = "Database import failed. Error message: #{output}"
+      end
+
+      # Remove the temporary file after import
+      File.delete(file_path) if File.exist?(file_path)
+    else
+      flash[:alert] = "No file uploaded."
+    end
+
+    redirect_to admin_index_path
+  rescue => e
+    Rails.logger.error "Import failed: #{e.message}"
+    flash[:alert] = "Import failed: #{e.message}"
+    redirect_to admin_index_path
+  end
+
+
   private
 
   def check_admin

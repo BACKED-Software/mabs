@@ -478,3 +478,9 @@ h1 {
 .right-justified {
     text-align: right;
 }
+
+.buttons-row {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start of the container */
+    gap: 10px; /* Optional: adds some space between the buttons */
+}
