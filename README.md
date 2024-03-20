@@ -58,4 +58,3 @@ bundle exec rspec
  - Brandon Fornero
  - Kirk Graham
  - Conner Kaufhold
-

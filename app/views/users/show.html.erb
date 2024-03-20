@@ -1,0 +1,40 @@
+<%= link_to "Back to Home", root_path %>
+
+
+<% if @user %>
+  <div id="<%= dom_id @user %>">
+    <%= render @user %>
+  </div>
+<% else %>
+  <p>User not found</p>
+<% end %>
+
+<% if user_signed_in? && (current_user == @user) %>
+  <div class="actions">
+    <%= link_to "Update Profile", edit_user_path(@user) %>
+    <%= link_to "Delete", delete_user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
+
+<% if user_signed_in? && current_user.is_admin? && !@user.is_admin? %>
+  <%= link_to 'Make Admin', make_admin_user_path(@user), method: :patch, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<% if user_signed_in? && (current_user == @user) %>
+  <h2>Upcoming Events</h2>
+  <ul>
+    <% @rsvps.each do |rsvp| %>
+      <% event = rsvp.event %>
+      <% puts "RSVP: #{rsvp.inspect}, Event: #{event.inspect}" %>
+      <% if event.eventTime > Time.now %>
+        <li>
+          <%= link_to event.eventName, event_path(event) %>
+          <p><%= event.eventTime.strftime("%B %d, %Y") %></p>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2> <%= link_to 'Back to Dashboard', root_path %> </h2>
+

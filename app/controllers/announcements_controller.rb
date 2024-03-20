@@ -3,7 +3,10 @@
 # This class is for creating and storing MCABS announcements
 class AnnouncementsController < ApplicationController
   # before_action :authenticate_user!, only: %i[new create edit update delete destroy]
+  before_action :check_admin, only: %i[new create edit update delete destroy] # Custom filter to check for admin status
   before_action :set_announcement, only: %i[show edit update destroy]
+  before_action :set_user
+  layout 'authenticated_layout'
 
   # GET /announcements or /announcements.json
   def index
@@ -28,7 +31,8 @@ class AnnouncementsController < ApplicationController
 
   # POST /announcements or /announcements.json
   def create
-    @announcement = Announcement.new(announcement_params)
+    @announcement = @user.announcements.new(announcement_params)
+    @announcement.googleUserID = @user.uid
     @announcement.dateOfAnnouncement = DateTime.now
 
     respond_to do |format|
@@ -70,6 +74,18 @@ class AnnouncementsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_announcement
     @announcement = Announcement.find(params[:id])
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = current_user
+  end
+
+  def check_admin
+    return if current_user&.admin?
+
+    flash[:alert] = 'You are not authorized to access this page.'
+    redirect_to announcements_path # or any other path you wish to redirect to
   end
 
   # Only allow a list of trusted parameters through.

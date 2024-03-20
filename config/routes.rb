@@ -10,6 +10,27 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
 
   # define the events resources routes
+  get '/admin-tools', to: 'admin#index'
+  get '/admin/upcoming_events', to: 'admin#upcoming_events'
+  get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
+  get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
+
+  get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
+  get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
+  get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
+  get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
+
+  resources :admin do
+    member do
+      # get 'make_admin'
+      # patch 'update'
+      # delete 'destroy'
+      get 'delete'
+      get 'promote_to_admin'
+      get 'demote_to_user'
+      # get 'export_demographics'
+    end
+  end
 
   resources :events do
     # special route for deleting events
@@ -20,9 +41,43 @@ Rails.application.routes.draw do
 
   # define the announcements resources routes
   resources :announcements do
-    # special route for deleting events
+    # special route for deleting announcements
     member do
       get 'delete'
     end
   end
+
+  resources :users do
+    # special route for deleting users
+    member do
+      get 'delete'
+      patch 'make_admin'
+    end
+  end
+
+  resources :attendances do
+    member do
+      get 'delete'
+    end
+  end
+
+  post 'award_points', to: 'points#award', as: 'award_points'
+
+  get 'manage_points', to: 'points#manage', as: 'manage_points'
+
+  # config/routes.rb
+  post 'points/save_changes', to: 'points#save_changes', as: :save_changes_points
+
+  resources :points do
+    member do
+      get 'delete'
+    end
+  end
+
+  resources :rsvps, only: %i[index create destroy]
+
+  get 'leaderboard/index'
+  get 'dashboard/index'
+
+  post 'recalculate_points', to: 'admin#recalculate_points'
 end

@@ -1,8 +1,7 @@
 <%= form_with(model: event) do |form| %>
   <% if event.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger" role="alert">
       <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
       <ul>
         <% event.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,25 +10,48 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="mb-3">
     <%= form.label :eventName, style: "display: block" %>
-    <%= form.text_field :eventName %>
-    <%= form.label :eventLocation, style: "display: block" %>
-    <%= form.text_area :eventLocation %>
-    <%= form.label :eventInfo, style: "display: block" %>
-    <%= form.text_field :eventInfo %>
-    <%= form.label :eventTime, style: "display: block" %>
-    <%= form.datetime_local_field :eventTime %>
-
-    <%= form.label :sponsor_title, style: "display: block" %>
-    <%= form.text_field :sponsor_title %>
-
-    <%= form.label :sponsor_description, style: "display: block" %>
-    <%= form.text_area :sponsor_description %>
+    <%= form.text_field :eventName, class: "form-control" %>
   </div>
-  
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.label :eventLocation, style: "display: block" %>
+    <%= form.text_field :eventLocation, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :eventInfo, style: "display: block" %>
+    <%= form.rich_text_area :eventInfo, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :eventTime, style: "display: block" %>
+    <%= form.datetime_local_field :eventTime, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :eventPoints, style: "display: block" %>
+    <%= form.text_field :eventPoints, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :sponsor_title, style: "display: block" %>
+    <%= form.text_field :sponsor_title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :sponsor_description, style: "display: block" %>
+    <%= form.rich_text_area :sponsor_description, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, style: "display: block" %>
+    <%= form.text_field :password, class: "form-control" %>
+  </div>
+
+  <br>
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

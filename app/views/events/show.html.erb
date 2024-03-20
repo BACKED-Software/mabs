@@ -1,12 +1,15 @@
-<header class="top-bar">
-  <h1>
-    Events
-  </h1>
-</header>
-<%= link_to "Back to list", events_path %>
+<p><%= notice %></p>
+<h1>
+  Events
+</h1>
+
+<%= link_to "Back to Home", "/dashboard/index" %>
 <%= render @event %>
 
 <div class="actions">
-  <%= link_to("Edit", edit_event_path(@event)) %>
-  <%= link_to("Delete", delete_event_path(@event))%>
+  <% if user_signed_in? && @current_user.is_admin == true %>
+    <%= link_to("Edit", edit_event_path(@event)) %>
+    <%= link_to("Delete", delete_event_path(@event))%>
+  <% end %>
 </div>
+

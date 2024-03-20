@@ -1,0 +1,119 @@
+<%# Bootstrap Accordion for managing user points %>
+<div class="accordion" id="pointsAccordion">
+  <%# Accordion Item for Awarding Points %>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingAwardPoints">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAwardPoints" aria-expanded="true" aria-controls="collapseAwardPoints">
+        Award User Points
+      </button>
+    </h2>
+    <div id="collapseAwardPoints" class="accordion-collapse collapse" aria-labelledby="headingAwardPoints" data-bs-parent="#pointsAccordion">
+      <div class="accordion-body">
+        <%# User lookup and point awarding form %>
+        <%= form_with(url: award_points_path, method: :post, local: true, id: 'awardPointsForm') do |form| %>
+          <div class="mb-3">
+            <%= form.label :user_identifier, 'User Identifier (Email or ID)' %>
+            <%= form.text_field :user_identifier, class: 'form-control', placeholder: 'Enter user email or ID', required: true %>
+          </div>
+
+          <%# Point awarding fields %>
+          <div class="mb-3">
+            <%= label_tag :numPointsAwarded, 'Number of Points Awarded' %>
+            <%= number_field_tag 'point[numPointsAwarded]', nil, class: 'form-control', required: true %>
+          </div>
+
+          <%# Hidden field for "Awarded By" set to the current user's ID or email %>
+          <%= hidden_field_tag 'point[awardedBy]', current_user.email %>
+
+          <div class="mb-3">
+            <%= label_tag :dateOfAward, 'Date of Award' %>
+            <%= date_field_tag 'point[dateOfAward]', nil, class: 'form-control', required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= label_tag :awardDescription, 'Description' %>
+            <%= text_area_tag 'point[awardDescription]', nil, class: 'form-control', required: true %>
+          </div>
+
+          <%= form.submit 'Award Points', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+  <%# Accordion Item for Managing Awarded Points %>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingManagePoints">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseManagePoints" aria-expanded="false" aria-controls="collapseManagePoints">
+        Manage Awarded Points
+      </button>
+    </h2>
+    <div id="collapseManagePoints" class="accordion-collapse collapse" aria-labelledby="headingManagePoints" data-bs-parent="#pointsAccordion" collapsed>
+      <div class="accordion-body">
+        <%= form_with(url: manage_points_path, method: :get, id: 'managePointsForm', local: true) do |form| %>
+          <div class="mb-3">
+            <%= form.label :email, 'User Email' %>
+            <%= form.text_field :email, class: 'form-control', placeholder: 'Enter user email', required: true %>
+          </div>
+          <%= form.submit 'Manage Points', class: 'btn btn-primary', id: 'managePointsButton' %>
+        <% end %>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <%# Accordion Item for Recalculating All Event Points %>
+</div>
+
+<%# Modal for Managing User Points %>
+<div class="modal fade" id="manageUserPointsModal" tabindex="-1" aria-labelledby="manageUserPointsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="manageUserPointsModalLabel">Manage Points for User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%# This is where the user points management table will be injected %>
+        <div id="userPointsTableContainer">
+          <!-- Table will be loaded here based on the user selected -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# JavaScript to handle form submission and modal interaction %>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const awardPointsForm = document.getElementById('awardPointsForm');
+        const managePointsForm = document.getElementById('managePointsForm');
+        managePointsForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.querySelector('#managePointsForm input[name="email"]').value;
+
+            fetch(`/manage_points?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text()
+                })
+                .then(data => {
+                    document.getElementById('userPointsTableContainer').innerHTML = data;
+                    var modal = new bootstrap.Modal(document.getElementById('manageUserPointsModal'));
+                    modal.show();
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    })
+</script>

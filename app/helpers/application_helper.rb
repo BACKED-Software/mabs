@@ -3,4 +3,20 @@
 # app/helpers/application_helper.rb
 # Helper methods for use across the application.
 module ApplicationHelper
+  def truncate_with_link(text, max_length, link_url)
+    # Convert ActionText::RichText to plain text if necessary
+    text = text.to_plain_text if text.is_a?(ActionText::RichText)
+
+    truncated_text = truncate(text, length: max_length, separator: ' ')
+    if text.length > max_length
+      truncated_text += link_to ' (Read more)', link_url, target: '_blank', style: 'font-size: 14px;'
+    end
+    truncated_text.html_safe
+  end
+
+  def require_sign_in(&block)
+    return unless user_signed_in?
+
+    capture(&block)
+  end
 end
