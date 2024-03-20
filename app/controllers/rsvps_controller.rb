@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class RsvpsController < ApplicationController
-  before_action :set_user, except: :index
+  before_action :set_user
   before_action :set_event, except: :index
+  before_action :check_admin, only: :index
   layout 'authenticated_layout'
 
   def index
@@ -34,11 +35,14 @@ class RsvpsController < ApplicationController
   private
 
   def set_user
-    uid = params[:user_uid] || params[:rsvp][:user_uid]
-    @user = User.find_by!(uid:)
-    return if @user
+    @user = current_user
+  end
 
-    render json: { error: 'User not found' }, status: :not_found
+  def check_admin
+    return if current_user&.admin?
+
+    flash[:alert] = 'You are not authorized to access this page.'
+    redirect_to dashboard_index_path # or any other path you wish to redirect to
   end
 
   def set_event

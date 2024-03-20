@@ -73,13 +73,13 @@ RSpec.describe 'Leaderboard', type: :feature do
     expect(page).not_to have_content(user4.full_name)
 
     click_link 'View Next Users'
-    expect(page).to have_content(user1.full_name, count: 2) # user1 should appear twice now
+    expect(page).to have_content(user1.full_name, count: 3) # user1 should appear three times now as they are off-canvas, on the left, and on the right
     expect(page).to have_content(user2.full_name)
     expect(page).not_to have_content(user3.full_name)
     expect(page).not_to have_content(user4.full_name)
 
     click_link 'View Next Users'
-    expect(page).to have_content(user1.full_name, count: 2)
+    expect(page).to have_content(user1.full_name, count: 3) # user1 should appear three times now as they are off-canvas, on the left, and on the right
     expect(page).to have_content(user2.full_name)
     expect(page).to have_content(user3.full_name)
     expect(page).not_to have_content(user4.full_name)

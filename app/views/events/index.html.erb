@@ -4,8 +4,10 @@
     <div class="card">
       <div class="card-header">
         <div class="mb align-items-end">
-          <%= link_to new_event_path, class: "btn btn-primary d-block w-100" do %>
-            <i class="fas fa-plus-circle"></i> Create New Event
+          <% if user_signed_in? && @current_user.is_admin == true %>
+            <%= link_to new_event_path, class: "btn btn-primary d-block w-100" do %>
+              <i class="fas fa-plus-circle"></i> Create New Event
+            <% end %>
           <% end %>
         </div>
       </div>

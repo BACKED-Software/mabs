@@ -23,7 +23,9 @@
               <strong>Sponsor Description:</strong> <%= raw event.sponsor_description %>
           </div>
           <div>
+            <% if user_signed_in? && @current_user.is_admin == true %>
               <strong>Password:</strong> <%= event.password %>
+            <% end %>  
           </div>
       </div>
       </div>
