@@ -5,6 +5,10 @@ class AdminController < ApplicationController
   before_action :check_admin         # Custom filter to check for admin status
   layout 'authenticated_layout'
 
+  def valid_backup_file_name?(file_name)
+    /\A\w[\w\-]*\.sql\z/.match?(file_name)
+  end
+
   def index
     @users = User.all
     @users = User.all.order(is_admin: :desc, full_name: :asc)
@@ -112,29 +116,36 @@ class AdminController < ApplicationController
     end
   end
 
-
   def download_backup
     file_name = params[:file_name]
-    file_path = "#{Rails.root}/private/db_backups/#{file_name}"
 
-    # Security check to ensure only backup files can be downloaded
-    if File.exist?(file_path) && file_path.start_with?("#{Rails.root}/private/db_backups/")
-      send_file file_path, type: 'application/sql', disposition: 'attachment', filename: file_name
+    if valid_backup_file_name?(file_name)
+      file_path = Rails.root.join('private', 'db_backups', file_name)
+
+      if File.exist?(file_path)
+        send_file file_path, type: 'application/sql', disposition: 'attachment', filename: file_name
+      else
+        redirect_to list_backups_path, alert: 'File not found.'
+      end
     else
-      redirect_to list_backups_path, alert: 'File does not exist.'
+      redirect_to list_backups_path, alert: 'Invalid file name.'
     end
   end
 
   def delete_backup
     file_name = params[:file_name]
-    backup_file_path = Rails.root.join('private', 'db_backups', file_name)
 
-    # Security: Ensure the path is within the expected backup directory to prevent directory traversal attacks
-    if backup_file_path.to_s.start_with?(Rails.root.join('private', 'db_backups').to_s) && File.exist?(backup_file_path)
-      File.delete(backup_file_path)
-      flash[:notice] = "#{file_name} has been successfully deleted."
+    if valid_backup_file_name?(file_name)
+      backup_file_path = Rails.root.join('private', 'db_backups', file_name)
+
+      if File.exist?(backup_file_path)
+        File.delete(backup_file_path)
+        flash[:notice] = "#{file_name} has been successfully deleted."
+      else
+        flash[:alert] = "File not found."
+      end
     else
-      flash[:alert] = "File not found or invalid."
+      flash[:alert] = "Invalid file name."
     end
 
     redirect_to list_backups_path
@@ -155,31 +166,26 @@ class AdminController < ApplicationController
       end
 
       Rails.logger.info "Importing database from file: #{file_path}"
-      Rails.logger.info "File content: #{File.read(file_path).lines.first(10)}"
 
       # Database configuration
       database_name = Rails.configuration.database_configuration[Rails.env]["database"]
       username = ENV['DATABASE_USER'] || Rails.configuration.database_configuration[Rails.env]["username"]
       password = ENV['DATABASE_PASSWORD'] || Rails.configuration.database_configuration[Rails.env]["password"]
-      host = 'localhost' # or another host if your DB isn't on localhost
+      host = 'localhost'
 
-      # Build the pg_restore command
-      command = "PGPASSWORD=#{password} pg_restore --username=#{username} --dbname=#{database_name} --clean --host=#{host} #{file_path}"
+      # Prepare environment variables for the command
+      env = {"PGPASSWORD" => password}
 
-      Rails.logger.info "Executing command: #{command}"
+      # Build and execute the command using array syntax
+      command = ["pg_restore", "--username=#{username}", "--dbname=#{database_name}", "--clean", "--host=#{host}", file_path.to_s]
+      Rails.logger.info "Executing command: #{command.join(' ')} without password for security reasons"
 
-      # Execute the command and capture standard error output
-      output = `#{command} 2>&1`
-      success = $?.success?
+      success = system(env, *command)
 
-      # Log pg_restore output
-      Rails.logger.info "pg_restore output: #{output}"
-
-      # Handle success or failure
       if success
         flash[:notice] = "Database successfully imported to #{database_name}."
       else
-        flash[:alert] = "Database import failed. Error message: #{output}"
+        flash[:alert] = "Database import failed. Check server logs for details."
       end
 
       # Remove the temporary file after import
@@ -194,7 +200,6 @@ class AdminController < ApplicationController
     flash[:alert] = "Import failed: #{e.message}"
     redirect_to admin_index_path
   end
-
 
   private
 
