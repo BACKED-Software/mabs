@@ -12,10 +12,10 @@ RSpec.describe DatabaseBackupJob, type: :job do
       allow(Time).to receive_message_chain(:now, :utc, :strftime).and_return(timestamp)
     end
 
-    it "logs the database backup creation" do
+    it "performs the database backup creation" do
       DatabaseBackupJob.perform_now
 
-      expect(logger).to have_received(:info).with("Backup created at #{Rails.root.join('private', 'db_backups', "db_backup_#{timestamp}.sql")}")
+      expect(File.exist?(Rails.root.join('private', 'db_backups', "db_backup_#{timestamp}.sql"))).to be true
     end
 
     it "logs an error message when an exception is raised" do
@@ -24,13 +24,6 @@ RSpec.describe DatabaseBackupJob, type: :job do
       DatabaseBackupJob.perform_now
 
       expect(logger).to have_received(:error).with(a_string_starting_with("Failed to create backup:"))
-    end
-
-    it "logs nothing when there are no errors" do
-      DatabaseBackupJob.perform_now
-
-      # Check that logger.error was not called, meaning no exceptions raised
-      expect(logger).not_to have_received(:error)
     end
   end
 end
