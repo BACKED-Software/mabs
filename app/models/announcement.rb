@@ -2,7 +2,6 @@
 
 class Announcement < ApplicationRecord
   self.primary_key = 'announcementID'
-  has_rich_text :body
   validates :googleUserID, presence: true
   validates :subject, presence: true
   validates :dateOfAnnouncement, presence: true

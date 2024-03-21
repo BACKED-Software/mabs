@@ -1,62 +1,19 @@
-<div id="events" class="p-4">
-  <h2 class="header">Events</h2>
-  <%= require_sign_in do %>
-    <div class="card">
-      <div class="card-header">
-        <div class="mb align-items-end">
-          <% if user_signed_in? && @current_user.is_admin == true %>
-            <%= link_to new_event_path, class: "btn btn-primary d-block w-100" do %>
-              <i class="fas fa-plus-circle"></i> Create New Event
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-  <div class="card-body">
-  <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
-    <div class="calendar-col">
-      <div class="calendar-date">
-        <%= date.day %>
-        
-      </div>
-      <div class="calendar-events">
-        <ul class="list-unstyled">
-          <% events.sort_by(&:eventTime).each do |event| %>
-            <li>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+<body>
+  <header class="top-bar">
+    <h1>
+      Events
+    </h1>
+  </header>
+  <%= link_to "New Event", new_event_path %><br><br>
+  <div id="events">
+    <% @events.each do |event| %>
+      <%= link_to event do %>
+        <%= event.eventName %>
+      <% end %>
+      <br>
+    <% end %>
   </div>
-</div>
+</body>
 
-<% @events.each do |event| %>
-  <div class="modal fade" id="eventModal_<%= event.id %>" tabindex="-1" aria-labelledby="eventModalLabel_<%= event.id %>" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="eventModalLabel_<%= event.id %>"><%= event.eventName %></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <%= render 'event', event: event %>
-        </div>
-        <div class="modal-footer">
-          <%= require_sign_in do %>
-            <div class="actions mt-3">
-              <%= link_to "Edit", edit_event_path(event), class: "btn btn-outline-primary me-2" %>
-              <%= link_to "Delete", delete_event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
-            </div>
-          <% end %>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
+  <h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
+</div>

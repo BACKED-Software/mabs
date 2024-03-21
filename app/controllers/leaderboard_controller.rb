@@ -2,7 +2,6 @@
 
 # app/controllers/leaderboard_controller.rb
 class LeaderboardController < ApplicationController
-  before_action :set_user
   before_action :authenticate_user!
   layout 'authenticated_layout'
 
@@ -57,11 +56,5 @@ class LeaderboardController < ApplicationController
       user.define_singleton_method(:rank) { u_rank }
       prev_points = user.total_points
     end
-  end
-
-  private
-  
-  def set_user
-    @user = current_user
   end
 end

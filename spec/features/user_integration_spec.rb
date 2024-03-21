@@ -5,11 +5,14 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
   let!(:user) { create(:user) } # Assumes you have a User factory
   let(:admin) { create(:user, is_admin: true) }
-  it 'displays the user' do
-    get user_path(user)
-    expect(response).to have_http_status(200)
-    expect(response.body).to match(Regexp.new(Regexp.escape(user.full_name).gsub("'", '&#39;')))
-    expect(response.body).to include(user.email)
+
+  describe 'GET /users/:id' do
+    it 'displays the user' do
+      get user_path(user)
+      expect(response).to have_http_status(200)
+      expect(response.body).to include(user.full_name)
+      expect(response.body).to include(user.email)
+    end
   end
 
   describe 'GET /users' do

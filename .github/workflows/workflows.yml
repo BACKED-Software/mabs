@@ -8,25 +8,6 @@ env:
 name: Rails tests
 on: [push, pull_request]
 jobs:
-  check-branch-rules:
-    name: Check Branch Rules
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check branch for main
-        if: github.ref == 'refs/heads/main'
-        run: |
-          if [[ "$GITHUB_BASE_REF" != "test" ]]; then
-            echo "You can only merge into main from test."
-            exit 1
-          fi
-      - name: Check branch for test
-        if: github.ref == 'refs/heads/test'
-        run: |
-          if [[ "$GITHUB_BASE_REF" != "dev" ]]; then
-            echo "You can only merge into test from dev."
-            exit 1
-          fi
-          
   rspec-test:
     name: RSpec
     runs-on: ubuntu-latest
@@ -59,7 +40,7 @@ jobs:
       - name: Run tests
         run: bundler exec rspec .
       - name: Run brakeman
-        run: brakeman --no-exit-on-warn -o brakeman.txt
+        run: brakeman -o brakeman.txt
       - name: Run rubocop
         run: bundler exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
       - name: Upload coverage results

@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Dashboard Integration', type: :feature do
-  let!(:admin) { create(:admin) }
-  let!(:user) { create(:user) }
   before do
     @user = create(:user)
     # Update this section to include eventInfo
@@ -43,23 +41,5 @@ RSpec.describe 'Dashboard Integration', type: :feature do
     login_as(@user, scope: :user)
     visit '/'
     expect(page).to have_content('Sign Out')
-  end
-
-  it 'has admin button if signed in as admin' do
-    sign_in admin
-    visit '/'
-    expect(page).to have_content('Admin Tools')
-  end
-
-  it 'has no admin button if signed in as user' do
-    sign_in user
-    visit '/'
-    expect(page).not_to have_content('Admin Tools')
-  end
-
-  it 'user cannot access admin tools directly' do
-    sign_in user
-    visit admin_tools_path
-    expect(page).to have_content('You are not authorized to access this page.')
   end
 end

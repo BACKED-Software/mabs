@@ -6,25 +6,13 @@
   <title><%= yield(:title) %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-  <%= javascript_importmap_tags %>
   <%= csrf_meta_tags %>
   <%= yield(:extra_css) %>
       </head>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 <body>
-<!-- Flash Messages -->
-<% flash.each do |name, msg| %>
-  <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show m-4" role="alert">
-      <%= msg %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
-<% end %>
 <nav class="navbar navbar-expand-md navbar-light fixed-top navbar-bg">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">MABS</a>
@@ -34,71 +22,46 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <%= link_to "Dashboard", dashboard_index_path, class: "nav-link", "data-turbo": "false" %>
+          <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
+        </li>
+        <!-- TODO: make this only show if user is admin -->
+        <li class="nav-item">
+          <%= link_to "Events", events_path, class: "nav-link"%>
         </li>
         <li class="nav-item">
-          <%= link_to "Events", events_path, class: "nav-link", "data-turbo": "false" %>
+          <%= link_to "Announcements", announcements_path, class: "nav-link"%>
         </li>
         <li class="nav-item">
-          <%= link_to "Announcements", announcements_path, class: "nav-link", "data-turbo": "false" %>
-        </li>        
-        <% if user_signed_in? && current_user.is_admin == true %>
-          <li class="nav-item">
-            <%= link_to "Admin Tools", admin_index_url, class: "nav-link", "data-turbo": "false" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Check In", attendances_path, class: "nav-link", "data-turbo": "false" %>
-          </li>
-        <% end %>
+          <a class="nav-link active" aria-current="page" href="/admin-tools">Admin Tools</a>
+        </li>
+
+        <li class="nav-item">
+          <% if user_signed_in? %>
+            <!-- Display sign-out button if the user is signed in -->
+            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+          <% else %>
+            <!-- Display sign-in button if the user is not signed in -->
+            <%= link_to 'Sign In', new_user_session_path %>
+          <% end %>
+        </li>
+        <!-- Add more navigation items here -->
       </ul>
-      <% if user_signed_in? && @current_user.present? %>
-        <a class="d-flex align-items-center" data-bs-toggle="offcanvas" href="#userOffcanvas" role="button" aria-controls="userOffcanvas">
+      <a>
+        <% if user_signed_in? && @current_user.present? %>
           <div class="d-flex align-items-center justify-content-center bg-secondary" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
             <%= image_tag @current_user.avatar_url, alt: "User Avatar", style: 'width: 100%; height: auto;' if @current_user.avatar_url.present? %>
           </div>
-        </a>
-      <%else %>
-        <%= link_to 'Sign In with Google', new_user_session_path, class: "btn btn-light"%>
-      <% end %>
+        <% end %>
+
+      </a>
 
     </div>
-  </div>
-</nav>
-
-<!-- Offcanvas Panel -->
-<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="userOffcanvasLabel">Profile</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <% if user_signed_in? && @current_user.present? %>
-      <!-- User Profile Info -->
-      <div class="user-info text-center">
-        <%= image_tag @current_user.avatar_url, alt: "User Avatar", class: "img-fluid rounded-circle", style: 'width: 80px; height: 80px;' if @current_user.avatar_url.present? %>
-        <h6 class="mt-2"><%= @current_user.full_name %></h6>
-        <p><%= @current_user.email %></p>
-        <%= link_to 'Edit Profile', dashboard_index_url, class: 'btn btn-primary btn-settings' %>
-      </div>
-      <!-- Sign Out Button -->
-      <div class="text-center mt-4">
-        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="offcanvas-footer mt-auto text-center">
-    <small>Produced by <b>BACKeD Software</b></small>
-  </div>
-</div>
-
-
+  </div></nav>
 
       <%= yield %>
 
   <%= yield(:extra_js) %>
-
   </body>
 </html>
-
 
 

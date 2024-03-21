@@ -1,26 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<div id="announcements" class="m-3">
-  <h2 class="header"> Announcements </h2>
+<h1>Announcements</h1>
 
-  <div class="card">
-    <div class="card-header">
-      <%= require_sign_in do %>
-        <div class="mb align-items-end">
-          <% if user_signed_in? && @user.is_admin == true %>
-            <%= link_to new_announcement_path, class: "btn btn-primary d-block w-100" do %>
-              <i class="fas fa-plus-circle"></i> Create New Announcement
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+<%= require_sign_in do %>
+  <%= link_to "Create New Announcement", new_announcement_path %><br><br>
+<% end %>
+
+<div id="announcements">
+  <% @announcements.each do |announcement| %>
+    <div id="<%= dom_id announcement %>">
+      <%= render announcement %>
     </div>
-    <div class="card-body">
-      <% @announcements.each do |announcement| %>
-        <div id="<%= dom_id(announcement) %>">
-            <%= render announcement %>
-          </div>
-      <% end %>
-    </div>
-  </div>
+    <br>
+  <% end %>
+
+  <h2> <%= link_to 'Back to Dashboard', dashboard_index_path %> </h2>
 </div>
