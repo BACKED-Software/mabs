@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class DatabaseBackupJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform(*_args)
     backup_dir = Rails.root.join('private', 'db_backups')
     FileUtils.mkdir_p(backup_dir) unless Dir.exist?(backup_dir)
 
@@ -10,10 +12,10 @@ class DatabaseBackupJob < ApplicationJob
 
     # Retrieve database configurations
     db_config = Rails.configuration.database_configuration[Rails.env]
-    database = db_config["database"]
-    username = ENV['DATABASE_USER'] || db_config["username"]
+    database = db_config['database']
+    username = ENV['DATABASE_USER'] || db_config['username']
     password = ENV['DATABASE_PASSWORD']
-    host = db_config["host"] || 'localhost'
+    host = db_config['host'] || 'localhost'
 
     # Build the pg_dump command
     pg_dump_command = if password.present?
@@ -25,10 +27,10 @@ class DatabaseBackupJob < ApplicationJob
     # Execute the pg_dump command
     execute_pg_dump(pg_dump_command)
     Rails.logger.info "Backup created at #{file_path}"
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Failed to create backup: #{e.message}"
   end
-  
+
   private
 
   def execute_pg_dump(command)

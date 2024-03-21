@@ -20,7 +20,7 @@ RSpec.describe 'Leaderboard', type: :feature do
 
   it 'displays the correct point total' do
     visit leaderboard_index_path
-    expect(page).to have_content("#{user1.total_points}")
+    expect(page).to have_content(user1.total_points.to_s)
   end
 
   it 'displays points in descending order' do
@@ -50,7 +50,7 @@ RSpec.describe 'Leaderboard', type: :feature do
   it 'displays all users ranking trophies' do
     visit leaderboard_index_path
     click_link 'View All Users'
-    expect(page).to have_css("i.fas.fa-medal", count: 4) # Make sure four medal icons are present (gold, silver, bronze)
+    expect(page).to have_css('i.fas.fa-medal', count: 4) # Make sure four medal icons are present (gold, silver, bronze)
     expect(page).to have_content('#', count: 2)
   end
 
