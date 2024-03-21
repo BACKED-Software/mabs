@@ -1,0 +1,40 @@
+<div id="databaseBackups" class="m-3">
+  <h2 class="header">Database Backups</h2>
+
+  <div class="card">
+    <div class="card-header">
+      Database Backup Management
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Size</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @backup_files.each do |file| %>
+            <tr>
+              <td><%= file[:name] %></td>
+              <td><%= number_to_human_size(file[:size]) %></td>
+              <td><%= file[:created_at].strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td>
+                <%= link_to 'Download', download_backup_path(file_name: file[:name]), method: :get, class: "btn btn-primary btn-sm" %>
+                <%= link_to 'Delete', delete_backup_path(file_name: file[:name]), method: :get, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <div class="mt-3">
+    <%= link_to 'Back to Admin Tools', admin_tools_path, class: "btn btn-secondary" %>
+  </div>
+</div>

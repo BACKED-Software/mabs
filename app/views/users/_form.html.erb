@@ -32,7 +32,7 @@
       <%= form.collection_radio_buttons :is_first_generation_college_student, [[true, 'Yes'], [false, 'No']], :first, :last %>
   
       <%= form.label :date_of_birth, style: "display: block" %>
-      <%= form.datetime_local_field :date_of_birth %>
+      <%= form.date_field :date_of_birth %>
   
       <%= form.label :phone_number, style: "display: block" %>
       <%= form.text_field :phone_number %>

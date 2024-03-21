@@ -1,18 +1,24 @@
-<div class="events delete">
-  <header class="top-bar">
-    <h1>
-     Delete Event
-    </h1>
-  </header>
-  <%= link_to("Back to List", events_path) %>
-  <%= form_for(@event, method: 'delete') do |f| %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h1>Delete Event</h1>
+        </div>
+        <div class="card-body">
+          <%= link_to("Back to Calendar", events_path, class: "btn btn-outline-secondary mb-3") %>
 
-    <p>Are you sure you want to permanently delete this event?</p>
-    <p><%= @event.eventName %></p>
+          <%= form_for(@event, method: 'delete') do |f| %>
+            <p>Are you sure you want to permanently delete this event?</p>
+            <div class="card" style="padding: 10px"><%= render @event %></div>
+            </br>
 
-    <div class="form-buttons">
-      <%= f.submit("Delete Event") %>
+            <div class="form-buttons">
+              <%= f.submit("Delete Event", class: "btn btn-danger") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-
-  <% end %>
+  </div>
 </div>

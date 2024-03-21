@@ -1,39 +1,32 @@
-<% content_for(:title, 'Admin Dashboard - User Management') %>
+<% content_for(:title, 'Admin Tools') %>
 
-<div class="container mt-5">
-  <h1>Admin Tools will go here</h1>
-  <%= link_to 'Upcoming Events', admin_upcoming_events_path %>
-<div class="container mt-5">  
-  <h1>User Management</h1>
-  
-  <%= form_with url: admin_tools_path, method: :get, local: true do |form| %>
-    <%= form.label :search, "Search Users:" %>
-    <%= form.text_field :search %>
-    <%= form.submit "Search" %>
-  <% end %>
-  
-  <table class="table mt-3">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Full Name</th>
-        <th>Role</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.email %></td>
-          <td><%= user.full_name %></td>
-          <td><%= user.is_admin ? 'Admin' : 'User' %></td>
-          <td>
-            <%# <%= link_to 'Promote to Admin', make_admin_user_path(user), method: :patch, data: { confirm: 'Are you sure?' } unless user.is_admin %> %>
-            <%= link_to 'Remove User', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="container pt-5 pb-5">
+  <div class="alert alert-warning">
+    <h4 class="alert-heading">Please Proceed with Caution</h4>
+    <p>
+      This section is intended for administrative use. Exercise caution when making modifications to the system and user data.
+    </p>
+  </div>
 
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <h2 class="header"> Manage Application Users </h2>
+  <%= render 'user_management' %>
+
+  <h2 class="header mt-4"> Manage Non-Event Points </h2>
   <%= render 'admin_nonevent_points_manager' %>
+
+
+  <h2 class="header mt-4"> Event Management </h2>
+  <%= render 'upcoming_events' %>
+
+  <h2 class="header mt-4"> Demographic Statistics </h2>
+  <%= render 'demographics',
+             gender_distribution: @gender_distribution,
+             ethnicity_distribution: @ethnicity_distribution,
+             race_distribution: @race_distribution,
+             us_citizen_distribution: @us_citizen_distribution,
+             first_generation_college_student_distribution: @first_generation_college_student_distribution,
+             classification_distribution: @classification_distribution %>
+
+  <h2 class="header mt-4"> Maintenance </h2>
+  <%= render 'admin_points_maintenance' %>
 </div>

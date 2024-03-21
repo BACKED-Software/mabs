@@ -1,0 +1,14 @@
+<body>
+  <p><%= notice %></p>
+  <div id="events">
+  <h1>Events Attended</h1>
+  <% @attendances.each do |attendance| %>
+    <p>
+      <strong>Name:</strong> <%= User.find_by(uid: attendance.googleUserID).full_name %><br>
+      <strong>Event Name:</strong> <%= Event.find(attendance.eventID).eventName  %><br>
+      <strong>Time:</strong> <%= attendance.timeOfCheckIn %><br>
+      <strong>Points:</strong> <%= attendance.pointsAwarded %><br>
+    </p>
+    <br>
+  <% end %>
+</body>

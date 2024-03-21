@@ -8,7 +8,7 @@ class PointsController < ApplicationController
   end
 
   def show
-    redirect_to(admin)
+    redirect_to(admin_index_path)
   end
 
   def new

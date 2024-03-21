@@ -1,0 +1,87 @@
+<%= content_for :title, "Demographic Statistics" %>
+<div class="card p-3">
+  <%= form_with url: admin_demographics_path, method: :get, local: true, id: "chart-selection-form", class: "row" do |form| %>
+    <div class="col-auto">
+      <%= form.label :chart_type, 'Chart Type:', class: "col-form-label" %>
+    </div>
+    <div class="col-auto">
+      <%= form.select :chart_type, options_for_select(
+        {
+          'Gender Distribution' => 'gender',
+          'Ethnicity Distribution (Hispanic or Latino)' => 'ethnicity',
+          'Race Distribution' => 'race',
+          'US Citizen Distribution' => 'us_citizen',
+          'First Generation College Student Distribution' => 'first_generation',
+          'Classification Distribution' => 'classification'
+        }, selected: params[:chart_type]
+      ), { include_blank: 'Select a chart...' }, { class: "form-select form-select-md mb-3" } %>
+    </div>
+  <% end %>
+
+  <section class="statistics" id="charts">
+    <% case params[:chart_type] %>
+    <% when 'gender' %>
+      <div class="chart-container">
+        <%= pie_chart gender_distribution, id: 'gender-distribution-chart', title: 'Gender Distribution' %>
+      </div>
+
+    <% when 'ethnicity' %>
+      <div class="chart-container">
+        <%= pie_chart ethnicity_distribution, id: 'ethnicity-distribution-chart', title: 'Ethnicity Distribution (Hispanic or Latino)' %>
+      </div>
+
+    <% when 'race' %>
+      <div class="chart-container">
+        <%= pie_chart race_distribution, id: 'race-distribution-chart', title: 'Race Distribution' %>
+      </div>
+
+    <% when 'us_citizen' %>
+      <div class="chart-container">
+        <%= pie_chart us_citizen_distribution, id: 'us-citizen-distribution-chart', title: 'US Citizen Distribution' %>
+      </div>
+
+    <% when 'first_generation' %>
+      <div class="chart-container">
+        <%= pie_chart first_generation_college_student_distribution, id: 'first-generation-college-student-distribution-chart', title: 'First Generation College Student Distribution' %>
+      </div>
+
+    <% when 'classification' %>
+      <div class="chart-container">
+        <%= pie_chart classification_distribution, id: 'classification-distribution-chart', title: 'Classification Distribution' %>
+      </div>
+
+    <% else %>
+      <p>Please select a chart to display.</p>
+    <% end %>
+          </section>
+
+
+<br>
+  <h2> <%= link_to 'Download Demographic Data', export_demographics_path, method: :get , class: "btn btn-primary"%> </h2>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // Check if there's a hash in the URL
+        if(window.location.hash) {
+            // Try to find the element
+            var element = document.querySelector(window.location.hash);
+            if(element) {
+                // Scroll to the element
+                element.scrollIntoView();
+            }
+        }
+
+        document.querySelector("#chart-selection-form select[name='chart_type']").addEventListener("change", function() {
+            // Modify the form's action to include a hash before submitting
+            var form = document.getElementById("chart-selection-form");
+            form.action = form.action.split('#')[0] + '#charts';
+            form.submit();
+        });
+    });
+</script>
+
+
+
+

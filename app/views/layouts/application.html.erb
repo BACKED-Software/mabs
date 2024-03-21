@@ -11,11 +11,29 @@
   </head>
 
   <body>
-    <% if flash.any? %>
+
+  <!-- Offcanvas Panel -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="userOffcanvasLabel">User Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Optionally, add more content or links here -->
+      <div class="offcanvas-footer mt-auto">
+        <% if user_signed_in? %>
+          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if flash.any? %>
       <% flash.each do |key, value| -%>
         <section class="flash flash__<%= key %>"><%= value.html_safe %></section>
       <% end -%>
     <% end %>
-    <%= yield %>
+    <%= yield %> 
+
   </body>
 </html>
