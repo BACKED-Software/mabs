@@ -4,6 +4,10 @@
 
 <br>
 
+<div class="actions">
+  <%= link_to "Delete", delete_user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %>
+</div>
+
 <div>
   <%= link_to "Back to Dashboard", root_path %>
 </div>
