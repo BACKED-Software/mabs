@@ -75,7 +75,7 @@
   
   /* Style for dates with events */
   .simple-calendar .has-events {
-    width: 20%;
+    width: 14%;
   }
 
   /* Style for calendar date */
@@ -269,7 +269,7 @@ body {
 .total-points {
     font-weight: bold;
     font-size: 1.5rem; /* Larger font size for emphasis */
-    color: #333; /* Dark color for contrast */
+    color: #007bff; /* Dark color for contrast */
 }
 
 .points-value {
@@ -303,15 +303,14 @@ body {
 .profile p {
     margin: 0;
 }
+
+.user-details {
+    flex-grow: 1;
+}
  
 .full-name {
-    font-size: 16px; /* Set font size for full name */
+    font-size: 16; /* Set font size for full name */
     color: #555; /* Set color for full name */
-}
-  
-.total-points {
-    font-size: 14px; /* Set font size for total points */
-    color: #777; /* Set color for total points */
 }
 
 .points-summary {
@@ -463,6 +462,10 @@ body {
     -webkit-line-clamp: 3; /* Adjust the number of lines as per requirement */
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.announcement-body ul, .announcement-body ol {
+    padding-left: 20px; /* Adjust the padding as per requirement */
 }
 
 h1 {

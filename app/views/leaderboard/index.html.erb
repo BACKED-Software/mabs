@@ -1,48 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Leaderboard</title>
-</head>
-<body>
-  <div class="top-bar">
-    <h1>Leaderboard</h1>
-    <h2> <%= link_to 'Dashboard', dashboard_index_path %> </h2>
-  </div>
+<style>
+  .custom-container {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+  }
+</style>
 
-  <div class="row">
-    <div class="col-md-6">
-      <h2>Your Ranking: <%= @current_user_rank %></h2>
-      <div class="user-profile">
-        <div class="profile">
-          <%= image_tag(current_user.avatar_url) %>
-          <div class="user-details">
-            <p class="full-name"><%= current_user.full_name %></p>
-            <p class="total-points"><%= current_user.total_points %> points</p>
+<div class="container custom-container">
+  <div id="leaderboard" class="m-3">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <div class="mb align-items-end">
+              <h2 class="header text-center"> 
+                <i class="fas fa-trophy"></i> Leaderboard
+              </h2>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <h2 class="border-bottom border-gray border-2 text-center">Your Ranking</h2>
+                  <div class="list-group">
+                  <li class="list-group-item d-flex align-items-center bg-light shadow-sm mb-2">
+                    <h4 class="rank">
+                        <% if @current_user_rank == 1 %>
+                            <i class="fas fa-medal" style="color: goldenrod;"></i>
+                        <% elsif @current_user_rank == 2 %>
+                            <i class="fas fa-medal" style="color: silver;"></i>
+                        <% elsif @current_user_rank == 3 %>
+                            <i class="fas fa-medal" style="color: #CD7F32;"></i>
+                        <% else %>
+                            #
+                        <% end %>
+                        <%= @current_user_rank%>
+                    </h4>
+                    <div class="vr mr-3"></div>
+                    <h4 style="margin-left: 3%;">Total Points: </h4>
+                    <p class="total-points m-1">
+                        <%= @current_user.total_points %>
+                        <i class="fas fa-coins"></i>
+                    </p>
+                </li>
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-7">
+                <h2 class="border-bottom border-gray border-2 text-center">Top Users</h2>
+                <div class="list-group">
+                  <% @users.each_with_index do |user| %>
+                    <%= render 'user_card', user: user, rank: user.rank %>
+                  <% end %> 
+                </div>
+                <% unless @show_all_users or @all_displayed %>
+                  <div class="mt-3">
+                    <%= link_to leaderboard_index_path(show_all: true), class: "btn btn-primary" do %>
+                      View All Users
+                    <% end %>
+                    <%= link_to leaderboard_index_path(user_count: @user_count + 1), class: "btn btn-primary ms-2" do %>
+                      View Next Users
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <h2>Top Users</h2>
-      <% @users.each_with_index do |user| %>
-        <div class="user-profile">
-          <div class="profile">
-            <span class="rank">#<%= user.rank %></span>
-            <%= image_tag(user.avatar_url) %>
-            <div class="user-details">
-              <p class="full-name"><%= user.full_name %></p>
-              <p class="total-points"><%= user.total_points %> points</p>
-            </div>
-          </div>
-        </div>
-      <% end %>           
-      <% unless @show_all_users or @all_displayed %>
-        <%= link_to 'View All Users', leaderboard_index_path(show_all: true), class: "btn btn-primary align-self-start" %>
-        
-        <%# TODO: for production, change from incrementing user_count by 1 to a larger index like 5 or 10 %>
-        <%= link_to 'View Next Users', leaderboard_index_path(user_count: @user_count + 1), class: "btn btn-primary align-self-start" %>
-      <% end %>
-    </div>
   </div>
-</body>
-</html>
+</div>
