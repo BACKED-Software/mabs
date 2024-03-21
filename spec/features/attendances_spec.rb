@@ -8,7 +8,7 @@ RSpec.describe 'Attendances Integration', type: :feature do
   let!(:admin) { create(:admin) }
   let!(:user) { create(:user) }
   let!(:event) { create(:event, eventName: 'Test Event') }
-  let!(:event2) { create(:event, eventName: 'Test Event 2', eventTime: Time.now + 1*60, password: 'pass') }
+  let!(:event2) { create(:event, eventName: 'Test Event 2', eventTime: Time.now + 1 * 60, password: 'pass') }
   let!(:attendance) { create(:attendance, eventID: event.id, googleUserID: user.uid) }
   before do
     Attendance.create(
@@ -32,7 +32,7 @@ RSpec.describe 'Attendances Integration', type: :feature do
       expect(page).to have_content("Points: #{attendance.pointsAwarded}")
     end
   end
-  context 'user can' do 
+  context 'user can' do
     before do
       sign_in user
       visit attendances_path
