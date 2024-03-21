@@ -9,25 +9,32 @@
       </div>
     </div>
     <div class="col-md-6">
-    <div class="event-info ml-3">
-          <div class="mb-2">
-              <strong>Info:</strong> <%= raw event.eventInfo %>
-          </div>
-          <div class="mb-2">
-              <strong>Points:</strong> <%= event.eventPoints %>
-          </div>
-          <div class="mb-2">
-              <strong>Sponsor Title:</strong> <%= event.sponsor_title %>
-          </div>
-          <div class="mb-2">
-              <strong>Sponsor Description:</strong> <%= raw event.sponsor_description %>
-          </div>
-          <div>
-            <% if user_signed_in? && @current_user.is_admin == true %>
-              <strong>Password:</strong> <%= event.password %>
-            <% end %>  
-          </div>
-      </div>
-      </div>
+    <ul class="list-group list-group-flush fs-6">
+                <li class="list-group-item">
+                    <strong>Info:</strong>
+                    <%= raw event.eventInfo %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Sponsor Title:</strong>
+                    <%= event.sponsor_title %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Sponsor Description:</strong>
+                    <%= raw event.sponsor_description %>
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                    <strong>Points: </strong>
+                    <p class="total-points m-1 fs-6">
+                        <%= event.eventPoints %>
+                        <i class="fas fa-coins"></i>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <% if user_signed_in? && @current_user.is_admin == true %>
+                        <strong>Password:</strong>
+                        <%= event.password %>
+                    <% end %>
+                </li>
+            </ul>
   </div>
 </div>
