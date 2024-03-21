@@ -154,6 +154,11 @@ class AdminController < ApplicationController
   def import_backup
     uploaded_file = params[:backup_file]
 
+    unless ENV['DATABASE_URL']
+      flash[:alert] = "Database URL is not configured."
+      redirect_to admin_index_path and return
+    end
+
     if uploaded_file.present?
       # Generate a unique filename
       timestamp = Time.now.utc.strftime('%Y%m%d%H%M%S')
@@ -167,11 +172,12 @@ class AdminController < ApplicationController
 
       Rails.logger.info "Importing database from file: #{file_path}"
 
-      # Database configuration
-      database_name = Rails.configuration.database_configuration[Rails.env]["database"]
-      username = ENV['DATABASE_USER'] || Rails.configuration.database_configuration[Rails.env]["username"]
-      password = ENV['DATABASE_PASSWORD'] || Rails.configuration.database_configuration[Rails.env]["password"]
-      host = 'localhost'
+      # Parse database URL from environment variables
+      db_url = URI.parse(ENV['DATABASE_URL'])
+      database_name = db_url.path.delete_prefix("/")
+      username = db_url.user
+      password = db_url.password
+      host = db_url.host
 
       # Prepare environment variables for the command
       env = {"PGPASSWORD" => password}
