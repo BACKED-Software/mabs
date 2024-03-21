@@ -293,6 +293,12 @@ body {
     font-weight: bold; /* Make rank text bold */
     color: #333; /* Set color for rank text */
 }
+
+.current-user-rank {
+    margin-right: 10px;
+    font-weight: bold; /* Make rank text bold */
+    color: #333; /* Set color for rank text */
+}
   
 .profile img {
     width: 50px;
