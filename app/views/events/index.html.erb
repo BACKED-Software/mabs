@@ -14,27 +14,46 @@
     </div>
   <% end %>
   <div class="card-body">
-  <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
-    <div class="calendar-col">
-      <div class="calendar-date">
-        <%= date.day %>
-        
-      </div>
-      <div class="calendar-events">
-        <ul class="list-unstyled">
-          <% events.sort_by(&:eventTime).each do |event| %>
-            <li>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <!-- Desktop Calendar -->
+    <div class="d-none d-md-block">
+      <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
+        <div class="calendar-col">
+          <div class="calendar-date">
+            <%= date.day %>
+          </div>
+          <div class="calendar-events">
+            <ul class="list-unstyled">
+              <% events.sort_by(&:eventTime).each do |event| %>
+                <li>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                    <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
+                  </button>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    
+    <!-- Mobile List View -->
+    <div class="d-block d-md-none">
+      <% @events.each do |event| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= event.eventName %></h5>
+            <p class="card-text"><%= event.eventTime.strftime('%I:%M %p') %>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                <i class="fas fa-info-circle"></i> More Info
+              </button>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
+
 
 <% @events.each do |event| %>
   <div class="modal fade" id="eventModal_<%= event.id %>" tabindex="-1" aria-labelledby="eventModalLabel_<%= event.id %>" aria-hidden="true">
