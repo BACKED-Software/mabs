@@ -29,7 +29,7 @@ RSpec.describe 'Users', type: :request do
       get edit_user_path(user)
       expect(response).to have_http_status(200)
       expect(response.body).to include('Update Profile')
-      expect(response.body).to include('Back to Dashboard')
+      expect(response.body).to include('Edit your profile')
     end
   end
 
