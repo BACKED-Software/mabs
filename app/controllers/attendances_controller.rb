@@ -25,26 +25,24 @@ class AttendancesController < ApplicationController
   def create
     if Attendance.exists?(eventID: @event.id, googleUserID: @user.uid)
       redirect_to(attendances_path, notice: 'You have already checked in for this event')
-    else
-      if params[:password] == @event.password
-        @attendance = Attendance.new(attendance_params)
-        @attendance.timeOfCheckIn = DateTime.now
-        @attendance.eventID = @event.id
-        @attendance.pointsAwarded = @event.eventPoints
-        @attendance.googleUserID = @user.uid
+    elsif params[:password] == @event.password
+      @attendance = Attendance.new(attendance_params)
+      @attendance.timeOfCheckIn = DateTime.now
+      @attendance.eventID = @event.id
+      @attendance.pointsAwarded = @event.eventPoints
+      @attendance.googleUserID = @user.uid
 
-        respond_to do |format|
-          if @attendance.save
-            format.html { redirect_to(dashboard_index_path, notice: 'Attendance was successfully checked in.') }
-            format.json { render(:show, status: :created, location: @attendance) }
-          else
-            format.html { render(:new, status: :unprocessable_entity) }
-            format.json { render(json: @attendance.errors, status: :unprocessable_entity) }
-          end
+      respond_to do |format|
+        if @attendance.save
+          format.html { redirect_to(dashboard_index_path, notice: 'Attendance was successfully checked in.') }
+          format.json { render(:show, status: :created, location: @attendance) }
+        else
+          format.html { render(:new, status: :unprocessable_entity) }
+          format.json { render(json: @attendance.errors, status: :unprocessable_entity) }
         end
-      else
-        redirect_to(dashboard_index_path, notice: 'Incorrect Password')
       end
+    else
+      redirect_to(dashboard_index_path, notice: 'Incorrect Password')
     end
   end
 

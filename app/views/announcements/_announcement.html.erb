@@ -16,7 +16,7 @@
       <%= link_to announcement_path(announcement), class: "text-decoration-none" do %>
         <h4 class="mb-1" style="color: #0056b3;"> <%= announcement.subject %></h4>
       <% end %>
-      <div id="announcement-content-<%= announcement.id %>">
+      <div id="announcement-content-<%= announcement.id %>" class="announcement-body" >
         <%= announcement.body %>
       </div>
     </div>

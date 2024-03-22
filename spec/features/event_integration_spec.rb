@@ -184,13 +184,13 @@ RSpec.describe 'Events Integration', type: :feature do
       visit event_path(@event)
     end
 
-    it 'event password is not visible' do 
+    it 'event password is not visible' do
       expect(page).not_to have_content('Password:')
     end
 
     ### This case is removed because it grabs the Edit Profile link, the edit event link is not present
     # it 'edit is not accessible' do
-    #   expect(page).not_to have_link('Edit') 
+    #   expect(page).not_to have_link('Edit')
     # end
 
     it 'create is not accessible' do
