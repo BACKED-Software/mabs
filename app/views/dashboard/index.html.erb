@@ -21,8 +21,12 @@
         </div>
         <div class="actions mt-4">
           <%= require_sign_in do %>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">View Point History</button>
-            <a href="<%= leaderboard_index_path %>" class="btn btn-info">View Leaderboard</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">
+              <i class="fas fa-history"></i> View Point History
+            </button>
+            <a href="<%= leaderboard_index_path %>" class="btn btn-info">
+              <i class="fas fa-trophy"></i> View Leaderboard
+            </a>
           <% end %>
 
         </div>
@@ -86,10 +90,10 @@
               </div>
               <p class="text-muted mb-1"><%= announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
 
-              <div id="announcement-content-<%= announcement.id %>" class="line-clamp">
-                <%= announcement.body %>
+              <div id="announcement-content-<%= announcement.id %>" class="line-clamp announcement-body">
+                <%= raw announcement.body %>
               </div>
-              <a href="#" class="text-muted read-more-link" style="font-size: 14px;" onclick="toggleContent('<%= announcement.id %>'); return false;">Read more</a>
+              <%# Check if the content overflows its container to decide whether to show the "Read more" link %>
             </div>
           <% end %>
 
@@ -236,10 +240,37 @@
           }
       });
 
+      document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener('click', function(event) {
+          if (event.target && event.target.matches('.read-more-link')) {
+            event.preventDefault();
+            toggleContent(event.target.dataset.announcementId);
+          }
+        });
+      });
+
+      <% @announcements.each do |announcement| %>
+        var contentDiv<%= announcement.id %> = document.getElementById('announcement-content-<%= announcement.id %>');
+        if (contentDiv<%= announcement.id %>.scrollHeight > contentDiv<%= announcement.id %>.clientHeight) {
+          var readMoreLink<%= announcement.id %> = document.createElement('a');
+          readMoreLink<%= announcement.id %>.setAttribute('href', '#');
+          readMoreLink<%= announcement.id %>.setAttribute('class', 'text-muted read-more-link');
+          readMoreLink<%= announcement.id %>.setAttribute('data-announcement-id', '<%= announcement.id %>');
+          readMoreLink<%= announcement.id %>.setAttribute('style', 'font-size: 14px;');
+          readMoreLink<%= announcement.id %>.innerText = 'Read more';
+          contentDiv<%= announcement.id %>.parentNode.appendChild(readMoreLink<%= announcement.id %>);
+        }
+      <% end %>
+
 
       function toggleContent(announcementId) {
           const contentDiv = document.getElementById(`announcement-content-${announcementId}`);
           contentDiv.classList.toggle('line-clamp');
+          if (contentDiv.classList.contains('line-clamp')) {
+              event.target.innerHTML = 'Read more';
+          } else {
+              event.target.innerHTML = 'Read less';
+          }
       }
 
 

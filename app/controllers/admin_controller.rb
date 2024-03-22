@@ -6,7 +6,7 @@ class AdminController < ApplicationController
   layout 'authenticated_layout'
 
   def valid_backup_file_name?(file_name)
-    /\A\w[\w\-]*\.sql\z/.match?(file_name)
+    /\A\w[\w-]*\.sql\z/.match?(file_name)
   end
 
   def index
@@ -142,10 +142,10 @@ class AdminController < ApplicationController
         File.delete(backup_file_path)
         flash[:notice] = "#{file_name} has been successfully deleted."
       else
-        flash[:alert] = "File not found."
+        flash[:alert] = 'File not found.'
       end
     else
-      flash[:alert] = "Invalid file name."
+      flash[:alert] = 'Invalid file name.'
     end
 
     redirect_to list_backups_path
@@ -153,6 +153,11 @@ class AdminController < ApplicationController
 
   def import_backup
     uploaded_file = params[:backup_file]
+
+    unless ENV['DATABASE_URL']
+      flash[:alert] = "Database URL is not configured."
+      redirect_to admin_index_path and return
+    end
 
     if uploaded_file.present?
       # Generate a unique filename
@@ -167,17 +172,19 @@ class AdminController < ApplicationController
 
       Rails.logger.info "Importing database from file: #{file_path}"
 
-      # Database configuration
-      database_name = Rails.configuration.database_configuration[Rails.env]["database"]
-      username = ENV['DATABASE_USER'] || Rails.configuration.database_configuration[Rails.env]["username"]
-      password = ENV['DATABASE_PASSWORD'] || Rails.configuration.database_configuration[Rails.env]["password"]
-      host = 'localhost'
+      # Parse database URL from environment variables
+      db_url = URI.parse(ENV['DATABASE_URL'])
+      database_name = db_url.path.delete_prefix("/")
+      username = db_url.user
+      password = db_url.password
+      host = db_url.host
 
       # Prepare environment variables for the command
-      env = {"PGPASSWORD" => password}
+      env = { 'PGPASSWORD' => password }
 
       # Build and execute the command using array syntax
-      command = ["pg_restore", "--username=#{username}", "--dbname=#{database_name}", "--clean", "--host=#{host}", file_path.to_s]
+      command = ['pg_restore', "--username=#{username}", "--dbname=#{database_name}", '--clean', "--host=#{host}",
+                 file_path.to_s]
       Rails.logger.info "Executing command: #{command.join(' ')} without password for security reasons"
 
       success = system(env, *command)
@@ -185,17 +192,17 @@ class AdminController < ApplicationController
       if success
         flash[:notice] = "Database successfully imported to #{database_name}."
       else
-        flash[:alert] = "Database import failed. Check server logs for details."
+        flash[:alert] = 'Database import failed. Check server logs for details.'
       end
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)
     else
-      flash[:alert] = "No file uploaded."
+      flash[:alert] = 'No file uploaded.'
     end
 
     redirect_to admin_index_path
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Import failed: #{e.message}"
     flash[:alert] = "Import failed: #{e.message}"
     redirect_to admin_index_path

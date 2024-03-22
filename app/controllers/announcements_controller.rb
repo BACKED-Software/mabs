@@ -15,7 +15,7 @@ class AnnouncementsController < ApplicationController
     # Reset the PK sequence
     # ActiveRecord::Base.connection.reset_pk_sequence!('announcements')
 
-    @announcements = Announcement.all
+    @announcements = Announcement.all.order(dateOfAnnouncement: :desc)
   end
 
   # GET /announcements/1 or /announcements/1.json

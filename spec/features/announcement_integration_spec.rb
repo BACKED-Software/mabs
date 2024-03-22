@@ -44,7 +44,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
         dateOfAnnouncement: DateTime.now,
         body: 'New Body'
       )
-  
+
       # Visit the show page of the announcement
       visit announcement_path(announcement)
       click_link 'Edit'
@@ -52,7 +52,7 @@ RSpec.describe 'Announcements Integration', type: :feature do
       click_button 'Update Announcement'
       expect(page).to have_content('Updated Subject')
     end
-  
+
     it 'fails to update an announcement' do
       # Create a new announcement to fail update
       announcement = Announcement.create(
@@ -61,17 +61,17 @@ RSpec.describe 'Announcements Integration', type: :feature do
         dateOfAnnouncement: DateTime.now,
         body: 'Body to fail update'
       )
-  
+
       visit announcements_path(announcement)
       click_link 'To Fail Update'
       click_link 'Edit'
       fill_in 'announcement[subject]', with: ''
-  
+
       click_button 'Update Announcement'
-  
+
       expect(page).to have_content("Subject can't be blank")
     end
-    
+
     it 'fails to create a new announcement with missing body' do
       visit new_announcement_path
       fill_in 'announcement[subject]', with: 'New Subject'
@@ -114,5 +114,5 @@ RSpec.describe 'Announcements Integration', type: :feature do
       visit announcement_path(announcement)
       expect(page).not_to have_link('Delete')
     end
-  end  
+  end
 end
