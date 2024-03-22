@@ -209,8 +209,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.7.3)
     rack (2.2.8)
-    rack-cors (2.0.2)
-      rack (>= 2.0.0)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -293,8 +291,6 @@ GEM
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    sassc (2.4.0)
-      ffi (~> 1.9)
     selenium-webdriver (4.17.0)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -375,13 +371,11 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   pg (~> 1.1)
   puma (~> 5.0)
-  rack-cors
   rails (~> 7.0.8)
   rails-controller-testing
   rexml
   rspec-rails
   rubocop
-  sassc (~> 2.0)
   selenium-webdriver
   simple_calendar
   simplecov
