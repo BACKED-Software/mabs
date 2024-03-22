@@ -69,23 +69,17 @@ RSpec.describe 'Leaderboard', type: :feature do
     expect(page).to have_content(user4.full_name)
   end
 
-  it 'allows viewing next users' do
+  it 'allows viewing more users' do
     visit leaderboard_index_path
     expect(page).to have_content(user1.full_name)
     expect(page).to have_content(user2.full_name) # user2 has most points
     expect(page).not_to have_content(user3.full_name)
     expect(page).not_to have_content(user4.full_name)
 
-    click_link 'View Next Users'
-    expect(page).to have_content(user1.full_name, count: 2)
-    expect(page).to have_content(user2.full_name)
-    expect(page).not_to have_content(user3.full_name)
-    expect(page).not_to have_content(user4.full_name)
-
-    click_link 'View Next Users'
+    click_link 'View More Users'
     expect(page).to have_content(user1.full_name, count: 2)
     expect(page).to have_content(user2.full_name)
     expect(page).to have_content(user3.full_name)
-    expect(page).not_to have_content(user4.full_name)
+    expect(page).to have_content(user4.full_name)
   end
 end

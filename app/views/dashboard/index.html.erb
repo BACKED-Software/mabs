@@ -112,50 +112,36 @@
         <% if event.eventTime >= DateTime.now.in_time_zone + 4%>
           <li class="event mb-3 p-3 bg-light rounded">
             <div class="d-flex justify-content-between">
-              <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link" >
-                <div>
-                  <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
-                  <div class="event-details">
-                    <h5 class="event-title mb-1"><%= event.eventName %></h5>
-                    <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
-                    <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
-                  </div>
+              <div>
+              
+              <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link">
+                <div class="event-date text-primary">
+                <i class="far fa-calendar-alt"></i>
+                <strong><%= event.eventTime.strftime("%A, %B %-d") %></strong>
                 </div>
               </a>
-              <div class="col-md-6">
-                  <div class="card">
-                      <div class="card-body">
-                          <h5 class="card-title">Event Information</h5>
-                          <ul class="list-group list-group-flush fs-6">
-                              <li class="list-group-item bg-light mb-0">
-                                  <strong class="mr-2">Info:</strong>
-                                  <%= raw event.eventInfo %>
-                              </li>
-                              <li class="list-group-item bg-light mb-0">
-                                  <strong class="mr-2">Sponsor Title:</strong>
-                                  <%= event.sponsor_title %>
-                              </li>
-                              <li class="list-group-item bg-light mb-0">
-                                  <strong class="mr-2">Sponsor Description:</strong>
-                                  <%= raw event.sponsor_description %>
-                              </li>
-                              <li class="list-group-item d-flex align-items-center bg-light mb-0">
-                                  <strong class="mr-2">Points: </strong>
-                                  <p class="total-points m-1 fs-6">
-                                      <%= event.eventPoints %>
-                                      <i class="fas fa-coins"></i>
-                                  </p>
-                              </li>
-                              <li class="list-group-item bg-light mb-0">
-                                  <% if user_signed_in? && @current_user.is_admin == true %>
-                                      <strong class="mr-2">Password:</strong>
-                                      <%= event.password %>
-                                  <% end %>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
+                <div class="event-details">
+                  <h5 class="event-title mb-1"><%= event.eventName %></h5>
+                  
+                  <p class="event-location text-muted mb-2"><%= event.eventLocation %></p>
+                  <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
+                  
+                  <p class="m-0">
+                    <strong class="m-0 text-secondary">Sponsor:</strong>
+                    <%= event.sponsor_title %>
+                  </p>
+
+                  <strong class="m-0 text-secondary">Info:</strong>
+                  <p class="mb-0"><%= raw event.eventInfo %></p>
+                  
+                  <strong class="m-0 text-secondary">Points: </strong>
+                  <span class="total-points m-1 fs-6">
+                      <%= event.eventPoints %>
+                      <i class="fas fa-coins"></i>
+                  </span>
+                </div>
               </div>
+
               <% if user_signed_in? %>
                 <% if DateTime.now >= event.eventTime - 15*60 %>
                   <% if Attendance.exists?(googleUserID: current_user.uid, eventID: event.id) %>

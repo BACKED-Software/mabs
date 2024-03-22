@@ -14,25 +14,26 @@
     </div>
   <% end %>
   <div class="card-body">
-  <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
-    <div class="calendar-col">
-      <div class="calendar-date">
-        <%= date.day %>
-        
-      </div>
-      <div class="calendar-events">
-        <ul class="list-unstyled">
-          <% events.sort_by(&:eventTime).each do |event| %>
-            <li>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="row">
+      <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
+        <div class="col-6 col-md-3 calendar-col">
+          <div class="calendar-date">
+            <%= date.day %>
+          </div>
+          <div class="calendar-events">
+            <ul class="list-unstyled">
+              <% events.sort_by(&:eventTime).each do |event| %>
+                <li>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                    <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
+                  </button>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
   </div>
 </div>
 
@@ -49,7 +50,7 @@
         </div>
         <div class="modal-footer">
           <%= require_sign_in do %>
-            <div class="actions mt-3">
+            <div class="actions">
               <%= link_to "Edit", edit_event_path(event), class: "btn btn-outline-primary me-2" %>
               <%= link_to "Delete", delete_event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
             </div>
