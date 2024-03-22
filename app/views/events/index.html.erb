@@ -14,26 +14,25 @@
     </div>
   <% end %>
   <div class="card-body">
-    <div class="row">
-      <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
-        <div class="col-6 col-md-3 calendar-col">
-          <div class="calendar-date">
-            <%= date.day %>
-          </div>
-          <div class="calendar-events">
-            <ul class="list-unstyled">
-              <% events.sort_by(&:eventTime).each do |event| %>
-                <li>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                    <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
-                  </button>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
+  <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
+    <div class="calendar-col">
+      <div class="calendar-date">
+        <%= date.day %>
+        
+      </div>
+      <div class="calendar-events">
+        <ul class="list-unstyled">
+          <% events.sort_by(&:eventTime).each do |event| %>
+            <li>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
+  <% end %>
   </div>
 </div>
 
