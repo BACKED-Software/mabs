@@ -7,7 +7,7 @@ class LeaderboardController < ApplicationController
   layout 'authenticated_layout'
 
   def index
-    session[:user_count] ||= 1
+    session[:user_count] ||= 5
 
     @show_all_users = params[:show_all].present?
     # user_count is the number of users displayed on the leaderboard
