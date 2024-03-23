@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <% @events.where('"eventTime" <= ?', Time.now).each do |event| %>
+      <% @events.where('"eventTime" <= ? AND "eventTime" >= ?', Time.now, 1.month.ago).each do |event| %>
         <tr>
           <td><%= event.eventName %></td>
           <td><%= event.eventTime.strftime("%B %d, %Y") %></td>
