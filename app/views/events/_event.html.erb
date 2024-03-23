@@ -1,33 +1,37 @@
-<div id="<%= dom_id event %>">
-  <div class="d-flex justify-content-between">
-    <div>
+<div id="<%= dom_id event %>" class="row">
+  <div class="col-md-6 mb-3">
+    <div class="details">
       <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
       <div class="event-details">
         <h5 class="event-title mb-1"><%= event.eventName %></h5>
         <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
         <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+        <div class="mt-4">
+          <strong class="m-0 text-muted">Points: </strong>
+          <span class="total-points m-1 fs-6">
+              <%= event.eventPoints %>
+              <i class="fas fa-coins"></i>
+          </span>
+        </div>
+        <div>
+          <% if user_signed_in? && @current_user.is_admin == true %>
+            <strong class="text-muted">Password:</strong> <%= event.password %>
+          <% end %>  
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-    <div class="event-info ml-3">
-          <div class="mb-2">
-              <strong>Info:</strong> <%= raw event.eventInfo %>
-          </div>
-          <div class="mb-2">
-              <strong>Points:</strong> <%= event.eventPoints %>
-          </div>
-          <div class="mb-2">
-              <strong>Sponsor:</strong> <%= event.sponsor_title %>
-          </div>
-          <div class="mb-2">
-              <strong>Sponsor Description:</strong> <%= raw event.sponsor_description %>
-          </div>
-          <div>
-            <% if user_signed_in? && @current_user.is_admin == true %>
-              <strong>Password:</strong> <%= event.password %>
-            <% end %>  
-          </div>
+  </div>
+  <div class="col-md-6">
+    <div class="event-info">
+      <div class="mb-2 text-muted">
+        <strong>Info:</strong> <%= raw event.eventInfo %>
       </div>
+      <div class="mb-2 text-muted">
+        <strong>Sponsor:</strong> <%= event.sponsor_title %>
       </div>
+      <div class="mb-2 text-muted">
+        <strong>Sponsor Description:</strong> <%= raw event.sponsor_description %>
+      </div>
+    </div>
   </div>
 </div>
