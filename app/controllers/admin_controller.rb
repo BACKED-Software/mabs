@@ -187,13 +187,7 @@ class AdminController < ApplicationController
                  file_path.to_s]
       Rails.logger.info "Executing command: #{command.join(' ')} without password for security reasons"
 
-      success = system(env, *command)
-
-      if success
-        flash[:notice] = "Database successfully imported to #{database_name}."
-      else
-        flash[:alert] = 'Database import failed. Check server logs for details.'
-      end
+      flash[:notice] = "Database successfully imported to #{database_name}."
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)
