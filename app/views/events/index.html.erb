@@ -48,7 +48,7 @@
           <div class="card-body">
             <% events.each do |event| %>
               <div class="mb-3 border-bottom">
-                <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
                   <h5 class="card-title m-0"><%= event.eventName %></h5>
                   <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
                     <i class="fas fa-info-circle m-1"></i>More Info

@@ -117,7 +117,7 @@
               <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link">
                 <div class="event-date text-primary">
                 <i class="far fa-calendar-alt"></i>
-                <strong><%= event.eventTime.strftime("%A, %B %-d") %></strong>
+                <strong><%= event.eventTime.strftime("%A, %B %-d (%I:%M %p)") %></strong>
                 </div>
               </a>
                 <div class="event-details">
