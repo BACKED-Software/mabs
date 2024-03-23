@@ -129,13 +129,9 @@
                 <% else %>
                   <%= form_with url: attendances_path, method: :post do |form| %>
                     <%= form.hidden_field :event_id, value: event.id %>
-                    <div class="row">
-                      <div class="col m-6 p-0">
-                        <%= form.password_field :password, class: 'form-control', placeholder: 'Enter Password' %>
-                      </div>
-                      <div class="col m-6 p-0">
-                        <%= form.submit "Check In", class: 'btn btn-primary' %>
-                      </div>
+                    <%= form.password_field :password, class: 'form-control', placeholder: 'Enter Password' %>
+                    <div class="col d-flex justify-content-end">
+                      <%= form.submit "Check In", class: 'btn btn-primary' %>
                     </div>
                   <% end %>
                 <% end %>
@@ -146,7 +142,7 @@
                   <%= form_with url: rsvps_path, method: :post do |form| %>
                     <%= form.hidden_field :user_uid, value: current_user.uid %>
                     <%= form.hidden_field :event_id, value: event.id %>
-                    <%= form.submit "  RSVP  ", class: 'btn btn-primary rsvp-btn' %>
+                    <%= form.submit "  RSVP  ", class: 'btn btn-primary' %>
                   <% end %>
                 <% end %>
               <% end %>

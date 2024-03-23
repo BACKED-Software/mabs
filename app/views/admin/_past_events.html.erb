@@ -1,0 +1,113 @@
+<%# app/views/points/_admin_nonevent_points_manager.html.erb %>
+<div class="card rounded-4 mt-4">
+  <div class="card-header bg-white">
+    <h2 class="h5 mb-0">Past Events</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Event Name</th>
+        <th scope="col">Event Date</th>
+        <th scope="col">Total RSVPs</th>
+        <th scope="col">Total Attendance</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @events.where('"eventTime" <= ?', Time.now).each do |event| %>
+        <tr>
+          <td><%= event.eventName %></td>
+          <td><%= event.eventTime.strftime("%B %d, %Y") %></td>
+          <td><%= event.rsvps.count %></td>
+          <td><%= event.attendances.count %></td>
+          <td><!-- Trigger button for modal -->
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#pastEventDetailsModal<%= event.id %>">
+              View Details
+            </button>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modals for event details -->
+<% @events.each do |event| %>
+  <div class="modal fade" id="pastEventDetailsModal<%= event.id %>" tabindex="-1" aria-labelledby="eventDetailsModalLabel<%= event.id %>" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventDetailsModalLabel<%= event.id %>">Event details for <%= event.eventName %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-4">
+            <p>
+              <i class="fas fa-calendar-alt detail-icon"></i>
+              <span class="text-muted"><%= event.eventTime.strftime("%B %d, %Y") %></span>
+            </p>
+            <p>
+              <i class="fas fa-users detail-icon"></i>
+              <span class="text-muted">Total RSVPs: <%= event.rsvps.count %></span>
+            </p>
+            <p>
+              <i class="fas fa-users detail-icon"></i>
+              <span class="text-muted">Total Attendance: <%= event.attendances.count %></span>
+            </p>
+          </div>
+
+          <h2 class="rsvp-header">Attendance Summary</h2>
+          <ul class="list-group">
+            <% event.rsvps.each do |rsvp| %>
+              <% if Attendance.exists?(googleUserID: rsvp.user_uid, eventID: rsvp.event_id) %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col">
+                      <i class="fas fa-user detail-icon"></i>
+                      <%= rsvp.user.full_name %>
+                    </div>
+                    <div class="col">
+                      <p>Checked in and RSVP'd</p>
+                    </div>
+                  </div>
+                </li>
+              <% else %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col">
+                      <i class="fas fa-user detail-icon"></i>
+                      <%= rsvp.user.full_name %>
+                    </div>
+                    <div class="col">
+                      <p>RSVP'd, did not check in</p>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+
+            <% event.attendances.each do |attendance| %>
+                <% if Rsvp.exists?(user_uid: attendance.googleUserID, event_id: attendance.eventID) %>
+
+                <% else %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <i class="fas fa-user detail-icon"></i>
+                        <%= attendance.user.full_name %>
+                      </div>
+                      <div class="col">
+                        <p>Checked in, did not RSVP</p>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
