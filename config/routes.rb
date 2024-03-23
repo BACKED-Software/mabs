@@ -80,4 +80,10 @@ Rails.application.routes.draw do
   get 'dashboard/index'
 
   post 'recalculate_points', to: 'admin#recalculate_points'
+  # config/routes.rb
+  post 'backup_database', to: 'admin#backup_database', as: :backup_database
+  get 'list_backups', to: 'admin#list_backups', as: :list_backups
+  get 'download_backup', to: 'admin#download_backup', as: :download_backup
+  get 'delete_backup', to: 'admin#delete_backup', as: :delete_backup
+  post 'import_backup', to: 'admin#import_backup', as: :import_backup
 end

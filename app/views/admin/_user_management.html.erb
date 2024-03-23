@@ -1,3 +1,21 @@
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to proceed?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="accordion" id="userManagementAccordion">
   <div class="accordion-item">
     <h2 class="accordion-header" id="userManagementHeader">
@@ -19,9 +37,6 @@
           </div>
         <% end %>
 
-
-
-
       <div class="table-responsive">
           <table class="table table-striped mt-3 rounded-3">
             <thead>
@@ -40,12 +55,11 @@
                 <td><%= user.is_admin ? 'Admin' : 'User' %></td>
                 <td>
                   <% if user.is_admin %>
-                  <%=  link_to 'Demote to User', demote_to_user_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-secondary", data: { confirm: 'Are you sure?' }  %>
-                    <%  else %>
-                  <%=  link_to 'Promote to Admin', promote_to_admin_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-primary", data: { confirm: 'Are you sure?' }  %>
+                    <%= link_to 'Demote to User', demote_to_user_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-secondary confirm-action", data: { confirm: "Are you sure you want to demote #{user.full_name} to user?" } %>
+                  <%  else %>
+                    <%= link_to 'Promote to Admin', promote_to_admin_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-primary confirm-action", data: { confirm: "Are you sure you want to promote #{user.full_name} to admin?" } %>
                   <%  end %>
-
-                  <%= link_to 'Remove User', user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: 'Are you sure?' } %>
+                    <%= link_to 'Remove User', destroy_user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger confirm-action", data: { confirm: "Are you sure you want to remove #{user.full_name}?" } %>
                 </td>
               </tr>
             <% end %>
@@ -56,3 +70,33 @@
       </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+  const confirmActionBtn = document.getElementById('confirmAction');
+  let currentAction;
+
+  document.querySelectorAll('.confirm-action').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent the link from directly navigating.
+      currentAction = e.currentTarget; // Store the clicked element.
+      // Fetch and display the confirmation message, which includes the user's name.
+      document.querySelector('#confirmationModal .modal-body').textContent = currentAction.getAttribute('data-confirm');
+      confirmationModal.show(); // Show the confirmation modal.
+    });
+  });
+
+  confirmActionBtn.addEventListener('click', function() {
+    confirmationModal.hide();
+    if (currentAction) {
+      // Create and submit a form to perform the action.
+      const form = document.createElement('form');
+      form.method = currentAction.getAttribute('data-method') || 'post';
+      form.action = currentAction.href;
+      document.body.appendChild(form);
+      form.submit();
+    }
+  });
+});
+</script>

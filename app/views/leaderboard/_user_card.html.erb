@@ -1,0 +1,25 @@
+<li class="list-group-item d-flex align-items-left bg-light shadow-sm mb-2 p-3">
+    <h4 class="rank">
+        <% if rank == 1 %>
+            <i class="fas fa-medal" style="color: goldenrod;"></i>
+        <% elsif rank == 2 %>
+            <i class="fas fa-medal" style="color: silver;"></i>
+        <% elsif rank == 3 %>
+            <i class="fas fa-medal" style="color: #CD7F32;"></i>
+        <% else %>
+            #
+        <% end %>
+        <%= rank%>
+    </h4>
+    <div class="vr"></div>
+    <div class="avatar rounded-circle overflow-hidden me-3" style="width: 8%; height: 8%; margin-left: 3%">                  
+        <%= image_tag user.avatar_url, alt: "User Avatar", class: "img-fluid align-self-center" %>
+    </div>
+    <div class="user-details">
+        <h4 class="full-name mb-1"><%= user.full_name %></h4>
+        <p class="total-points mb-0">
+            <%= user.total_points %>
+            <i class="fas fa-coins"></i>
+        </p>
+    </div>
+</li>

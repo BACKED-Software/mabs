@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy make_admin delete]
   before_action :authorize_user!, only: %i[edit update destroy delete]
   before_action :authorize_admin!, only: [:make_admin]
+  layout 'authenticated_layout'
 
   def make_admin
     @user.update!(is_admin: true)

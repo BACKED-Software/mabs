@@ -1,19 +1,16 @@
-<div id="announcements" class=" p-4">
+<p style="color: green"><%= notice %></p>
 
-  <% if notice %>
-    <div class="alert alert-success" role="alert">
-      <%= notice %>
-    </div>
-  <% end %>
-
+<div id="announcements" class="m-3">
   <h2 class="header"> Announcements </h2>
 
   <div class="card">
     <div class="card-header">
       <%= require_sign_in do %>
         <div class="mb align-items-end">
-          <%= link_to new_announcement_path, class: "btn btn-primary d-block w-100" do %>
-            <i class="fas fa-plus-circle"></i> Create New Announcement
+          <% if user_signed_in? && @user.is_admin == true %>
+            <%= link_to new_announcement_path, class: "btn btn-primary d-block w-100" do %>
+              <i class="fas fa-plus-circle"></i> Create New Announcement
+            <% end %>
           <% end %>
         </div>
       <% end %>

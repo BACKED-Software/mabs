@@ -4,14 +4,13 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Attendances Integration', type: :feature do
-  let(:user) { create(:user) }
-  let(:existing_user) { User.find_by(uid: user.uid) }
+RSpec.describe 'Attendances Integration', type: :feature do
+  let!(:admin) { create(:admin) }
+  let!(:user) { create(:user) }
   let!(:event) { create(:event, eventName: 'Test Event') }
-  let!(:event2) { create(:event, eventName: 'Test Event 2') }
+  let!(:event2) { create(:event, eventName: 'Test Event 2', eventTime: Time.now + 1 * 60, password: 'pass') }
   let!(:attendance) { create(:attendance, eventID: event.id, googleUserID: user.uid) }
   before do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     Attendance.create(
       googleUserID: user.uid,
       eventID: event.id,
@@ -19,44 +18,48 @@ RSpec.feature 'Attendances Integration', type: :feature do
       timeOfCheckIn: DateTime.now
     )
   end
+  context 'admin can' do
+    before do
+      sign_in admin
+      visit attendances_path
+    end
 
-  scenario 'user views attended events' do
-    login_as(user, scope: :user)
-    visit attendances_path
-
-    expect(page).to have_content('Attendance Check In')
-    expect(page).to have_link('Back to Home', href: '/dashboard/index')
-    expect(page).to have_content('Events Attended')
-    expect(page).to have_content("Name: #{user.full_name}")
-    expect(page).to have_content('Event Name: Test Event')
-    expect(page).to have_content("Time: #{attendance.timeOfCheckIn}")
-    expect(page).to have_content("Points: #{attendance.pointsAwarded}")
-    expect(page).to have_selector('form')
-    expect(page).to have_select('event', with_options: ['Test Event'])
-    expect(page).to have_button('Submit')
+    it 'view all attended events' do
+      expect(page).to have_content('Events Attended')
+      expect(page).to have_content("Name: #{user.full_name}")
+      expect(page).to have_content('Event Name: Test Event')
+      expect(page).to have_content("Time: #{attendance.timeOfCheckIn}")
+      expect(page).to have_content("Points: #{attendance.pointsAwarded}")
+    end
   end
+  context 'user can' do
+    before do
+      sign_in user
+      visit attendances_path
+    end
+    it 't access all attended events' do
+      expect(page).to have_content('You are not authorized to access this page.')
+    end
 
-  scenario 'user submits attendance form' do
-    login_as(user, scope: :user)
-    visit attendances_path
+    it 'submit attendance form with incorrect password' do
+      expect(page).to have_content('Enter Password:')
+      fill_in 'password', with: 'psas'
+      click_button 'Check In'
 
-    select 'Test Event 2', from: 'event'
-    click_button 'Submit'
+      expect(page).to have_content('Incorrect Password')
+    end
 
-    expect(page).to have_content('Attendance was successfully checked in.')
-  end
+    it 'submit attendance form with correct password to check in' do
+      expect(page).to have_content('Enter Password:')
+      fill_in 'password', with: 'pass'
+      click_button 'Check In'
 
-  scenario 'User attempts to create a duplicate attendance record' do
-    create(:attendance, event:, googleUserID: user.uid)
+      expect(page).to have_content('You are Checked in')
+    end
 
-    sign_in user
-
-    visit attendances_path
-
-    select event.eventName, from: 'event'
-    click_button 'Submit'
-
-    expect(page).to have_content('You have already checked in for this event')
-    expect(Attendance.count).to eq(3) # Ensure no new records were created
+    it 'see event check in is not available yet' do
+      click_button 'RSVP'
+      expect(page).to have_content('Check in starts in')
+    end
   end
 end

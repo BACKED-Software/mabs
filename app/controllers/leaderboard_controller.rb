@@ -2,11 +2,12 @@
 
 # app/controllers/leaderboard_controller.rb
 class LeaderboardController < ApplicationController
+  before_action :set_user
   before_action :authenticate_user!
   layout 'authenticated_layout'
 
   def index
-    session[:user_count] ||= 1
+    session[:user_count] ||= 5
 
     @show_all_users = params[:show_all].present?
     # user_count is the number of users displayed on the leaderboard
@@ -56,5 +57,11 @@ class LeaderboardController < ApplicationController
       user.define_singleton_method(:rank) { u_rank }
       prev_points = user.total_points
     end
+  end
+
+  private
+
+  def set_user
+    @user = current_user
   end
 end

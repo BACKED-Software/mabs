@@ -75,7 +75,7 @@
   
   /* Style for dates with events */
   .simple-calendar .has-events {
-    width: 20%;
+    width: 14%;
   }
 
   /* Style for calendar date */
@@ -269,7 +269,7 @@ body {
 .total-points {
     font-weight: bold;
     font-size: 1.5rem; /* Larger font size for emphasis */
-    color: #333; /* Dark color for contrast */
+    color: #007bff; /* Dark color for contrast */
 }
 
 .points-value {
@@ -293,6 +293,12 @@ body {
     font-weight: bold; /* Make rank text bold */
     color: #333; /* Set color for rank text */
 }
+
+.current-user-rank {
+    margin-right: 10px;
+    font-weight: bold; /* Make rank text bold */
+    color: #333; /* Set color for rank text */
+}
   
 .profile img {
     width: 50px;
@@ -303,15 +309,14 @@ body {
 .profile p {
     margin: 0;
 }
+
+.user-details {
+    flex-grow: 1;
+}
  
 .full-name {
-    font-size: 16px; /* Set font size for full name */
+    font-size: 16; /* Set font size for full name */
     color: #555; /* Set color for full name */
-}
-  
-.total-points {
-    font-size: 14px; /* Set font size for total points */
-    color: #777; /* Set color for total points */
 }
 
 .points-summary {
@@ -465,6 +470,10 @@ body {
     overflow: hidden;
 }
 
+.announcement-body ul, .announcement-body ol {
+    padding-left: 20px; /* Adjust the padding as per requirement */
+}
+
 h1 {
     font-family: 'Roboto', sans-serif; /* Google's Material Design font */
     color: #202124; /* Almost black but slightly softer, common in Google's designs */
@@ -474,4 +483,13 @@ h1 {
     padding-bottom: 0.25rem; /* Subtle padding at the bottom */
     border-bottom: 1px solid #e0e0e0; /* Light grey bottom border for a touch of separation */
     letter-spacing: normal; /* Default spacing to maintain readability */
+}
+.right-justified {
+    text-align: right;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start of the container */
+    gap: 10px; /* Optional: adds some space between the buttons */
 }
