@@ -2,7 +2,6 @@
 
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-    layout 'authenticated_layout'
     def google_oauth2
       user = User.from_google(**from_google_params)
 
