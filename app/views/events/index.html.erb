@@ -14,27 +14,57 @@
     </div>
   <% end %>
   <div class="card-body">
-  <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
-    <div class="calendar-col">
-      <div class="calendar-date">
-        <%= date.day %>
-        
-      </div>
-      <div class="calendar-events">
-        <ul class="list-unstyled">
-          <% events.sort_by(&:eventTime).each do |event| %>
-            <li>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <!-- Desktop Calendar -->
+    <div class="d-none d-md-block">
+      <%= month_calendar events: @events, first_day_of_week: 1 do |date, events| %>
+        <div class="calendar-col">
+          <div class="calendar-date">
+            <%= date.day %>
+          </div>
+          <div class="calendar-events">
+            <ul class="list-unstyled">
+              <% events.sort_by(&:eventTime).each do |event| %>
+                <li>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                    <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
+                  </button>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    
+    <!-- Mobile List View -->
+    <div class="d-block d-md-none" style="max-height: calc(75vh); overflow-y: auto;">
+    <div class="d-block d-md-none" id="events-list">
+      <% grouped_events = @events.group_by { |event| event.eventTime.to_date } %>
+      <% grouped_events.each do |date, events| %>
+        <div class="card mb-3" id="event-date-<%= date.strftime('%Y%m%d') %>">
+          <div class="card-header">
+            <%= date.strftime('%A, %B %d, %Y') %>
+          </div>
+          <div class="card-body">
+            <% events.each do |event| %>
+              <div class="mb-3 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title m-0"><%= event.eventName %></h5>
+                  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                    <i class="fas fa-info-circle m-1"></i>More Info
+                  </button>
+                </div>
+                <p class="card-text"><%= event.eventTime.strftime('%I:%M %p') %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
   </div>
 </div>
+
 
 <% @events.each do |event| %>
   <div class="modal fade" id="eventModal_<%= event.id %>" tabindex="-1" aria-labelledby="eventModalLabel_<%= event.id %>" aria-hidden="true">
@@ -60,3 +90,27 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    var startDate = '<%= @start_date.strftime('%Y%m%d') %>';
+    console.log(startDate);
+    var targetElement = document.getElementById("event-date-" + startDate);
+
+    if (!targetElement) {
+      // If the target element is not found, find the first event date that is after the start date
+      var eventDates = document.querySelectorAll("[id^='event-date-']");
+      for(var eventDate of eventDates) {
+        var currDate = parseInt(eventDate.id.replace("event-date-", ""));
+        if (currDate >= startDate) {
+          targetElement = eventDate;
+          break;
+        }
+      }
+    }
+
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
