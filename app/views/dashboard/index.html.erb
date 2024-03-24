@@ -4,13 +4,14 @@
   <div class="row">
     <% if user_signed_in? %>
     <div class="col-md-5">
-      <% current_hour = Time.now.in_time_zone.hour %>
+      <% current_hour = Time.now.in_time_zone.in_time_zone.hour %>
+      
       <% if current_hour >= 0 && current_hour < 12 %>
         <h1>Good Morning<% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
       <% elsif current_hour >= 12 && current_hour < 17 %>
         <h1>Good Afternoon<% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
       <% else %>
-        <h1>Good Evening<% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
+        <h1>Good Evening <% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
       <% end %>
       <p>Welcome to your dashboard</p>
       <div class="points-summary mt-5 p-4 bg-white rounded shadow text-center">
@@ -149,10 +150,11 @@
                   <% else %>
                     <%= form_with url: attendances_path, method: :post do |form| %>
                       <%= form.hidden_field :event_id, value: event.id %>
-                      <%= form.label :password, "Enter Password:", style: "display: block" %>
-                      <%= form.text_field :password %>
-                      <%= form.submit "Check In" %>
-                    <% end %>
+                      <%= form.password_field :password, class: 'form-control', placeholder: 'Enter Password' %>
+                      <div class="col d-flex justify-content-end">
+                        <%= form.submit "Check In", class: 'btn btn-primary' %>
+                      </div>
+                  <% end %>
                   <% end %>
                 <% else %>
                   <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
@@ -161,7 +163,7 @@
                     <%= form_with url: rsvps_path, method: :post do |form| %>
                       <%= form.hidden_field :user_uid, value: current_user.uid %>
                       <%= form.hidden_field :event_id, value: event.id %>
-                      <%= form.submit "RSVP" %>
+                      <%= form.submit "  RSVP  ", class: 'btn btn-primary' %>
                     <% end %>
                   <% end %>
                 <% end %>

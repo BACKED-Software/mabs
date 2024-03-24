@@ -16,7 +16,7 @@ class AdminController < ApplicationController
       search_term = "%#{params[:search]}%"
       @users = @users.where('full_name LIKE ? OR email LIKE ?', search_term, search_term)
     end
-    @events = Event.where('"eventTime" > ?', Time.now)
+    @events = Event.all
 
     # prepare data for charts or tables here
     @gender_distribution = User.group(:gender).count.except(nil)
