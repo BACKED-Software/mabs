@@ -1,17 +1,16 @@
 <div id="<%= dom_id announcement %>" class="announcement-container bg-info-subtle rounded shadow-lg p-4 mb-3">
-  <div class="d-flex flex-row align-items-start mb-2">
+  <!-- Responsive Flex Container -->
+  <div class="d-flex flex-column flex-md-row align-items-start mb-2">
     <!-- User Avatar -->
     <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
     <% if announcement_user.present? %>
-      <div class="me-3">
-          <%= image_tag announcement_user.avatar_url, alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>   
-      </div>
+      <%= render partial: 'application/user_avatar', locals: { avatar_user: announcement_user } %>
     <% else %>
-      <div class="me-3">
-          <%= image_tag 'deleted_profile.jpg', alt: "User Avatar", class: "rounded-circle", style: 'width: 60px; height: 60px; object-fit: cover;' %>   
+      <div class="me-3 mb-2 mb-md-0">
+        <%= image_tag 'deleted_profile.jpg', alt: "User Avatar", class: "rounded-circle", style: 'width: 40px; height: 40px; object-fit: cover;' %>
       </div>
-    <% end %> 
-    <!-- Announcement Title and Body -->
+    <% end %>
+    <!-- Title and Body Container -->
     <div class="flex-grow-1">
       <%= link_to announcement_path(announcement), class: "text-decoration-none" do %>
         <h4 class="mb-1" style="color: #0056b3;"> <%= announcement.subject %></h4>

@@ -55,7 +55,7 @@
           </div>
         </a>
       <%else %>
-        <%= link_to '<i class="fab fa-google"></i> Sign In with Google'.html_safe, new_user_session_path, class: "btn btn-light" %>      <% end %>
+        <%= link_to '<i class="fab fa-google"></i> Sign In with Google'.html_safe, user_google_oauth2_omniauth_authorize_path, class: "btn btn-light" %>      <% end %>
 
     </div>
   </div>
