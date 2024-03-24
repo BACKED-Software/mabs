@@ -1,0 +1,28 @@
+<div class="me-3 mb-2 mb-md-0">
+  <%
+    popover_content = "
+      <div class='user-info-detail'><strong>Name:</strong> #{avatar_user.full_name}</div>
+      <div class='user-info-detail'><strong>Role:</strong> #{avatar_user.role}</div>
+      <div class='user-info-detail'><strong>Classification:</strong> #{avatar_user.classification}</div>
+      <div class='user-info-detail'><strong>Email:</strong> #{avatar_user.email}</div>
+    "
+  %>
+  <%= image_tag avatar_user.avatar_url, alt: "User Avatar", class: "rounded-circle user-avatar-popover", style: 'width: 40px; height: 40px; object-fit: cover;',
+                data: {
+                  bs_toggle: "popover",
+                  bs_html: "true",
+                  bs_content: popover_content,
+                  bs_placement: "bottom",
+                  bs_trigger: "hover" }
+  %>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const popoverEls = document.querySelectorAll('[data-bs-toggle="popover"]');
+        for (let i=0; i < popoverEls.length; i++) {
+            var popover = new bootstrap.Popover(popoverEls[i])
+        }
+    });
+</script>
