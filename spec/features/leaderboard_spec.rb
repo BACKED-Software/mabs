@@ -19,7 +19,6 @@ RSpec.describe 'Leaderboard', type: :feature do
   let!(:user14) { create(:user, full_name: 'User 14', total_points: 0) }
   let!(:user15) { create(:user, full_name: 'User 15', total_points: 0) }
 
-
   before do
     login_as(user1, scope: :user)
   end
@@ -112,7 +111,7 @@ RSpec.describe 'Leaderboard', type: :feature do
     expect(page).not_to have_content(user14.full_name)
     expect(page).not_to have_content(user15.full_name)
 
-    click_link 'View More Users'    
+    click_link 'View More Users'
     expect(page).to have_content(user1.full_name, count: 2)
     expect(page).to have_content(user2.full_name)
     expect(page).to have_content(user3.full_name)

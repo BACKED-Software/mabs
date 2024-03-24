@@ -11,7 +11,7 @@ class LeaderboardController < ApplicationController
 
     @show_all_users = params[:show_all].present?
     # user_count is the number of users displayed on the leaderboard
-    @user_count = params[:user_count]? params[:user_count].to_i : 5
+    @user_count = params[:user_count] ? params[:user_count].to_i : 5
 
     @users = User.order(total_points: :desc)
 
