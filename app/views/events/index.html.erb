@@ -92,7 +92,7 @@
 <% end %>
 
 <script>
-  window.addEventListener("load", function() {
+  window.addEventListener("DOMContentLoaded", function() {
     var startDate = '<%= @start_date.strftime('%Y%m%d') %>';
     console.log(startDate);
     var targetElement = document.getElementById("event-date-" + startDate);
