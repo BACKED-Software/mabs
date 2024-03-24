@@ -52,7 +52,7 @@
                     <%= render 'user_card', user: user, rank: user.rank %>
                   <% end %> 
                 </div>
-                <% unless @show_all_users or @all_displayed %>
+                <% unless @show_all_users or (User.count == @users.count)%>
                   <div class="mt-3">
                     <%= link_to leaderboard_index_path(show_all: true), class: "btn btn-primary" do %>
                       View All Users
