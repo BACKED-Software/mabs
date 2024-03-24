@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   private
 
   def event_time_in_future
-    return unless eventTime.present? && eventTime < Time.now
+    return unless eventTime.present? && eventTime < Time.now.in_time_zone
 
     errors.add(:eventTime, "can't be in the past")
   end

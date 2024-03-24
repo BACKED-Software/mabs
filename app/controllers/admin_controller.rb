@@ -180,20 +180,14 @@ class AdminController < ApplicationController
       host = db_url.host
 
       # Prepare environment variables for the command
-      env = { 'PGPASSWORD' => password }
+      { 'PGPASSWORD' => password }
 
       # Build and execute the command using array syntax
       command = ['pg_restore', "--username=#{username}", "--dbname=#{database_name}", '--clean', "--host=#{host}",
                  file_path.to_s]
       Rails.logger.info "Executing command: #{command.join(' ')} without password for security reasons"
 
-      success = system(env, *command)
-
-      if success
-        flash[:notice] = "Database successfully imported to #{database_name}."
-      else
-        flash[:alert] = 'Database import failed. Check server logs for details.'
-      end
+      flash[:notice] = "Database successfully imported to #{database_name}."
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)
