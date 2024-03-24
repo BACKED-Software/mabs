@@ -180,7 +180,7 @@ class AdminController < ApplicationController
       host = db_url.host
 
       # Prepare environment variables for the command
-      env = { 'PGPASSWORD' => password }
+      { 'PGPASSWORD' => password }
 
       # Build and execute the command using array syntax
       command = ['pg_restore', "--username=#{username}", "--dbname=#{database_name}", '--clean', "--host=#{host}",

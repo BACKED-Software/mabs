@@ -109,7 +109,8 @@
     <h4>Upcoming Events</h4>
     <ul class="list-unstyled mt-3">
       <% @events.sort_by(&:eventTime).each do |event| %>
-        <% if event.eventTime >= DateTime.now.in_time_zone + 4%>
+        <!-- Only show events in future or started less than 4hrs ago-->
+        <% if event.eventTime >= DateTime.now.in_time_zone - 4*60*60%>
           <li class="event mb-3 p-3 bg-light rounded">
             <div class="d-flex justify-content-between">
               <div>
