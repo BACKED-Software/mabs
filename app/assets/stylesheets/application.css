@@ -530,3 +530,41 @@ h1 {
     gap: 10px; /* Optional: adds some space between the buttons */
 }
 
+.announcement-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+
+}
+.announcement-list {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.view-all-announcements {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    margin: 0px 0; /* Adjust as needed */
+    background: none;
+    text-decoration: underline;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.view-all-events {
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    margin: 0px 0; /* Adjust as needed */
+    background: none;
+    text-decoration: underline;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
