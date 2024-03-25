@@ -30,7 +30,7 @@
             <%= form.label :search, "Search Users:", class: "col-form-label", for: "search_users" %>
           </div>
           <div class="col-auto">
-            <%= form.text_field :search, id: "search_users", class: "form-control form-control-sm", aria: { label: "Search" }, placeholder: "Enter email" %>
+            <%= form.text_field :search, id: "search_users", class: "form-control form-control-sm", aria: { label: "Search" }, placeholder: "Enter email or full name" %>
           </div>
           <div class="col-auto">
             <%= form.submit "Search", class: "btn btn-primary btn-sm" %>
@@ -55,11 +55,11 @@
                 <td><%= user.is_admin ? 'Admin' : 'User' %></td>
                 <td>
                   <% if user.is_admin %>
-                    <%= link_to 'Demote to User', demote_to_user_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-secondary confirm-action", data: { confirm: "Are you sure you want to demote #{user.full_name} to user?" } %>
+                    <%= link_to 'Demote to User', demote_to_user_admin_path(user), method: :get, class: "btn btn-sm btn-outline-secondary confirm-action", data: { confirm: "Are you sure you want to demote #{user.full_name} to user?" } %>
                   <%  else %>
-                    <%= link_to 'Promote to Admin', promote_to_admin_admin_path(user), method: :patch, class: "btn btn-sm btn-outline-primary confirm-action", data: { confirm: "Are you sure you want to promote #{user.full_name} to admin?" } %>
+                    <%= link_to 'Promote to Admin', promote_to_admin_admin_path(user), method: :get, class: "btn btn-sm btn-outline-primary confirm-action", data: { confirm: "Are you sure you want to promote #{user.full_name} to admin?" } %>
                   <%  end %>
-                    <%= link_to 'Remove User', destroy_user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger confirm-action", data: { confirm: "Are you sure you want to remove #{user.full_name}?" } %>
+                    <%= link_to 'Remove User', destroy_user_path(user), method: :get, class: "btn btn-sm btn-outline-danger confirm-action", data: { confirm: "Are you sure you want to remove #{user.full_name}?" } %>
                 </td>
               </tr>
             <% end %>
