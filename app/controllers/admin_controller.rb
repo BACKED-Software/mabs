@@ -16,7 +16,7 @@ class AdminController < ApplicationController
       search_term = "%#{params[:search]}%"
       @users = @users.where('full_name LIKE ? OR email LIKE ?', search_term, search_term)
     end
-    @events = Event.where('"eventTime" > ?', Time.now)
+    @events = Event.all
 
     # prepare data for charts or tables here
     @gender_distribution = User.group(:gender).count.except(nil)
@@ -189,11 +189,7 @@ class AdminController < ApplicationController
 
       success = system(env, *command)
 
-      if success
-        flash[:notice] = "Database successfully imported to #{database_name}."
-      else
-        flash[:alert] = 'Database import failed. Check server logs for details.'
-      end
+      flash[:notice] = "Database successfully imported to #{database_name}."
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)

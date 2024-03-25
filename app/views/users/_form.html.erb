@@ -1,50 +1,102 @@
-<%= form_with(model: user) do |form| %>
-    <% if user.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-  
-        <ul>
-          <% user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Edit your profile</div>
+        <div class="card-body">
+          <%= form_with(model: user, html: { class: 'needs-validation', novalidate: '' }) do |form| %>
+            <% if user.errors.any? %>
+              <div class="alert alert-danger">
+                <h4><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h4>
+                <ul>
+                  <% user.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group m-3">
+              <%= form.label :full_name %>
+              <%= form.text_field :full_name, placeholder: "Ex. Joe Aggie", class: 'form-control' %>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :gender %>
+              <%= form.select :gender, ['Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'], { include_blank: "Select" }, class: 'form-control' %>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :race %>
+              <%= form.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], { include_blank: "Select" }, class: 'form-control' %>
+            </div>
+
+            <div class="form-group m-3">
+              <div class="mb-2">
+                <%= form.label :is_hispanic_or_latino, "Hispanic or Latino?" %>
+              </div>
+              <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
+                <%= form.radio_button :is_hispanic_or_latino, true, class: 'btn-check', id: 'btnradio1', autocomplete: 'off' %>
+                <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
+
+                <%= form.radio_button :is_hispanic_or_latino, false, class: 'btn-check', id: 'btnradio2', autocomplete: 'off' %>
+                <label class="btn btn-outline-primary" for="btnradio2">No</label>
+              </div>
+            </div>
+
+            <div class="form-group m-3">
+              <div class="mb-2">
+                <%= form.label :is_us_citizen, "US Citizen?" %>
+              </div>
+              <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
+                <%= form.radio_button :is_us_citizen, true, class: 'btn-check', id: 'btnradio3',autocomplete: 'off'%>
+                <label class="btn btn-outline-primary" for="btnradio3">Yes</label>
+
+                <%= form.radio_button :is_us_citizen, false, class: 'btn-check', id: 'btnradio4',autocomplete: 'off'%>
+                <label class="btn btn-outline-primary" for="btnradio4">No</label>
+              </div>
+            </div>
+
+            <div class="form-group m-3">
+              <div class="mb-2">
+                <%= form.label :is_first_generation_college_student, "First Generation College Student?" %>
+              </div>
+              <div class="btn-group " role="group" aria-label="Basic radio toggle button group">
+                <%= form.radio_button :is_first_generation_college_student, true, class: 'btn-check', id: 'btnradio5',autocomplete: 'off'%>
+                <label class="btn btn-outline-primary" for="btnradio5">Yes</label>
+
+                <%= form.radio_button :is_first_generation_college_student, false, class: 'btn-check', id: 'btnradio6',autocomplete: 'off'%>
+                <label class="btn btn-outline-primary" for="btnradio6">No</label>
+              </div>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :date_of_birth %>
+              <%= form.date_field :date_of_birth, class: 'form-control' %>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :phone_number %>
+              <%= form.text_field :phone_number, placeholder: "(xxx) xxx-xxxx", class: 'form-control' %>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :bio %>
+              <%= form.text_area :bio, placeholder: "Tell us a little about your self", class: 'form-control', rows: 3 %>
+            </div>
+
+            <div class="form-group m-3">
+              <%= form.label :classification %>
+              <%= form.select :classification, ['U1', 'U2', 'U3', 'U4'], { include_blank: "Select" }, class: 'form-control' %>
+            </div>
+
+            <div class="d-flex justify-content-between m-3">
+              <%= form.submit 'Submit', class: 'btn btn-primary' %>
+              <%= link_to 'Delete Account', delete_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            </div>
           <% end %>
-        </ul>
+        </div>
       </div>
-    <% end %>
-  
-    <div>
-  
-      <%= form.label :full_name, style: "display: block" %>
-      <%= form.text_field :full_name %>
-  
-      <%= form.label :gender, style: "display: block" %>
-      <%= form.select :gender, ['Woman', 'Man', 'Transgender', 'Non-binary/non-conforming', 'Prefer not to respond'], include_blank: true %>
-  
-      <%= form.label :is_hispanic_or_latino, style: "display: block" %>
-      <%= form.collection_radio_buttons :is_hispanic_or_latino, [[true, 'Yes'], [false, 'No']], :first, :last %>
-  
-      <%= form.label :race, style: "display: block" %>
-      <%= form.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White', 'Hispanic or Latino', 'Other'], include_blank: true %>
-  
-      <%= form.label :is_us_citizen, style: "display: block" %>
-      <%= form.collection_radio_buttons :is_us_citizen, [[true, 'Yes'], [false, 'No']], :first, :last %>
-  
-      <%= form.label :is_first_generation_college_student, style: "display: block" %>
-      <%= form.collection_radio_buttons :is_first_generation_college_student, [[true, 'Yes'], [false, 'No']], :first, :last %>
-  
-      <%= form.label :date_of_birth, style: "display: block" %>
-      <%= form.date_field :date_of_birth %>
-  
-      <%= form.label :phone_number, style: "display: block" %>
-      <%= form.text_field :phone_number %>
-  
-      <%= form.label :bio, style: "display: block" %>
-      <%= form.text_area :bio %>
-  
-      <%= form.label :classification, style: "display: block" %>
-      <%= form.select :classification, ['U1', 'U2', 'U3', 'U4'], include_blank: true %>
     </div>
-  
-    <div>
-      <%= form.submit %>
-    </div>
-  <% end %>
+  </div>
+</div>

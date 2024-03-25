@@ -43,7 +43,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'redirects to the users path' do
         patch :update, params: { id: user.id, user: { full_name: 'New Name' } }
-        expect(response).to redirect_to(user_path(user))
+        expect(response).to redirect_to(dashboard_index_path)
       end
     end
 

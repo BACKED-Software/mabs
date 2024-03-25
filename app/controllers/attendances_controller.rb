@@ -4,16 +4,10 @@ class AttendancesController < ApplicationController
   layout 'authenticated_layout'
 
   before_action :set_user
-  before_action :set_event, except: :index
-  before_action :check_admin, only: :index
+  before_action :set_event
 
   def delete
     @attendance = Attendance.find(params[:id])
-  end
-
-  def index
-    @events = Event.all
-    @attendances = Attendance.all
   end
 
   def destroy
@@ -56,13 +50,6 @@ class AttendancesController < ApplicationController
   def set_event
     event_id = params[:event_id] || params[:attendance][:eventID]
     @event = Event.find(event_id)
-  end
-
-  def check_admin
-    return if current_user&.admin?
-
-    flash[:alert] = 'You are not authorized to access this page.'
-    redirect_to dashboard_index_path # or any other path you wish to redirect to
   end
 
   def attendance_params
