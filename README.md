@@ -1,4 +1,4 @@
-# Multicultural Association of Business Students (MABS) Event Scheduler
+# Multicultural Association of Business Students (MABS) Tracker
 
 ## Description
 
