@@ -20,10 +20,10 @@
         </div>
         <div class="actions mt-4">
           <%= require_sign_in do %>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">
+            <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#pointsHistoryModal">
               <i class="fas fa-history"></i> View Point History
             </button>
-            <a href="<%= leaderboard_index_path %>" class="btn btn-info">
+            <a href="<%= leaderboard_index_path %>" class="btn btn-info mb-2">
               <i class="fas fa-trophy"></i> View Leaderboard
             </a>
           <% end %>
