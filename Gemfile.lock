@@ -291,6 +291,8 @@ GEM
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     selenium-webdriver (4.17.0)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -376,6 +378,7 @@ DEPENDENCIES
   rexml
   rspec-rails
   rubocop
+  sassc (~> 2.4)
   selenium-webdriver
   simple_calendar
   simplecov

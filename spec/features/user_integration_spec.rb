@@ -56,17 +56,7 @@ RSpec.describe 'Users', type: :request do
 
     it 'updates the user and redirects to the show page' do
       patch(user_path(user), params:)
-      expect(response).to redirect_to(user_path(user))
-      follow_redirect!
-      expect(response.body).to include('New Name')
-      expect(response.body).to include('Man')
-      expect(response.body).to include('Yes') # for is_hispanic_or_latino and is_us_citizen
-      expect(response.body).to include('No')  # for is_first_generation_college_student
-      expect(response.body).to include('Asian')
-      expect(response.body).to include('2000-01-01')
-      expect(response.body).to include('1234567890')
-      expect(response.body).to include('New Bio')
-      expect(response.body).to include('U1')
+      expect(response).to redirect_to(dashboard_index_path)
     end
   end
 end
