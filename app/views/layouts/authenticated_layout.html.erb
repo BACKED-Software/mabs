@@ -27,8 +27,9 @@
 <% end %>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top navbar-bg">
   <div class="container-fluid">
-    <%= image_tag "shortened-mabs-logo-removebg.png", alt: "Multicultural Association of Business Student Logo", height: '28', style: 'margin-right: 10px'%>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <%= link_to root_path do %>
+      <%= image_tag "shortened-mabs-logo-removebg.png", alt: "Multicultural Association of Business Student Logo", height: '28', style: 'margin-right: 10px' %>
+    <% end %>    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
