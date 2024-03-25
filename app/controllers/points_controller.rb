@@ -22,7 +22,7 @@ class PointsController < ApplicationController
     if @point.save
       redirect_to @point, notice: 'Point was successfully created.'
     else
-      render :new
+      redirect_to admin_index_path, notice: 'Failed to create point.'
     end
   end
 
