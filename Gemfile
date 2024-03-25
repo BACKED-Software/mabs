@@ -102,3 +102,4 @@ gem 'chartkick'
 gem 'simple_calendar'
 gem 'whenever', require: false
 gem "sassc", "~> 2.4"
+gem 'redcarpet'

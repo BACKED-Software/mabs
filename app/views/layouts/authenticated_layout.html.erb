@@ -48,6 +48,9 @@
             <%= link_to "Admin Tools", admin_index_url, class: "nav-link", "data-turbo": "false" %>
           </li>
         <% end %>
+        <li class="nav-item">
+          <%= link_to "Help", help_path, class: "nav-link", "data-turbo": "false" %>
+        </li>
       </ul>
       <% if user_signed_in? && @current_user.present? %>
         <a class="d-flex align-items-center" data-bs-toggle="offcanvas" href="#userOffcanvas" role="button" aria-controls="userOffcanvas">
