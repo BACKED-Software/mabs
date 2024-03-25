@@ -224,6 +224,7 @@ body {
 
 .nav-item {
     border-radius: 10px;
+    padding: 3px 5px;
 }
 
 .nav-item:hover {
@@ -516,7 +517,8 @@ h1 {
     font-weight: 400; /* Normal weight to avoid heaviness */
     margin-bottom: 0.5rem; /* Reduced bottom margin for a tighter layout */
     padding-bottom: 0.25rem; /* Subtle padding at the bottom */
-    border-bottom: 1px solid #e0e0e0; /* Light grey bottom border for a touch of separation */
+    border-bottom: 1px solid #c9c9c9; /* Light grey bottom border for a touch of separation */
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     letter-spacing: normal; /* Default spacing to maintain readability */
 }
 
@@ -528,4 +530,43 @@ h1 {
     display: flex;
     justify-content: flex-start; /* Align items to the start of the container */
     gap: 10px; /* Optional: adds some space between the buttons */
+}
+
+.announcement-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+
+}
+.announcement-list {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.view-all-announcements {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    margin: 0px 0; /* Adjust as needed */
+    background: none;
+    text-decoration: underline;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.view-all-events {
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    margin: 0px 0; /* Adjust as needed */
+    background: none;
+    text-decoration: underline;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
 }

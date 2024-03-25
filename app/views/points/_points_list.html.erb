@@ -22,7 +22,7 @@
         <td><%= date_field_tag "points[#{index}][dateOfAward]", point.dateOfAward.strftime("%Y-%m-%d"), class: 'form-control' %></td>
         <td><%= text_field_tag "points[#{index}][awardDescription]", point.awardDescription, class: 'form-control' %></td>
         <td>
-          <%= link_to("Delete", delete_point_path(point), class: 'delete-point-link') %>
+          <%= link_to 'Delete', destroy_points_path(point), method: :delete, class: "btn btn-sm btn-outline-danger confirm-action" %>
         </td>
       </tr>
     <% end %>

@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to(@user, notice: 'User was successfully updated.') }
+        format.html { redirect_to(dashboard_index_path, notice: 'Your profile information was successfully updated.') }
         format.json { render(:show, status: :ok, location: @user) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     return if current_user == @user || current_user.is_admin?
 
     flash.now[:alert] = 'You are not authorized to perform this action.'
-    redirect_to(users_path)
+    redirect_to(root_path)
   end
 
   def authorize_admin!

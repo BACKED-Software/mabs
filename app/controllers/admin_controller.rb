@@ -16,7 +16,7 @@ class AdminController < ApplicationController
       search_term = "%#{params[:search]}%"
       @users = @users.where('full_name LIKE ? OR email LIKE ?', search_term, search_term)
     end
-    @events = Event.where('"eventTime" > ?', Time.now)
+    @events = Event.all
 
     # prepare data for charts or tables here
     @gender_distribution = User.group(:gender).count.except(nil)
@@ -155,7 +155,7 @@ class AdminController < ApplicationController
     uploaded_file = params[:backup_file]
 
     unless ENV['DATABASE_URL']
-      flash[:alert] = 'Database URL is not configured.'
+      flash[:alert] = "Database URL is not configured."
       redirect_to admin_index_path and return
     end
 
@@ -174,18 +174,20 @@ class AdminController < ApplicationController
 
       # Parse database URL from environment variables
       db_url = URI.parse(ENV['DATABASE_URL'])
-      database_name = db_url.path.delete_prefix('/')
+      database_name = db_url.path.delete_prefix("/")
       username = db_url.user
       password = db_url.password
       host = db_url.host
 
       # Prepare environment variables for the command
-      { 'PGPASSWORD' => password }
+      env = { 'PGPASSWORD' => password }
 
       # Build and execute the command using array syntax
       command = ['pg_restore', "--username=#{username}", "--dbname=#{database_name}", '--clean', "--host=#{host}",
                  file_path.to_s]
       Rails.logger.info "Executing command: #{command.join(' ')} without password for security reasons"
+
+      success = system(env, *command)
 
       flash[:notice] = "Database successfully imported to #{database_name}."
 
