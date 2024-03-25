@@ -78,12 +78,12 @@ ActiveRecord::Schema[7.0].define(version: 20_240_318_013_048) do
     t.text 'eventInfo'
     t.string 'eventName'
     t.datetime 'eventTime'
-    t.integer 'eventPoints'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'sponsor_title'
     t.text 'sponsor_description'
     t.string 'password'
+    t.integer 'eventPoints'
   end
 
   create_table 'points', force: :cascade do |t|
