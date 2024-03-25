@@ -74,7 +74,7 @@
         </div>
         <div class="announcement-list">
           <% @announcements.each do |announcement| %>
-            <div class="announcement bg-info-subtle shadow-md rounded p-3 mb-3">
+            <div class="announcement bg-info-subtle shadow rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
               <% announcement_user = User.find_by(uid: announcement.googleUserID) %>
                 <% if announcement_user.present? %>
