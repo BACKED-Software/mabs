@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     return if current_user == @user || current_user.is_admin?
 
     flash.now[:alert] = 'You are not authorized to perform this action.'
-    redirect_to(users_path)
+    redirect_to(root_path)
   end
 
   def authorize_admin!
