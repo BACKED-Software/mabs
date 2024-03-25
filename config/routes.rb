@@ -71,8 +71,11 @@ Rails.application.routes.draw do
   resources :points do
     member do
       get 'delete'
+      get 'destroy'
     end
   end
+
+  delete 'points/:id/destroy', to: 'points#destroy', as: 'destroy_points'
 
   resources :rsvps, only: %i[index create destroy]
 

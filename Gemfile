@@ -99,3 +99,4 @@ gem 'chartkick'
 # gem 'chart_js'
 gem 'simple_calendar'
 gem 'whenever', require: false
+gem "sassc", "~> 2.4"
