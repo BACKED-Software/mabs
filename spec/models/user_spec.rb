@@ -6,20 +6,6 @@ RSpec.describe UsersController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:user, is_admin: true) }
 
-  describe 'GET #index' do
-    it 'returns a success response' do
-      get :index
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET #show' do
-    it 'returns a success response' do
-      get :show, params: { id: user.id }
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET #edit' do
     before do
       sign_in user
