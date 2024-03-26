@@ -59,8 +59,12 @@
           </div>
         </a>
       <%else %>
-        <%= link_to '<i class="fab fa-google"></i> Sign In with Google'.html_safe, user_google_oauth2_omniauth_authorize_path, class: "btn btn-light" %>      <% end %>
-
+        <%= form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, local: true, data: { turbo: false } do %>
+          <%= button_tag(type: 'submit', class: "btn btn-light") do %>
+            <i class="fab fa-google"></i> Sign In with Google
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </nav>
