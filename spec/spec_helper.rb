@@ -3,6 +3,9 @@
 require 'capybara/rspec'
 
 require 'simplecov'
+
+require 'database_cleaner'
+
 SimpleCov.start
 # frozen_string_literal: true
 
@@ -25,6 +28,25 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :selenium_chrome_headless
   # or :selenium_chrome to see the browser
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
   # Use JavaScript driver for tests tagged with :js
   config.before(:each, type: :feature, js: true) do
     Capybara.current_driver = Capybara.javascript_driver

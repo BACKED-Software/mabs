@@ -196,10 +196,15 @@ class AdminController < ApplicationController
 
       success = system(env, *command)
 
-      flash[:notice] = "Database successfully imported to #{database_name}."
+      if success == true
+        flash[:notice] = "Database successfully imported to #{database_name}."
+      else
+        flash[:alert] = "Import failed: #{e.message}"
+      end
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)
+
     else
       flash[:alert] = 'No file uploaded.'
     end
@@ -210,6 +215,7 @@ class AdminController < ApplicationController
     flash[:alert] = "Import failed: #{e.message}"
     redirect_to admin_index_path
   end
+
 
   private
 

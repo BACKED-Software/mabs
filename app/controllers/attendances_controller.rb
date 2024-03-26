@@ -29,10 +29,8 @@ class AttendancesController < ApplicationController
       respond_to do |format|
         if @attendance.save
           format.html { redirect_to(dashboard_index_path, notice: 'Attendance was successfully checked in.') }
-          format.json { render(:show, status: :created, location: @attendance) }
         else
-          format.html { render(:new, status: :unprocessable_entity) }
-          format.json { render(json: @attendance.errors, status: :unprocessable_entity) }
+          format.html { redirect_to(dashboard_index_path, alert:  'Failed to check in') }
         end
       end
     else

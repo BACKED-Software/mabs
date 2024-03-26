@@ -90,6 +90,12 @@ GEM
     chronic (0.10.2)
     concurrent-ruby (1.2.3)
     crass (1.0.6)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -250,6 +256,7 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
+    redcarpet (3.6.0)
     regexp_parser (2.9.0)
     reline (0.4.2)
       io-console (~> 0.5)
@@ -359,6 +366,7 @@ DEPENDENCIES
   brakeman
   capybara
   chartkick
+  database_cleaner
   debug
   devise
   dotenv-rails
@@ -375,6 +383,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.8)
   rails-controller-testing
+  redcarpet
   rexml
   rspec-rails
   rubocop
