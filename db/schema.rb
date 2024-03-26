@@ -70,17 +70,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_013048) do
     t.datetime "updated_at", null: false
   end
 
-  create_table 'events', force: :cascade do |t|
-    t.text 'eventLocation'
-    t.text 'eventInfo'
-    t.string 'eventName'
-    t.datetime 'eventTime'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'sponsor_title'
-    t.text 'sponsor_description'
-    t.string 'password'
-    t.integer 'eventPoints'
+  create_table "events", force: :cascade do |t|
+    t.text "eventLocation"
+    t.text "eventInfo"
+    t.string "eventName"
+    t.datetime "eventTime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "sponsor_title"
+    t.text "sponsor_description"
+    t.string "password"
+    t.integer "eventPoints"
   end
 
   create_table "points", force: :cascade do |t|
