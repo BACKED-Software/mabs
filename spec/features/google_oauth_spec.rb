@@ -22,7 +22,7 @@ RSpec.feature 'Google OAuth Authentication' do
 
   scenario 'User can log in using Google OAuth' do
     visit '/dashboard/index'
-    click_link 'Sign In with Google'
+    click_button 'Sign In with Google'
     expect(page).to have_content 'mockuser'
   end
 end

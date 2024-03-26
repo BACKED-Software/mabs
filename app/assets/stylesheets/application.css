@@ -242,6 +242,7 @@ body {
 
 .card-body {
     background-color: #ffffff; /* White background for content */
+    border-radius: 8px; /* Rounded corners for content */
 }
 
 .events-container {
@@ -545,7 +546,6 @@ h1 {
 }
 
 .view-all-announcements {
-    position: sticky;
     bottom: 0;
     z-index: 1000;
     width: 100%;
@@ -569,4 +569,9 @@ h1 {
     border: none;
     padding: 5px;
     cursor: pointer;
+}
+
+.leaderboard-container {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
 }

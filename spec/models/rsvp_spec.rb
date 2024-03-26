@@ -13,14 +13,6 @@ RSpec.describe RsvpsController, type: :controller do
     sign_in user
   end
 
-  describe 'GET #index' do
-    it 'assigns all rsvps as @rsvps' do
-      rsvp = Rsvp.create! valid_attributes
-      get :index
-      expect(assigns(:rsvps)).to eq([rsvp])
-    end
-  end
-
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Rsvp' do

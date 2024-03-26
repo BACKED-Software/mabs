@@ -37,7 +37,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to(announcements_path, notice: 'announcement was successfully created.') }
+        format.html { redirect_to(announcements_path, notice: 'Announcement was successfully created.') }
         format.json { render(:show, status: :created, location: @announcement) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -50,7 +50,7 @@ class AnnouncementsController < ApplicationController
   def update
     respond_to do |format|
       if @announcement.update(announcement_params)
-        format.html { redirect_to(announcements_path, notice: 'announcement was successfully updated.') }
+        format.html { redirect_to(announcements_path, notice: 'Announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
       else
         format.html { render(:edit, status: :unprocessable_entity) }
@@ -66,7 +66,7 @@ class AnnouncementsController < ApplicationController
   def destroy
     @announcement = Announcement.find(params[:id])
     @announcement.destroy!
-    redirect_to(announcements_path, notice: 'announcement was successfully deleted.')
+    redirect_to(announcements_path, notice: 'Announcement was successfully deleted.')
   end
 
   private
