@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
   get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
   get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
+  patch 'users/:id/update_user_title', to: 'users#update_user_title', as: :update_user_title
+
 
   resources :admin do
     member do
@@ -52,6 +54,7 @@ Rails.application.routes.draw do
     member do
       get 'delete'
       patch 'make_admin'
+      # patch 'update_user_title'
     end
   end
 

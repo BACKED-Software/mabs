@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Removing a user', type: :feature do
-    let!(:admin) { create(:admin) } # Adjust this to match your user factory and admin trait
+    let!(:admin) { create(:admin) } 
     let!(:user) { create(:user, full_name: 'John Doe', email: 'john@example.com') } # Ensure this matches your user factory
   
     context 'as an admin' do
@@ -28,7 +28,7 @@ RSpec.describe 'Removing a user', type: :feature do
   
   # Promoting a user to admin
   RSpec.describe 'Promoting a user to admin', type: :feature do
-    let!(:admin) { create(:admin) } # Adjust this to match your user factory and admin trait
+    let!(:admin) { create(:admin) } 
     let!(:user) { create(:user, full_name: 'John Doe', email: 'john@example.com') } 
   
     before do
@@ -52,7 +52,7 @@ RSpec.describe 'Removing a user', type: :feature do
   
   #Demote to User
   RSpec.describe 'Demoting a user to admin', type: :feature do
-    let!(:admin) { create(:admin) } # Adjust this to match your user factory and admin trait
+    let!(:admin) { create(:admin) } 
     let!(:user) { create(:user, full_name: 'John Doe', email: 'john@example.com', is_admin: true) } 
   
     before do
@@ -127,3 +127,54 @@ RSpec.describe 'UserManagementActions', type: :request do
   end
 
 end
+
+RSpec.describe UsersController, type: :request do
+  let(:user) { create(:user) } # Create a user from the factory
+
+  describe 'PATCH #update_user_title' do
+    context 'when updating the title of a user' do
+      let(:new_title) { "President" }
+
+      before do
+        patch update_user_title_path(user), params: { user: { title: new_title } }
+      end
+
+      it 'updates the user title successfully' do
+        user.reload
+        expect(user.title).to eq(new_title)
+      end
+
+      it 'redirects to the admin tools path with a success notice' do
+        expect(response).to redirect_to(admin_tools_path)
+        expect(flash[:notice]).to eq('User title updated successfully.')
+      end
+    end
+  end
+end
+
+
+RSpec.describe "Users", type: :request do
+  let(:admin) { create(:user, is_admin: true) } # Create an admin user
+  let(:user) { create(:user, title: "Member") } # Create a user with default title
+
+  describe "PATCH update_user_title" do
+    before do
+      sign_in admin 
+      # visit admin_tools_path
+    end
+
+    let(:new_title) { "President" } # New title to update the user with
+
+    it "updates the user's title" do
+      patch update_user_title_path(user), params: { user: { title: new_title } }
+      user.save # Reload user from the database to get the updated title
+      user.reload
+      expect(user.title).to eq(new_title)
+      expect(response).to redirect_to(admin_tools_path) # Or wherever you redirect to after update
+      expect(flash[:notice]).to eq("User title updated successfully.")
+    end
+  end
+end
+
+# Create a test for update_user_title
+

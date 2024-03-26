@@ -32,19 +32,24 @@ class AdminController < ApplicationController
   def promote_to_admin
     user = User.find(params[:id])
     user.update!(is_admin: true)
-    redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
+    user.save
+    flash[:notice] = "#{user.email} has been promoted to admin."
+    redirect_to admin_index_path
   end
 
   def demote_to_user
     user = User.find(params[:id])
     user.update!(is_admin: false)
-    redirect_to admin_index_path, notice: "#{user.email} has been demoted to user."
+    user.save
+    flash[:notice] = "#{user.email} has been demoted to user."
+    redirect_to admin_index_path
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to admin_index_path, notice: "#{user.email} was successfully updated."
+      flash[:notice] = '#{user.email} User was successfully updated.'
+      redirect_to admin_index_path
     else
       render :index, status: :unprocessable_entity
     end
@@ -57,7 +62,8 @@ class AdminController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_index_path, notice: "#{@user.email} was successfully removed."
+    flash[:notice] = "#{@user.email} was successfully removed."
+    redirect_to admin_index_path
   end
 
   def event
@@ -96,7 +102,8 @@ class AdminController < ApplicationController
 
   def recalculate_points
     RecalculateUserPointsJob.perform_later
-    redirect_to admin_index_path, notice: 'Recalculation of points has been initiated.'
+    flash[:notice] = 'Recalculation of points has been initiated.'
+    redirect_to admin_index_path
   end
 
   def backup_database

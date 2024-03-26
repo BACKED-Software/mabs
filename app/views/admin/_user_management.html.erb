@@ -34,7 +34,9 @@
           </div>
           <div class="col-auto">
             <%= form.submit "Search", class: "btn btn-primary btn-sm" %>
+            <%= link_to 'Clear Search', admin_tools_path, class: 'btn btn-primary btn-sm' if params[:search].present? %>
           </div>
+          
         <% end %>
 
       <div class="table-responsive">
@@ -52,7 +54,13 @@
               <tr>
                 <td><%= user.email %></td>
                 <td><%= user.full_name %></td>
-                <td><%= user.is_admin ? 'Admin' : 'User' %></td>
+                <td><%= user.is_admin ? 'Admin' : 'User' %>
+                <strong>Title:</strong> <%= user.title.presence || 'Member' %>
+                <%= form_with model: [user], url: update_user_title_path(user), local: true, method: :patch, class: "d-inline-block" do |form| %>
+                  <%= form.text_field :title, value: user.title, placeholder: "Member, President, VP, etc.", class: "form-control form-control-sm d-inline-block w-auto" %>
+                  <%= form.submit "Update", class: "btn btn-sm btn-primary" %>
+                <% end %>
+                </td>
                 <td>
                   <% if user.is_admin %>
                     <%= link_to 'Demote to User', demote_to_user_admin_path(user), method: :get, class: "btn btn-sm btn-outline-secondary confirm-action", data: { confirm: "Are you sure you want to demote #{user.full_name} to user?" } %>
