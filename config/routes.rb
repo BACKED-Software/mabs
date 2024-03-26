@@ -89,4 +89,9 @@ Rails.application.routes.draw do
   get 'download_backup', to: 'admin#download_backup', as: :download_backup
   get 'delete_backup', to: 'admin#delete_backup', as: :delete_backup
   post 'import_backup', to: 'admin#import_backup', as: :import_backup
+
+
+  get 'help' => 'help#index', as: :help
+  get 'help/:id' => 'help#show', as: :help_article
+
 end

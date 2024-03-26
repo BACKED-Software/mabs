@@ -5,8 +5,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Events Integration', type: :feature do
-  let!(:admin) { create(:admin) }
-  let!(:user) { create(:user) }
+
+  let!(:admin) { create(:admin) } # Assuming you have a similar setup for admin
+
+  # Use this pattern for creating or finding a user with a specific uid
+  let!(:user) do
+    User.find_by(uid: 'specific_uid') || create(:user, uid: 'specific_uid')
+  end
   before do
     sign_in user
     event_time = DateTime.tomorrow.change(hour: 8, min: 0, sec: 0)
@@ -23,7 +28,7 @@ RSpec.describe 'Events Integration', type: :feature do
   context 'as an admin' do
     before do
       sign_in admin
-      visit event_path(@event)
+      visit events_path
     end
 
     it 'displays the event details page' do
@@ -181,10 +186,17 @@ RSpec.describe 'Events Integration', type: :feature do
   context 'as a user' do
     before do
       sign_in user
-      visit event_path(@event)
+      visit events_path
     end
 
     it 'event password is not visible' do
+      event_button_name = @event.eventName.present? ? @event.eventName : 'Event Name Missing'
+      event_button_name += ' - ' if @event.eventName.present?
+      event_button_name += @event.eventTime.strftime('%I:%M %p')
+      click_button event_button_name
+
+      # Wait for the modal to appear
+      expect(page).to have_selector('.modal', visible: true)
       expect(page).not_to have_content('Password:')
     end
 
@@ -252,6 +264,4 @@ RSpec.describe 'Events Integration', type: :feature do
   #   expect(page).to have_content('Sponsor description is too short (minimum is 10 characters)')
   # Add more assertions as needed
   # end
-
-  # Add more integration tests as needed
 end

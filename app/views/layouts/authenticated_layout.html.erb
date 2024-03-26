@@ -48,6 +48,9 @@
             <%= link_to "Admin Tools", admin_index_url, class: "nav-link", "data-turbo": "false" %>
           </li>
         <% end %>
+        <li class="nav-item">
+          <%= link_to "Help", help_path, class: "nav-link", "data-turbo": "false" %>
+        </li>
       </ul>
       <% if user_signed_in? && @current_user.present? %>
         <a class="d-flex align-items-center" data-bs-toggle="offcanvas" href="#userOffcanvas" role="button" aria-controls="userOffcanvas">
@@ -56,8 +59,12 @@
           </div>
         </a>
       <%else %>
-        <%= link_to '<i class="fab fa-google"></i> Sign In with Google'.html_safe, user_google_oauth2_omniauth_authorize_path, class: "btn btn-light" %>      <% end %>
-
+        <%= form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, local: true, data: { turbo: false } do %>
+          <%= button_tag(type: 'submit', class: "btn btn-light") do %>
+            <i class="fab fa-google"></i> Sign In with Google
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </nav>
