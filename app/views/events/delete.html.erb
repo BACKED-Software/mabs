@@ -1,4 +1,5 @@
-<div class="container mt-4">
+<% content_for(:title, 'Delete Event') %>
+<div class="container mt-4 mb-3">
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <div class="card">
@@ -6,8 +7,6 @@
           <h1>Delete Event</h1>
         </div>
         <div class="card-body">
-          <%= link_to("Back to Calendar", events_path, class: "btn btn-outline-secondary mb-3") %>
-
           <%= form_for(@event, method: 'delete') do |f| %>
             <p>Are you sure you want to permanently delete this event?</p>
             <div class="card" style="padding: 10px"><%= render @event %></div>
@@ -17,6 +16,9 @@
               <%= f.submit("Delete Event", class: "btn btn-danger") %>
             </div>
           <% end %>
+        </div>
+        <div class="card-footer">
+          <%= link_to "Back to events", events_path, class: "btn btn-outline-secondary" %>
         </div>
       </div>
     </div>

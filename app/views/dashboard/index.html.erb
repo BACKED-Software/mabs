@@ -10,7 +10,7 @@
       <% elsif current_hour >= 12 && current_hour < 17 %>
         <h1>Good Afternoon<% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
       <% else %>
-        <h1>Good Evening <% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
+        <h1>Good Evening<% if user_signed_in? %>, <%= @user.full_name.split(" ").first %><% end %></h1>
       <% end %>
       <p>Welcome to your dashboard</p>
       <div class="points-summary mt-5 p-4 bg-white rounded shadow text-center">
