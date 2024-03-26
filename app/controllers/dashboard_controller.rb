@@ -4,7 +4,8 @@ class DashboardController < ApplicationController
   layout 'authenticated_layout'
 
   def index
-    @events = Event.all
+    # Get all events that have an eventTime at least 4 hrs ago
+    @events = Event.where(eventTime: Time.now-4*60*60...).order(eventTime: :asc)
     @announcements = Announcement.order(dateOfAnnouncement: :desc).limit(2)
     @user = current_user
     return unless @user

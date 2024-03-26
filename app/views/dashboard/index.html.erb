@@ -73,6 +73,10 @@
           <h4>Latest Announcements</h4>
         </div>
         <div class="announcement-list">
+          <% if @announcements.empty? %>
+            <p class="text-center">No Current Announcements</p>
+          <% end %>
+          
           <% @announcements.each do |announcement| %>
             <div class="announcement bg-info-subtle shadow rounded p-3 mb-3">
               <div class="d-flex align-items-center mb-2">
@@ -107,68 +111,72 @@
   <div class="events mt-4 bg-white rounded p-4 shadow">
     <h4>Upcoming Events</h4>
     <ul class="list-unstyled mt-3">
-      <% @events.sort_by(&:eventTime).each do |event| %>
-        <!-- Only show events in future or started less than 4hrs ago-->
-        <% if event.eventTime >= DateTime.now.in_time_zone - 4*60*60%>
-          <li class="event mb-3 p-3 bg-light rounded">
-            <div class="d-flex justify-content-between">
-              <div>
-              
-              <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link">
-                <div class="event-date text-primary">
-                <i class="far fa-calendar-alt"></i>
-                <strong><%= event.eventTime.strftime("%A, %B %-d (%I:%M %p)") %></strong>
-                </div>
-              </a>
-                <div class="event-details">
-                  <h5 class="event-title mb-1"><%= event.eventName %></h5>
-                  
-                  <p class="event-location text-muted mb-2"><%= event.eventLocation %></p>
-                  
-                  <p class="m-0">
-                    <strong class="m-0 text-secondary">Sponsor:</strong>
-                    <%= event.sponsor_title %>
-                  </p>
 
-                  <strong class="m-0 text-secondary">Info:</strong>
-                  <p class="mb-0"><%= raw event.eventInfo %></p>
-                  
-                  <strong class="m-0 text-secondary">Points: </strong>
-                  <span class="total-points m-1 fs-6">
-                      <%= event.eventPoints %>
-                      <i class="fas fa-coins"></i>
-                  </span>
-                </div>
+      <% if @events.empty? %>
+        <li class="event mb-3 p-3 bg-light rounded">
+          <p class="text-center">No upcoming events</p>
+        </li>
+      <% end %>
+
+      <% @events.each do |event| %>
+        <li class="event mb-3 p-3 bg-light rounded">
+          <div class="d-flex justify-content-between">
+            <div>
+            
+            <a href="<%= events_path(start_date: event.eventTime.to_date) %>" class="event-link">
+              <div class="event-date text-primary">
+              <i class="far fa-calendar-alt"></i>
+              <strong><%= event.eventTime.strftime("%A, %B %-d (%I:%M %p)") %></strong>
               </div>
+            </a>
+              <div class="event-details">
+                <h5 class="event-title mb-1"><%= event.eventName %></h5>
+                
+                <p class="event-location text-muted mb-2"><%= event.eventLocation %></p>
+                
+                <p class="m-0">
+                  <strong class="m-0 text-secondary">Sponsor:</strong>
+                  <%= event.sponsor_title %>
+                </p>
 
-              <% if user_signed_in? %>
-                <% if DateTime.now >= event.eventTime - 15*60 %>
-                  <% if Attendance.exists?(googleUserID: current_user.uid, eventID: event.id) %>
-                    <div class="attendance-status text-success">You are Checked in</div>
-                  <% else %>
-                    <%= form_with url: attendances_path, method: :post do |form| %>
-                      <%= form.hidden_field :event_id, value: event.id %>
-                      <%= form.password_field :password, class: 'form-control', placeholder: 'Enter Password' %>
-                      <div class="col d-flex justify-content-end">
-                        <%= form.submit "Check In", class: 'btn btn-primary' %>
-                      </div>
-                  <% end %>
-                  <% end %>
+                <strong class="m-0 text-secondary">Info:</strong>
+                <p class="mb-0"><%= raw event.eventInfo %></p>
+                
+                <strong class="m-0 text-secondary">Points: </strong>
+                <span class="total-points m-1 fs-6">
+                    <%= event.eventPoints %>
+                    <i class="fas fa-coins"></i>
+                </span>
+              </div>
+            </div>
+
+            <% if user_signed_in? %>
+              <% if DateTime.now >= event.eventTime - 15*60 %>
+                <% if Attendance.exists?(googleUserID: current_user.uid, eventID: event.id) %>
+                  <div class="attendance-status text-success">You are Checked in</div>
                 <% else %>
-                  <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
-                    <div class="rsvp-status text-success">You are RSVP'd, Check in starts in <%= distance_of_time_in_words(DateTime.now, event.eventTime-15*60) %></div>
-                  <% else %>
-                    <%= form_with url: rsvps_path, method: :post do |form| %>
-                      <%= form.hidden_field :user_uid, value: current_user.uid %>
-                      <%= form.hidden_field :event_id, value: event.id %>
-                      <%= form.submit "  RSVP  ", class: 'btn btn-primary' %>
-                    <% end %>
+                  <%= form_with url: attendances_path, method: :post do |form| %>
+                    <%= form.hidden_field :event_id, value: event.id %>
+                    <%= form.password_field :password, class: 'form-control', placeholder: 'Enter Password' %>
+                    <div class="col d-flex justify-content-end">
+                      <%= form.submit "Check In", class: 'btn btn-primary' %>
+                    </div>
+                <% end %>
+                <% end %>
+              <% else %>
+                <% if Rsvp.exists?(user_uid: current_user.uid, event_id: event.id) %>
+                  <div class="rsvp-status text-success">You are RSVP'd, Check in starts in <%= distance_of_time_in_words(DateTime.now, event.eventTime-15*60) %></div>
+                <% else %>
+                  <%= form_with url: rsvps_path, method: :post do |form| %>
+                    <%= form.hidden_field :user_uid, value: current_user.uid %>
+                    <%= form.hidden_field :event_id, value: event.id %>
+                    <%= form.submit "  RSVP  ", class: 'btn btn-primary' %>
                   <% end %>
                 <% end %>
               <% end %>
-            </div>
-          </li>
-        <% end %>
+            <% end %>
+          </div>
+        </li>
       <% end %>
     </ul>
     <a href="<%= events_path %>" class="view-all-events btn btn-link">View All Events</a>
