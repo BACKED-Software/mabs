@@ -32,10 +32,11 @@ RSpec.describe 'Events Integration', type: :feature do
 
     it 'displays the event details page' do
       visit events_path
-      event_button_name = @event.eventName.present? ? @event.eventName : 'Event Name Missing'
-      event_button_name += ' - ' if @event.eventName.present?
-      event_button_name += @event.eventTime.strftime('%I:%M %p')
-      click_button event_button_name
+      # Find the button by its content
+      button = find('button', text: @event.eventName)
+
+      # Click the button
+      button.click
 
       # Wait for the modal to appear
       expect(page).to have_selector('.modal', visible: true)
@@ -47,10 +48,12 @@ RSpec.describe 'Events Integration', type: :feature do
 
     it 'updates an existing event' do
       visit events_path
-      event_time_string = @event.eventTime.strftime('%I:%M %p')
-      event_button_name = @event.eventName.to_s
-      event_button_name += " - #{event_time_string}" if @event.eventName
-      click_button event_button_name
+      # Find the button by its content
+      button = find('button', text: @event.eventName)
+
+      # Click the button
+      button.click
+
       expect(page).to have_selector('.modal', visible: true)
       click_link 'Edit'
       fill_in 'event[eventName]', with: 'Updated Name'
@@ -61,10 +64,12 @@ RSpec.describe 'Events Integration', type: :feature do
 
     it 'fails to update an event' do
       visit events_path
-      event_time_string = @event.eventTime.strftime('%I:%M %p')
-      event_button_name = @event.eventName.to_s
-      event_button_name += " - #{event_time_string}" if @event.eventName
-      click_button event_button_name
+      # Find the button by its content
+      button = find('button', text: @event.eventName)
+
+      # Click the button
+      button.click
+
       expect(page).to have_selector('.modal', visible: true)
       click_link 'Edit'
       fill_in 'event[eventName]', with: ''
@@ -189,10 +194,11 @@ RSpec.describe 'Events Integration', type: :feature do
     end
 
     it 'event password is not visible' do
-      event_button_name = @event.eventName.present? ? @event.eventName : 'Event Name Missing'
-      event_button_name += ' - ' if @event.eventName.present?
-      event_button_name += @event.eventTime.strftime('%I:%M %p')
-      click_button event_button_name
+      # Find the button by its content
+      button = find('button', text: @event.eventName)
+
+      # Click the button
+      button.click
 
       # Wait for the modal to appear
       expect(page).to have_selector('.modal', visible: true)
