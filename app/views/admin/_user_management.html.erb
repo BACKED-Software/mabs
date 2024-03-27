@@ -16,6 +16,32 @@
   </div>
 </div>
 
+<div class="modal fade" id="updateTitleModal" tabindex="-1" aria-labelledby="updateTitleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateTitleModalLabel">Update User Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="updateTitleForm" method="post" action="">
+      
+      <div class="modal-body">
+          <div class="mb-3">
+            <label for="userTitle" class="col-form-label">Title:</label>
+            <input type="hidden" name="_method" value="patch">
+            <input type="text" class="form-control" id="userTitle" name="user[title]">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Title</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <div class="accordion" id="userManagementAccordion">
   <div class="accordion-item">
     <h2 class="accordion-header" id="userManagementHeader">
@@ -56,10 +82,7 @@
                 <td><%= user.full_name %></td>
                 <td><%= user.is_admin ? 'Admin' : 'User' %>
                 <strong>Title:</strong> <%= user.title.presence || 'Member' %>
-                <%= form_with model: [user], url: update_user_title_path(user), local: true, method: :patch, class: "d-inline-block" do |form| %>
-                  <%= form.text_field :title, value: user.title, placeholder: "Member, President, VP, etc.", class: "form-control form-control-sm d-inline-block w-auto" %>
-                  <%= form.submit "Update", class: "btn btn-sm btn-primary" %>
-                <% end %>
+                <%= link_to 'Edit', '#', class: "btn btn-sm btn-outline-primary edit-title", data: { bs_toggle: "modal", bs_target: "#updateTitleModal", user_id: user.id, user_title: user.title || "Member" } %>
                 </td>
                 <td>
                   <% if user.is_admin %>
@@ -105,6 +128,51 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(form);
       form.submit();
     }
+  });
+
+  document.querySelectorAll('.edit-title').forEach(button => {
+    button.addEventListener('click', function() {
+      // Fetch the user's title and ID from the data attributes
+      const userTitle = this.dataset.userTitle; // Ensuring we're using dataset for data attributes
+      const userId = this.dataset.userId; 
+
+      // Access the form and input elements
+      const form = document.getElementById('updateTitleForm');
+      const titleInput = document.getElementById('userTitle');
+
+      // Dynamically set the form's action
+      form.action = `/users/${userId}/update_user_title`;
+
+      // Set the user's current title in the input field
+      titleInput.value = userTitle;
+
+      // Ensure the hidden input for HTTP method 'PATCH' is correctly set
+      let methodInput = form.querySelector('input[name="_method"]');
+      if (!methodInput) {
+        methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'patch';
+        form.appendChild(methodInput);
+      }
+    });
+  });
+ 
+
+  document.getElementById('updateTitleForm').addEventListener('submit', function(event) {
+        const action = event.target.action;
+        console.log("Form submitted to:", action); // Debug: Check the action URL in console
+
+        // Optionally, prevent submission if action is incorrect (for debugging)
+        // if (!action.includes('/update_user_title')) {
+        //     console.error("Form action is incorrect:", action);
+        //     event.preventDefault(); // Prevent form submission for debugging
+        // }
+    });
+  document.getElementById('updateTitleModal').addEventListener('hidden.bs.modal', function () {
+    document.getElementById('updateTitleForm').reset();
+    // Reset the action attribute if necessary
+    document.getElementById('updateTitleForm').action = "";
   });
 });
 </script>
