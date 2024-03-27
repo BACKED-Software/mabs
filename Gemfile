@@ -99,7 +99,7 @@ gem 'rails-controller-testing'
 
 gem 'chartkick'
 # gem 'chart_js'
+gem 'redcarpet'
+gem 'sassc', '~> 2.4'
 gem 'simple_calendar'
 gem 'whenever', require: false
-gem "sassc", "~> 2.4"
-gem 'redcarpet'

@@ -2,7 +2,9 @@
 
 class RsvpsController < ApplicationController
   before_action :set_user
-  before_action :set_event
+  before_action :set_event, except: [:destroy, :index]
+  before_action :check_admin, only: :index
+
   layout 'authenticated_layout'
 
   def create
@@ -22,9 +24,9 @@ class RsvpsController < ApplicationController
   end
 
   def destroy
-    @rsvp = Rsvp.find_by(user_uid: @user.uid, event_id: @event.id)
+    @rsvp = Rsvp.find(params[:id])
     @rsvp.destroy
-    head :no_content
+    redirect_to(dashboard_index_path)
   end
 
   private

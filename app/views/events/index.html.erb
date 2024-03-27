@@ -26,10 +26,16 @@
             <ul class="list-unstyled">
               <% events.sort_by(&:eventTime).each do |event| %>
                 <li>
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
-                    <%= "#{event.eventName} - #{event.eventTime.strftime('%I:%M %p')}" %>
+                  <div class="event-time">
+                    <%= event.eventTime.strftime('%I:%M %p') %>
+                  </div>
+                  
+                  <button class="btn" data-bs-toggle="modal" data-bs-target="#eventModal_<%= event.id %>">
+                    <i class="calendar-event-icon fas fa-calendar-day m-1"></i>
+                    <span><%= "#{event.eventName}" %></span>
                   </button>
                 </li>
+                <hr/>
               <% end %>
             </ul>
           </div>
