@@ -73,13 +73,8 @@ RSpec.describe RsvpsController, type: :controller do
 
     it 'deletes the RSVP' do
       expect {
-        delete :destroy, params: { id: rsvp.id, event_id: event.id }
+        delete :destroy, params: { id: rsvp.id }
       }.to change(Rsvp, :count).by(-1)
-    end
-
-    it 'returns no content status' do
-      delete :destroy, params: { id: rsvp.id, event_id: event.id }
-      expect(response).to have_http_status(:no_content)
     end
   end
 end

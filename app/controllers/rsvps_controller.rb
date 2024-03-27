@@ -26,7 +26,7 @@ class RsvpsController < ApplicationController
   def destroy
     @rsvp = Rsvp.find(params[:id])
     @rsvp.destroy
-    redirect_to(dashboard_index_path, notice: 'RSVP was successfully deleted.')
+    redirect_to(dashboard_index_path)
   end
 
   private
