@@ -16,6 +16,7 @@
   </div>
 </div>
 
+
 <div class="modal fade" id="updateTitleModal" tabindex="-1" aria-labelledby="updateTitleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -25,7 +26,7 @@
       </div>
       <form id="updateTitleForm" method="post" action="">
       
-      <div class="modal-body">
+        <div class="modal-body">
           <div class="mb-3">
             <label for="userTitle" class="col-form-label">Title:</label>
             <input type="hidden" name="_method" value="patch">
@@ -130,9 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ----------------- Update User Title Modal -----------------
+
   document.querySelectorAll('.edit-title').forEach(button => {
     button.addEventListener('click', function() {
       // Fetch the user's title and ID from the data attributes
+      
       const userTitle = this.dataset.userTitle; // Ensuring we're using dataset for data attributes
       const userId = this.dataset.userId; 
 
@@ -145,30 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Set the user's current title in the input field
       titleInput.value = userTitle;
-
-      // Ensure the hidden input for HTTP method 'PATCH' is correctly set
-      let methodInput = form.querySelector('input[name="_method"]');
-      if (!methodInput) {
-        methodInput = document.createElement('input');
-        methodInput.type = 'hidden';
-        methodInput.name = '_method';
-        methodInput.value = 'patch';
-        form.appendChild(methodInput);
-      }
     });
   });
+
+  document.getElementById('updateTitleForm').addEventListener('submit', function(event) {    
+    // After form submission is successfully processed, refresh the page after 3 seconds
+    setTimeout(function() {
+      window.location.reload();
+    }, 500); // 500 milliseconds = 0.5 seconds
+  });
  
-
-  document.getElementById('updateTitleForm').addEventListener('submit', function(event) {
-        const action = event.target.action;
-        console.log("Form submitted to:", action); // Debug: Check the action URL in console
-
-        // Optionally, prevent submission if action is incorrect (for debugging)
-        // if (!action.includes('/update_user_title')) {
-        //     console.error("Form action is incorrect:", action);
-        //     event.preventDefault(); // Prevent form submission for debugging
-        // }
-    });
   document.getElementById('updateTitleModal').addEventListener('hidden.bs.modal', function () {
     document.getElementById('updateTitleForm').reset();
     // Reset the action attribute if necessary
