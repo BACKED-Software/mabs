@@ -33,4 +33,4 @@
 coverage
 /db/schema.rb
 
-/private/db_backups
+/private/db_backups/*
