@@ -28,6 +28,19 @@ RSpec.describe 'Dashboard Integration', type: :feature do
     end
   end
 
+  it 'displays message if no events are available' do
+    # Delete all events
+    Event.destroy_all
+    visit '/'
+    expect(page).to have_content('No Upcoming Events')
+  end
+
+  it 'displays message if no announcements are available' do
+    Announcement.destroy_all
+    visit '/'
+    expect(page).to have_content('No Current Announcements')
+  end
+
   it 'diplays the user name' do
     login_as(@user, scope: :user)
     visit '/'
