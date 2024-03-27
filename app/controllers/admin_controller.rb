@@ -45,19 +45,20 @@ class AdminController < ApplicationController
     redirect_to admin_index_path
   end
 
-  def update
-    @user = User.find(params[:id])
-    if @user.update(user_params)
-      flash[:notice] = '#{user.email} User was successfully updated.'
-      redirect_to admin_index_path
-    else
-      render :index, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   @user = User.find(params[:id])
+  #   if @user.update(user_params)
+  #     user.save
+  #     flash[:notice] = '#{user.email} User was successfully updated.'
+  #     redirect_to admin_index_path
+  #   else
+  #     render :index, status: :unprocessable_entity
+  #   end
+  # end
 
-  def delete
-    @user = User.find(params[:id])
-  end
+  # def delete
+  #   @user = User.find(params[:id])
+  # end
 
   def destroy
     @user = User.find(params[:id])
