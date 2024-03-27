@@ -5,7 +5,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Events Integration', type: :feature do
-
   let!(:admin) { create(:admin) } # Assuming you have a similar setup for admin
 
   # Use this pattern for creating or finding a user with a specific uid

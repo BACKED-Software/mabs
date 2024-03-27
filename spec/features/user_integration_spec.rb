@@ -6,7 +6,6 @@ RSpec.describe 'Users', type: :request do
   let!(:user) { create(:user) } # Assumes you have a User factory
   let(:admin) { create(:user, is_admin: true) }
 
-
   describe 'GET /users/:id/edit' do
     before do
       sign_in user
