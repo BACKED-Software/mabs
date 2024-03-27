@@ -97,8 +97,29 @@
   </div>
 <% end %>
 
-<script>
-  window.addEventListener("DOMContentLoaded", function() {
+<% content_for :extra_js do %>
+  <script>
+    window.onunload = function(){}
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      var offcanvasElement = document.querySelector('.offcanvas');
+      var offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+      var signOutLink = document.querySelector('a[href="/users/sign_out"]');
+
+      if (offcanvasElement) {
+        offcanvasInstance.hide();
+      }
+
+      if (signOutLink) {
+        signOutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          offcanvasInstance.hide();
+          window.location.href = signOutLink.getAttribute('href');
+        });
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", function() {
     var startDate = '<%= @start_date.strftime('%Y%m%d') %>';
     console.log(startDate);
     var targetElement = document.getElementById("event-date-" + startDate);
@@ -119,4 +140,5 @@
       targetElement.scrollIntoView({ behavior: 'smooth' });
     }
   });
-</script>
+  </script>
+<% end %>
