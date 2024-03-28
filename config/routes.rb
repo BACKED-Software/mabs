@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
   get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
 
-  resources :admin do
+  resources :admin, only: [:index] do
     member do
       # get 'make_admin'
       # patch 'update'
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events do
+  resources :events, except: [:show] do
     # special route for deleting events
     member do
       get 'delete'
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
+  resources :users, only: [:edit, :update, :destroy] do
     # special route for deleting users
     member do
       get 'delete'
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :attendances do
+  resources :attendances, only: [:create, :destroy] do
     member do
       get 'delete'
     end
@@ -71,7 +71,6 @@ Rails.application.routes.draw do
   resources :points do
     member do
       get 'delete'
-      get 'destroy'
     end
   end
 
@@ -90,8 +89,6 @@ Rails.application.routes.draw do
   get 'delete_backup', to: 'admin#delete_backup', as: :delete_backup
   post 'import_backup', to: 'admin#import_backup', as: :import_backup
 
-
   get 'help' => 'help#index', as: :help
   get 'help/:id' => 'help#show', as: :help_article
-
 end
