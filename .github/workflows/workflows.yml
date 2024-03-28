@@ -11,9 +11,6 @@ jobs:
   rspec-test:
     name: RSpec
     runs-on: ubuntu-latest
-    env:
-      EMAIL_USERNAME: ${{ env.EMAIL_USERNAME }}
-      EMAIL_PASSWORD: ${{ env.EMAIL_PASSWORD }}
     services:
       postgres:
         image: postgres:12

@@ -2,7 +2,7 @@
 
 class NotificationMailer < ApplicationMailer
   default to: -> { User.pluck(:email) },
-          from: ENV['EMAIL_USERNAME']
+          from: ENV['EMAIL_USERNAME'].presence || 'fallback@example.com'
 
   def new_announcement(announcement, host, port)
     @announcement = announcement
