@@ -121,10 +121,36 @@
 }
 
 /* Style for event button */
-.simple-calendar .calendar-events li button {
+.simple-calendar .calendar-events li .btn {
     width: 100%;
     margin: 0;
+    padding: 3%;
+    border: 1px solid #0056b3;
+    border-radius: 25px;
+    background-color: #0056b3;
+    color: white;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
 }
+
+.simple-calendar .calendar-events li .btn span {
+    display: -webkit-box;
+    margin: 1%;
+    -webkit-line-clamp: 1; /* Adjust the number of lines as per requirement */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: smaller;
+}
+
+.simple-calendar .calendar-events hr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-top: 3px solid #333;
+    margin-top: 3%;
+}
+
 
 /* Style for calendar heading */
 .simple-calendar .calendar-heading {
@@ -157,18 +183,19 @@
 
 .simple-calendar nav a {
     text-decoration: none;
-    padding: 2%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0 5px;
+    padding: 5%;
+    border: 1px solid #0056b3;
+    border-radius: 10px;
+    background-color: #0056b3;
+    color: white;
+    margin: 0 5%;
     transition: background-color 0.3s ease;
+    font-size: x-large;
 }
 
 /* Style for today's navigation link */
 .simple-calendar nav a:nth-child(2) {
-    background-color: #ffc;
+    background-color: #152864;
 }
 
 /* Style for navigation links on hover */
@@ -242,6 +269,7 @@ body {
 
 .card-body {
     background-color: #ffffff; /* White background for content */
+    border-radius: 8px; /* Rounded corners for content */
 }
 
 .events-container {
@@ -545,7 +573,6 @@ h1 {
 }
 
 .view-all-announcements {
-    position: sticky;
     bottom: 0;
     z-index: 1000;
     width: 100%;
@@ -569,4 +596,9 @@ h1 {
     border: none;
     padding: 5px;
     cursor: pointer;
+}
+
+.leaderboard-container {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
 }

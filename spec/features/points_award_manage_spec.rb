@@ -67,11 +67,9 @@ RSpec.describe 'PointsAwardManage', type: :feature do
     visit admin_tools_path
 
     click_on 'Manage Awarded Points'
-    puts other_user.email
     fill_in 'email', with: other_user.email
     click_on 'Manage Points'
 
-    # wait 1 second for the page to load
     click_on 'Delete', match: :first
 
     expect(page).to have_content('Point was successfully deleted.')

@@ -155,7 +155,7 @@ class AdminController < ApplicationController
     uploaded_file = params[:backup_file]
 
     unless ENV['DATABASE_URL']
-      flash[:alert] = "Database URL is not configured."
+      flash[:alert] = 'Database URL is not configured.'
       redirect_to admin_index_path and return
     end
 
@@ -174,7 +174,7 @@ class AdminController < ApplicationController
 
       # Parse database URL from environment variables
       db_url = URI.parse(ENV['DATABASE_URL'])
-      database_name = db_url.path.delete_prefix("/")
+      database_name = db_url.path.delete_prefix('/')
       username = db_url.user
       password = db_url.password
       host = db_url.host
@@ -189,10 +189,15 @@ class AdminController < ApplicationController
 
       success = system(env, *command)
 
-      flash[:notice] = "Database successfully imported to #{database_name}."
+      if success == true
+        flash[:notice] = "Database successfully imported to #{database_name}."
+      else
+        flash[:alert] = "Import failed: #{e.message}"
+      end
 
       # Remove the temporary file after import
       File.delete(file_path) if File.exist?(file_path)
+
     else
       flash[:alert] = 'No file uploaded.'
     end

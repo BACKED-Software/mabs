@@ -32,3 +32,5 @@
 /config/master.key
 coverage
 /db/schema.rb
+
+/private/db_backups/*

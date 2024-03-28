@@ -47,6 +47,11 @@ RSpec.describe 'Leaderboard', type: :feature do
   end
 
   it 'displays the current user rank with appropriate medal icon' do
+    original_stdout = $stdout
+    original_stderr = $stderr
+    $stdout = File.open(File::NULL, 'w')
+    $stderr = File.open(File::NULL, 'w')
+
     visit leaderboard_index_path
 
     within('.current-user-rank') do
@@ -55,6 +60,9 @@ RSpec.describe 'Leaderboard', type: :feature do
       expect(page).to have_css("h4.rank i.fas.fa-medal[style='color: #CD7F32;']", count: 1) if @current_user_rank == 3
       expect(page).to have_content(@current_user_rank) # Make sure the rank number is present
     end
+  ensure
+    $stdout = original_stdout
+    $stderr = original_stderr
   end
 
   it 'displays all users ranking trophies' do
