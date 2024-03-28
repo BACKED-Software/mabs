@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <style>
+    /* Inline CSS styles */
+    .announcement-container {
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .announcement-container img {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+    }
+
+    .announcement-title {
+      color: #0056b3;
+      margin-bottom: 5px;
+    }
+
+    .announcement-body {
+      margin-top: 5px;
+    }
+
+    .announcement-date {
+      color: #999;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>New Announcement</h1>
+  <div id="<%= dom_id @announcement %>" class="announcement-container">
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+      <!-- User Avatar -->
+      <% announcement_user = User.find_by(uid: @announcement.googleUserID) %>
+      <% if announcement_user.present? %>
+      <div style="margin-right: 10px;">
+        <img src="<%= announcement_user.avatar_url %>" alt="User Avatar" style="border-radius: 50%; width: 60px; height: 60px; object-fit: cover;">
+      </div>
+      <% else %>
+      <div style="margin-right: 10px;">
+        <img src="deleted_profile.jpg" alt="User Avatar" style="border-radius: 50%; width: 60px; height: 60px; object-fit: cover;">
+      </div>
+      <% end %> 
+      <!-- Announcement Title and Body -->
+      <div style="flex-grow: 1;">
+        <a href="<%= @url %>" class="text-decoration-none">
+          <h4 class="announcement-title"><%= @announcement.subject %></h4>
+        </a>
+        <div class="announcement-body">
+          <%= @announcement.body %>
+        </div>
+      </div>
+    </div>
+    <!-- Announcement Date -->
+    <div>
+      <p class="announcement-date">Posted on: <%= @announcement.dateOfAnnouncement.in_time_zone.strftime("%b %d, %Y, %I:%M %p %Z") %></p>
+    </div>
+  </div>
+</body>
+</html>

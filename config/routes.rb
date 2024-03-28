@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:edit, :update, :destroy] do
+  resources :users, only: %i[edit update destroy] do
     # special route for deleting users
     member do
       get 'delete'
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :attendances, only: [:create, :destroy] do
+  resources :attendances, only: %i[create destroy] do
     member do
       get 'delete'
     end
