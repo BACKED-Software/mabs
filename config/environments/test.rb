@@ -60,17 +60,7 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
-  # config.action_mailer.logger = Logger.new($stdout)
   config.action_mailer.perform_deliveries = true
-  # config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
-    user_name: ENV['EMAIL_USERNAME'],
-    password: ENV['EMAIL_PASSWORD'],
-    authentication: :login,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :test
+
 end
