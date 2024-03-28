@@ -19,8 +19,8 @@ jobs:
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_USERNAME: ${{ env.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ env.EMAIL_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
