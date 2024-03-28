@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
   get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
   get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
+  # get 'demographics', to: 'admin#demographics', as: 'actual_admin_demographics'
 
   get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
       get 'delete'
       get 'promote_to_admin'
       get 'demote_to_user'
+      get 'demographics'
       # get 'export_demographics'
     end
   end

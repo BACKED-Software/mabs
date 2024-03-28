@@ -73,6 +73,7 @@
               <th>Email</th>
               <th>Full Name</th>
               <th>Role</th>
+              <th>Title</th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -81,8 +82,8 @@
               <tr>
                 <td><%= user.email %></td>
                 <td><%= user.full_name %></td>
-                <td><%= user.is_admin ? 'Admin' : 'User' %>
-                <strong>Title:</strong> <%= user.title.presence || 'Member' %>
+                <td><%= user.is_admin ? 'Admin' : 'User' %></td>
+                <td> <%= user.title.presence || 'Member' %>
                 <%= link_to 'Edit', '#', class: "btn btn-sm btn-outline-primary edit-title", data: { bs_toggle: "modal", bs_target: "#updateTitleModal", user_id: user.id, user_title: user.title || "Member" } %>
                 </td>
                 <td>
