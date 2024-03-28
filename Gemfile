@@ -77,7 +77,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'webdrivers'
+  gem 'webdrivers', '~> 5.0'
 
   gem 'brakeman'
   gem 'launchy'
