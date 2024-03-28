@@ -8,5 +8,4 @@ class Announcement < ApplicationRecord
   validates :dateOfAnnouncement, presence: true
   validates :body, presence: true
   belongs_to :user, foreign_key: 'googleUserID', optional: true
-
 end

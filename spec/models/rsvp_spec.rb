@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.describe RsvpsController, type: :controller do
   let!(:user) { create(:admin) }
   let!(:event) { create(:event) }
-  let(:user2) {create(:user)}
+  let(:user2) { create(:user) }
   let(:valid_attributes) { { user_uid: user.uid, event_id: event.id } }
   let(:invalid_attributes) { { user_uid: nil, event_id: nil } }
 
@@ -72,9 +72,9 @@ RSpec.describe RsvpsController, type: :controller do
     let!(:rsvp) { create(:rsvp, user_uid: user.uid, event_id: event.id) } # replace with your RSVP creation logic
 
     it 'deletes the RSVP' do
-      expect {
+      expect do
         delete :destroy, params: { id: rsvp.id }
-      }.to change(Rsvp, :count).by(-1)
+      end.to change(Rsvp, :count).by(-1)
     end
   end
 end

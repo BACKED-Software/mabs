@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/mailers/notification_mailer_spec.rb
 require 'rails_helper'
 

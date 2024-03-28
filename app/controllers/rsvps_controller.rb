@@ -2,7 +2,7 @@
 
 class RsvpsController < ApplicationController
   before_action :set_user
-  before_action :set_event, except: [:destroy, :index]
+  before_action :set_event, except: %i[destroy index]
   before_action :check_admin, only: :index
 
   layout 'authenticated_layout'
