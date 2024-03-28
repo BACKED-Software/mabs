@@ -15,6 +15,7 @@ RSpec.describe DatabaseBackupJob, type: :job do
     end
 
     it 'performs the database backup creation' do
+      ENV['DATABASE_URL'] = 'dummy_database_url'
       DatabaseBackupJob.perform_now
 
       expect(File.exist?(Rails.root.join('private', 'db_backups', "db_backup_#{timestamp}.sql"))).to be true

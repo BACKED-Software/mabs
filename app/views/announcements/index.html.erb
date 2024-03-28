@@ -12,7 +12,6 @@
           </div>
         </div>
     <% end %>
-      <% end %>
     <div class="card-body">
       <% @announcements.each do |announcement| %>
         <div id="<%= dom_id(announcement) %>">
@@ -22,3 +21,28 @@
     </div>
   </div>
 </div>
+<% end %>
+
+<% content_for :extra_js do %>
+  <script>
+    window.onunload = function(){}
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      var offcanvasElement = document.querySelector('.offcanvas');
+      var offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+      var signOutLink = document.querySelector('a[href="/users/sign_out"]');
+
+      if (offcanvasElement) {
+        offcanvasInstance.hide();
+      }
+
+      if (signOutLink) {
+        signOutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          offcanvasInstance.hide();
+          window.location.href = signOutLink.getAttribute('href');
+        });
+      }
+    });
+  </script>
+<% end %>
