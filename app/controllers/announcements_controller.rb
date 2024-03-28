@@ -39,6 +39,7 @@ class AnnouncementsController < ApplicationController
       if @announcement.save
         format.html { redirect_to(announcements_path, notice: 'announcement was successfully created.') }
         format.json { render(:show, status: :created, location: @announcement) }
+        NotificationMailer.new_announcement(@announcement, request.host, request.port).deliver_later
       else
         format.html { render(:new, status: :unprocessable_entity) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }
@@ -52,6 +53,7 @@ class AnnouncementsController < ApplicationController
       if @announcement.update(announcement_params)
         format.html { redirect_to(announcements_path, notice: 'announcement was successfully updated.') }
         format.json { render(:show, status: :ok, location: @announcement) }
+        NotificationMailer.edit_announcement(@announcement, request.host, request.port).deliver_later
       else
         format.html { render(:edit, status: :unprocessable_entity) }
         format.json { render(json: @announcement.errors, status: :unprocessable_entity) }

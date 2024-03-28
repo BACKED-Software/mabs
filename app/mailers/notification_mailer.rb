@@ -4,17 +4,15 @@ class NotificationMailer < ApplicationMailer
   default to: -> { User.pluck(:email) },
     from: ENV['EMAIL_USERNAME']
 
-  def new_announcement(announcement)
+  def new_announcement(announcement, host, port)
     @announcement = announcement
-    @users = User.all
-
+    @url = announcement_url(@announcement, host: host, port: port)
     mail(subject: "New MABS Announcement - #{@announcement.subject}")
   end
 
-  def edit_announcement(announcement)
+  def edit_announcement(announcement, host, port)
     @announcement = announcement
-    @users = User.all
-
+    @url = announcement_url(@announcement, host: host, port: port)
     mail(subject: "Update to MABS Announcement - #{@announcement.subject}")
   end
 end
