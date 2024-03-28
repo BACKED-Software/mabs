@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   patch 'users/:id/update_user_title', to: 'users#update_user_title', as: :update_user_title
 
 
-  resources :admin do
+  resources :admin, only: [:index] do
     member do
       # get 'make_admin'
       # patch 'update'
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events do
+  resources :events, except: [:show] do
     # special route for deleting events
     member do
       get 'delete'
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
+  resources :users, only: %i[edit update destroy] do
     # special route for deleting users
     member do
       get 'delete'
@@ -60,7 +60,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :attendances do
+  resources :attendances, only: %i[create destroy] do
     member do
       get 'delete'
     end
@@ -76,7 +76,6 @@ Rails.application.routes.draw do
   resources :points do
     member do
       get 'delete'
-      get 'destroy'
     end
   end
 
