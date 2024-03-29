@@ -139,6 +139,12 @@ trix-toolbar .trix-button-group--file-tools {
     flex-direction: row;
 }
 
+/* Change color when hovering */
+.simple-calendar .calendar-events li .btn:hover {
+    background-color: #003d80;
+    border-color: #003d80;
+}
+
 .simple-calendar .calendar-events li .btn span {
     display: -webkit-box;
     margin: 1%;
@@ -200,12 +206,12 @@ trix-toolbar .trix-button-group--file-tools {
 
 /* Style for today's navigation link */
 .simple-calendar nav a:nth-child(2) {
-    background-color: #152864;
+    background-color: #003d80;
 }
 
 /* Style for navigation links on hover */
 .simple-calendar nav a:hover {
-    background-color: #e0e0e0;
+    background-color: #0b1739;
 }
 
 
