@@ -18,6 +18,11 @@
  *= require simple_calendar
  */
 
+/* disable file attachments */
+trix-toolbar .trix-button-group--file-tools {
+    display: none;
+}
+
 /* Style for the overall calendar */
 .simple-calendar {
     font-family: Arial, sans-serif;
