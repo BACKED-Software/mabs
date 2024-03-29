@@ -1,11 +1,13 @@
 <div id="<%= dom_id event %>" class="row">
-  <div class="col-md-6 mb-3">
+  <div class="col-md-7 mb-3">
     <div class="details">
-      <div class="event-date text-primary"><strong><%= event.eventTime.strftime("%A, %B %-d") %></strong></div>
+      <div class="event-date text-primary text-nowrap"><strong><%= event.eventTime.strftime("%A, %B %-d\n(%I:%M %p)") %></strong></div>
       <div class="event-details">
         <h5 class="event-title mb-1"><%= event.eventName %></h5>
-        <p class="event-time text-muted"><%= event.eventTime.strftime("%H:%M") %></p>
-        <p class="event-location text-muted mb-0"><%= event.eventLocation %></p>
+        <p class="event-location text-muted mb-0">
+          <span class="text-small text-muted mr-2">Location:</span>
+          <%= event.eventLocation %>
+        </p>
         <div class="mt-4">
           <strong class="m-0 text-muted">Points: </strong>
           <span class="total-points m-1 fs-6">
@@ -21,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="event-info">
       <div class="mb-2 text-muted">
         <strong>Info:</strong> <%= raw event.eventInfo %>
