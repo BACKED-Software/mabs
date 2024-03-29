@@ -396,7 +396,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  webdrivers
+  webdrivers (~> 5.0)
   whenever
 
 RUBY VERSION
