@@ -69,7 +69,6 @@ P.S. Check the email you signed in with because announcements are automatically 
 
 If you have trouble viewing events or announcements:
 
-- Make sure you are logged in to your account.
 - Refresh the page to see the most recent updates.
 - Check your internet connection.
 - If issues persist, contact our support team for assistance.

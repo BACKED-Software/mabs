@@ -46,3 +46,15 @@ Make sure to click **Save Changes** after making adjustments.
 Remember to save all changes before exiting the management window to ensure all adjustments are properly recorded.
 
 ---
+
+## Troubleshooting
+
+If you have trouble viewing events or announcements:
+
+- Refresh the page to see the most recent updates.
+- Check your internet connection.
+- If issues persist, contact our support team for assistance.
+
+For any further assistance, please don't hesitate to reach out to an app administrator for assistance.
+
+---
