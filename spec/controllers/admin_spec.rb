@@ -279,7 +279,7 @@ RSpec.describe AdminController, type: :controller do
   include Devise::Test::ControllerHelpers
 
   let!(:user) { create(:user, full_name: 'Jane Doe', email: 'jane@example.com') }
-  let!(:admin) { create(:user, is_admin: true) } # Assume you have an admin trait in your factory
+  let!(:admin) { create(:user, is_admin: true) }
 
   before do
     sign_in admin
@@ -308,7 +308,7 @@ end
 # spec/controllers/admin_controller_spec.rb
 
 RSpec.describe AdminController, type: :controller do
-  let(:admin) { create(:user, is_admin: true) } # Assume FactoryBot is set up for creating users. Adjust as necessary.
+  let(:admin) { create(:user, is_admin: true) }
 
   before do
     # Simulate admin login
@@ -329,7 +329,7 @@ RSpec.describe AdminController, type: :controller do
 end
 
 RSpec.describe AdminController, type: :controller do
-  let(:admin) { create(:user, is_admin: true) } # Assume a factory for admin users exists
+  let(:admin) { create(:user, is_admin: true) }
   let(:valid_file_name) { 'backup.sql' }
   let(:invalid_file_name) { 'nonexistent_backup.sql' }
 
@@ -361,6 +361,62 @@ RSpec.describe AdminController, type: :controller do
     end
   end
 end
+
+RSpec.describe AdminController, type: :controller do
+  describe 'GET #export_demographics' do
+    let(:admin) { create(:user, is_admin: true) }
+    before do
+      sign_in admin
+    end
+
+    context 'when there is an error exporting demographics' do
+      it 'redirects to the admin_tools_path with an error flash message' do
+        allow(User).to receive(:to_csv).and_raise(StandardError, 'Some error')
+        get :export_demographics
+        expect(flash[:error]).to eq('There was a problem retrieving statistics: Some error')
+        expect(response).to redirect_to(admin_tools_path)
+      end
+    end
+  end
+end
+
+RSpec.describe AdminController, type: :controller do
+  describe 'GET #demographics' do
+    let!(:user1) { FactoryBot.create(:user, gender: 'Male', is_hispanic_or_latino: false, race: 'Asian', is_us_citizen: true, is_first_generation_college_student: true, classification: 'U4') }
+    let!(:user2) { FactoryBot.create(:user, gender: 'Female', is_hispanic_or_latino: true, race: 'Hispanic or Latino', is_us_citizen: false, is_first_generation_college_student: false, classification: 'U1') }
+    let!(:admin) { create(:user, is_admin: true) }
+
+    before do
+      sign_in admin # Adjust this line to match your user factory setup
+      get :'admin/demographics'
+    end
+
+    it 'assigns the correct gender distribution' do
+      expect(assigns(:gender_distribution)).to eq({ 'Male' => 1, 'Female' => 1 })
+    end
+
+    it 'assigns the correct ethnicity distribution' do
+      expect(assigns(:ethnicity_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
+    end
+
+    it 'assigns the correct race distribution' do
+      expect(assigns(:race_distribution)).to eq({ 'Asian' => 1, 'Hispanic' => 1 })
+    end
+
+    it 'assigns the correct US citizen distribution' do
+      expect(assigns(:us_citizen_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
+    end
+
+    it 'assigns the correct first generation college student distribution' do
+      expect(assigns(:first_generation_college_student_distribution)).to eq({ true => 1, false => 1 })
+    end
+
+    it 'assigns the correct classification distribution' do
+      expect(assigns(:classification_distribution)).to eq({ 'Senior' => 1, 'Junior' => 1 })
+    end
+  end
+end
+
 
 # RSpec.describe AdminController, type: :controller do
 #   let(:admin) { create(:user, is_admin: true) }

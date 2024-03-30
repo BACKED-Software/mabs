@@ -30,9 +30,14 @@ Rails.application.routes.draw do
       get 'delete'
       get 'promote_to_admin'
       get 'demote_to_user'
-      get 'demographics'
+      # get 'demographics'
       # get 'export_demographics'
     end
+  end
+
+  namespace :admin do
+    get 'demographics', to: 'admin#demographics'
+    # ... other admin routes ...
   end
 
   resources :events, except: [:show] do

@@ -14,19 +14,19 @@ A few of the upcoming events are listed on the dashboard as well.
 
 Click on the **"Events"** tab on your dashboard to open the events calendar.
 
-<img src="/assets/dashboard-events.png" alt="Events Dashboard" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/dashboard-events.png" alt="Events Dashboard" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 ### Step 2: Browse Upcoming Events
 
 View upcoming events highlighted on the calendar. Events show up highlighted in blue so it's easy to visualize. 
 
-<img src="/assets/events-calendar.png" alt="Events Calendar" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/events-calendar.png" alt="Events Calendar" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 ### Step 3: Get Event Details
 
 Click on an event to get detailed information about the event, such as time, location, and the amount of points the event is worth.
 
-<img src="/assets/event-modal.png" alt="Event Details" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/event-modal.png" alt="Event Details" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 ---
 
@@ -40,19 +40,19 @@ Announcements are automatically sent to all the users once it is created.
 
 From your dashboard, select the **"Announcements"** tab to view recent and past announcements. The more recent announcements are viewed first.
 
-<img src="/assets/dashboard-announcements.png" alt="Dashboard Announcements" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/dashboard-announcements.png" alt="Dashboard Announcements" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 
 ### Step 2: Read an Announcement
 
 You will be sent to a page filled with Announcments.
 
-<img src="/assets/announcements-list.png" alt="List of Announcements" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/announcements-list.png" alt="List of Announcements" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
 
 
 Click on an announcement to expand and read the full details.
 
-<img src="/assets/announcement-details.png" alt="Announcements details" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/events_announcements_images/announcement-details.png" alt="Announcements details" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
 
 
 ### Step 3: Keep Up-to-Date
@@ -61,7 +61,7 @@ Regularly check the announcements section to stay informed about any new updates
 
 <!-- P.S. Check the email you signed in with because announcements are automatically sent there as well.
 
-<img src="/assets/email-announcement.png" alt="Announcement email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;"> -->
+<img src="/assets/events_announcements_images/email-announcement.png" alt="Announcement email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;"> -->
 
 ---
 
