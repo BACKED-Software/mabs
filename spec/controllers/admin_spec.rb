@@ -119,10 +119,10 @@ RSpec.describe AdminController, type: :controller do
     end
   end
 
-  let(:invalid_file_name) { "invalid_file.exe" }
-  describe "GET #download_backup" do
-    context "with an invalid file name" do
-      it "redirects to list_backups_path with an alert" do
+  let(:invalid_file_name) { 'invalid_file.exe' }
+  describe 'GET #download_backup' do
+    context 'with an invalid file name' do
+      it 'redirects to list_backups_path with an alert' do
         get :download_backup, params: { file_name: invalid_file_name }
 
         expect(response).to redirect_to(list_backups_path)
@@ -132,10 +132,11 @@ RSpec.describe AdminController, type: :controller do
   end
 end
 
-
 RSpec.describe AdminController, type: :controller do
   let(:admin) { create(:user, is_admin: true) }
-  let(:valid_sql_file) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'backup.sql'), 'application/sql') }
+  let(:valid_sql_file) do
+    fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'backup.sql'), 'application/sql')
+  end
 
   before do
     # Assuming you have a helper method to sign in users or devise test helpers
@@ -144,22 +145,22 @@ RSpec.describe AdminController, type: :controller do
     allow(ENV).to receive(:[]).with('DATABASE_URL').and_return('postgres://user:password@localhost:5432/dbname') # ...except for DATABASE_URL
   end
 
-  describe "POST #import_backup" do
-    context "with a valid SQL file uploaded" do
+  describe 'POST #import_backup' do
+    context 'with a valid SQL file uploaded' do
       before do
         allow_any_instance_of(AdminController).to receive(:system) { true }
       end
 
-      it "imports the database and redirects with a success notice" do
+      it 'imports the database and redirects with a success notice' do
         post :import_backup, params: { backup_file: valid_sql_file }
 
-        expect(flash[:notice]).to eq("Database successfully imported to dbname.") # Adjusted to match the expected output
+        expect(flash[:notice]).to eq('Database successfully imported to dbname.') # Adjusted to match the expected output
         expect(response).to redirect_to(admin_index_path)
       end
     end
 
-    context "without a file uploaded" do
-      it "redirects with an alert about missing file upload" do
+    context 'without a file uploaded' do
+      it 'redirects with an alert about missing file upload' do
         post :import_backup
 
         expect(flash[:alert]).to eq('No file uploaded.')
@@ -167,14 +168,14 @@ RSpec.describe AdminController, type: :controller do
       end
     end
 
-    context "when import fails" do
-      it "redirects with an alert about import failure" do
+    context 'when import fails' do
+      it 'redirects with an alert about import failure' do
         # Mock system call for pg_restore command to simulate failure
         allow_any_instance_of(AdminController).to receive(:system).and_return(false)
 
         post :import_backup, params: { backup_file: valid_sql_file }
 
-        expect(flash[:alert]).to include("Import failed:")
+        expect(flash[:alert]).to include('Import failed:')
         expect(response).to redirect_to(admin_index_path)
       end
     end
@@ -219,16 +220,16 @@ RSpec.describe AdminController, type: :controller do
     let!(:user_to_delete) { create(:user) } # Ensure the user exists
 
     it 'deletes the user and redirects' do
-      expect {
+      expect do
         delete :destroy, params: { id: user_to_delete.id }
-      }.to change(User, :count).by(-1)
+      end.to change(User, :count).by(-1)
       expect(flash[:notice]).to match(/successfully removed/)
       expect(response).to redirect_to(admin_index_path)
     end
   end
 
-  describe "GET #promote_to_admin" do
-    it "promotes a user to admin and redirects to admin index with a notice" do
+  describe 'GET #promote_to_admin' do
+    it 'promotes a user to admin and redirects to admin index with a notice' do
       get :promote_to_admin, params: { id: user.id }
       user.reload
       expect(user.is_admin).to be_truthy
@@ -237,10 +238,10 @@ RSpec.describe AdminController, type: :controller do
     end
   end
 
-  describe "GET #demote_to_user" do
+  describe 'GET #demote_to_user' do
     let(:another_admin) { create(:user, is_admin: true) } # Another admin for testing demotion
 
-    it "demotes an admin to a regular user and redirects with a notice" do
+    it 'demotes an admin to a regular user and redirects with a notice' do
       get :demote_to_user, params: { id: another_admin.id }
       another_admin.reload
       expect(another_admin.is_admin).to be_falsey
@@ -249,23 +250,23 @@ RSpec.describe AdminController, type: :controller do
     end
   end
 
-  describe "Authentication and Authorization" do
-    context "when not signed in" do
-      it "redirects to the sign-in page" do
+  describe 'Authentication and Authorization' do
+    context 'when not signed in' do
+      it 'redirects to the sign-in page' do
         sign_out :user # Ensure no user is signed in
         get :index
         expect(response).to redirect_to(new_user_session_path)
       end
     end
-  
-    context "when signed in as a regular user" do
+
+    context 'when signed in as a regular user' do
       let(:user) { create(:user, is_admin: false) }
-  
+
       before do
         sign_in user
       end
-  
-      it "redirects to the root path with an unauthorized notice" do
+
+      it 'redirects to the root path with an unauthorized notice' do
         get :index
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to eq('You are not authorized to access this page.')
@@ -274,39 +275,37 @@ RSpec.describe AdminController, type: :controller do
   end
 end
 
-
 RSpec.describe AdminController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let!(:user) { create(:user, full_name: "Jane Doe", email: "jane@example.com") }
+  let!(:user) { create(:user, full_name: 'Jane Doe', email: 'jane@example.com') }
   let!(:admin) { create(:user, is_admin: true) } # Assume you have an admin trait in your factory
 
   before do
     sign_in admin
   end
 
-  describe "GET #index with search" do
-    it "finds a user by full name" do
-      get :index, params: { search: "Jane" }
+  describe 'GET #index with search' do
+    it 'finds a user by full name' do
+      get :index, params: { search: 'Jane' }
       expect(assigns(:users)).to include(user)
       expect(response).to have_http_status(:success)
     end
 
-    it "finds a user by email" do
-      get :index, params: { search: "jane@example.com" }
+    it 'finds a user by email' do
+      get :index, params: { search: 'jane@example.com' }
       expect(assigns(:users)).to include(user)
       expect(response).to have_http_status(:success)
     end
 
-    it "does not find users by unrelated search term" do
-      get :index, params: { search: "unrelated" }
+    it 'does not find users by unrelated search term' do
+      get :index, params: { search: 'unrelated' }
       expect(assigns(:users)).not_to include(user)
     end
   end
 end
 
 # spec/controllers/admin_controller_spec.rb
-require 'rails_helper'
 
 RSpec.describe AdminController, type: :controller do
   let(:admin) { create(:user, is_admin: true) } # Assume FactoryBot is set up for creating users. Adjust as necessary.
@@ -316,8 +315,8 @@ RSpec.describe AdminController, type: :controller do
     sign_in admin
   end
 
-  describe "POST #recalculate_points" do
-    it "initiates recalculation job and redirects" do
+  describe 'POST #recalculate_points' do
+    it 'initiates recalculation job and redirects' do
       # Assuming RecalculateUserPointsJob is your ActiveJob
       expect(RecalculateUserPointsJob).to receive(:perform_later)
 
@@ -329,11 +328,10 @@ RSpec.describe AdminController, type: :controller do
   end
 end
 
-
 RSpec.describe AdminController, type: :controller do
   let(:admin) { create(:user, is_admin: true) } # Assume a factory for admin users exists
-  let(:valid_file_name) { "backup.sql" }
-  let(:invalid_file_name) { "nonexistent_backup.sql" }
+  let(:valid_file_name) { 'backup.sql' }
+  let(:invalid_file_name) { 'nonexistent_backup.sql' }
 
   before do
     sign_in admin
@@ -343,7 +341,8 @@ RSpec.describe AdminController, type: :controller do
   describe 'GET #delete_backup' do
     context 'when file does not exist' do
       it 'redirects to the list backups path with an alert' do
-        allow(File).to receive(:exist?).with(Rails.root.join('private', 'db_backups', invalid_file_name)).and_return(false)
+        allow(File).to receive(:exist?).with(Rails.root.join('private', 'db_backups',
+                                                             invalid_file_name)).and_return(false)
 
         get :delete_backup, params: { file_name: invalid_file_name }
 
@@ -416,7 +415,6 @@ end
 #   end
 # end
 
-
 # RSpec.describe AdminController, type: :controller do
 #   # Assuming you have a way to authenticate and set an admin user in your tests
 #   let(:admin) { create(:user, is_admin: true) }
@@ -470,7 +468,6 @@ end
 #   end
 # end
 
-
 # RSpec.describe AdminController, type: :controller do
 #   let(:admin) { create(:user, is_admin: true) }
 
@@ -520,7 +517,6 @@ end
 #     end
 #   end
 # end
-
 
 # RSpec.describe AdminController, type: :controller do
 #   include Devise::Test::ControllerHelpers

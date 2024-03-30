@@ -99,10 +99,9 @@ class AdminController < ApplicationController
 
   def export_demographics
     send_data User.to_csv, filename: "export-of-user-demographics-#{Date.today}.csv"
-
-    rescue StandardError => e
-      flash[:error] = "There was a problem retrieving statistics: #{e.message}"
-      redirect_to admin_tools_path
+  rescue StandardError => e
+    flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+    redirect_to admin_tools_path
   end
 
   def recalculate_points

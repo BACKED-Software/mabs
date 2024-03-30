@@ -58,13 +58,12 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       @user.save
       # Rails.logger.debug "Update succeeded"
-      flash[:notice] = "User title updated successfully."
-      redirect_to admin_tools_path
+      flash[:notice] = 'User title updated successfully.'
     else
       # Rails.logger.debug "Update failed: #{user.errors.full_messages.join(", ")}"
-      flash[:alert] = "Failed to update user title: #{user.errors.full_messages.join(", ")}"
-      redirect_to admin_tools_path
+      flash[:alert] = "Failed to update user title: #{user.errors.full_messages.join(', ')}"
     end
+    redirect_to admin_tools_path
   end
 
   private

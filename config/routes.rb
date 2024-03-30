@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
   patch 'users/:id/update_user_title', to: 'users#update_user_title', as: :update_user_title
 
-
   resources :admin, only: [:index] do
     member do
       # get 'make_admin'
