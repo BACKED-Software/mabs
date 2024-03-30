@@ -47,21 +47,21 @@ From your dashboard, select the **"Announcements"** tab to view recent and past 
 
 You will be sent to a page filled with Announcments.
 
-<img src="/assets/announcements-list.png" alt="List of Announcements" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/announcements-list.png" alt="List of Announcements" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
 
 
 Click on an announcement to expand and read the full details.
 
-<img src="/assets/announcement-details.png" alt="Announcements details" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/announcement-details.png" alt="Announcements details" style="max-width: 100%; max-height: 220px; width: auto; display: block; margin: 20px auto;">
 
 
 ### Step 3: Keep Up-to-Date
 
 Regularly check the announcements section to stay informed about any new updates or changes.
 
-P.S. Check the email you signed in with because announcements are automatically sent there as well.
+<!-- P.S. Check the email you signed in with because announcements are automatically sent there as well.
 
-<img src="/assets/email-announcement.png" alt="Announcement email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email-announcement.png" alt="Announcement email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;"> -->
 
 ---
 
