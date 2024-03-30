@@ -8,7 +8,7 @@ Welcome to our guide on how to easily award points to a user for anything non-ev
 
 If you are an admin, first log into your admin account
 
-### Step 1: Choose Google Sign Up
+### Step 1: Go to admin tools page
 
 From any page, select the **"Admin Tools"** tab to proceed.
 
