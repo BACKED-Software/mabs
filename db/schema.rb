@@ -130,10 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_013048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role"
-<<<<<<< HEAD
     t.string "title"
-=======
->>>>>>> dev
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end

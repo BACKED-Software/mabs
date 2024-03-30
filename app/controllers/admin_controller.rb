@@ -87,18 +87,22 @@ class AdminController < ApplicationController
     @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
     @classification_distribution = User.group(:classification).count.except(nil)
 
-    respond_to do |format|
-      format.html # For the webpage
-      format.json { render json: @users }
-      format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
-    rescue StandardError => e
-      flash[:error] = "There was a problem retrieving statistics: #{e.message}"
-      redirect_to admin_tools_path
-    end
+    # respond_to do |format|
+    #   format.html # For the webpage
+    #   format.json { render json: @users }
+    #   format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
+    # rescue StandardError => e
+    #   flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+    #   redirect_to admin_tools_path
+    # end
   end
 
   def export_demographics
     send_data User.to_csv, filename: "export-of-user-demographics-#{Date.today}.csv"
+
+    rescue StandardError => e
+      flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+      redirect_to admin_tools_path
   end
 
   def recalculate_points
