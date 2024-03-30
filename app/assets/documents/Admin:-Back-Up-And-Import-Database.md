@@ -1,6 +1,6 @@
 # How to Backup or Import the Database
 
-Welcome to our guide on how to easily backup the database, or import a previous backup.
+Welcome to our guide on how to easily backup the database, or import a previous backup. 
 
 ---
 
@@ -35,6 +35,8 @@ To complete the backup of the current database, select the yellow backup databas
 After pressing this button, you should be all done! The page will refresh, and you should get a green success message at the top that looks like this:
 
 <img src="/assets/backupDatabaseImages/backup-success.png" alt="Success Message" style="max-width: 100%; max-height: 250px; width: auto; display: block; margin: 20px auto;">
+
+> **Note:** After importing a database, it might be helpful to recalculate points to ensure all data is up-to-date. You can find instructions on how to do this in our [Recalculate Points Guide](/help/Admin:-Recalculating-Points).
 
 Congratulations! You've successfully backed up the database! You can find your backup and download it by selecting the "List Backups" button in the same menu.
 
