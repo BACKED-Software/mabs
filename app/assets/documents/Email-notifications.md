@@ -18,17 +18,17 @@ One and just ONE gmail account will handle sending all emails. If the app is alr
 
 First navigate to [https://myaccount.google.com/](https://myaccount.google.com/) and make sure you are signed in with the account your team wants to send the emails from.
 
-<img src="/assets/google_acct.png" alt="Manage Google Account" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/google_acct.png" alt="Manage Google Account" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 ### Step 2: Enable 2-Step Verification
 
 Go to the "Security" tab. Scroll down to the "How you sign in to Google" section.
 
-<img src="/assets/manage_google_account.png" alt="Google Security Tab" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/manage_google_account.png" alt="Google Security Tab" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 In this section, click where it says "2-Step Verification."
 
-<img src="/assets/security_tab.png" alt="Google 2-Step Verification" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/security_tab.png" alt="Google 2-Step Verification" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 If you have already enabled 2-Step Verification before, then you can move on to Step 3.
 If not, just follow Google's easy instructions for adding a phone number and setting up 2-Step Verification.
@@ -38,18 +38,18 @@ If not, just follow Google's easy instructions for adding a phone number and set
 
 Scroll to the bottom of the "2-Step Verification" page. Click on where it says "App Passwords."
 
-<img src="/assets/2FA.png" alt="App Password Link" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/2FA.png" alt="App Password Link" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 On this new page, type in the name for your App Password (this can be anything). Click Create.
 
-<img src="/assets/create_app_pswrd.png" alt="Generate App Password" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/create_app_pswrd.png" alt="Generate App Password" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 You will see a new pop-up containing your uniquely generated App Password.
 
 **STOP HERE** for just a second! This is the **ONLY** time you will **EVER** see this password!
 Copy it and save it somewhere secure. I recommend leaving this open until you have entered the password into Heroku.
 
-<img src="/assets/app_pswrd.png" alt="App Password" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/app_pswrd.png" alt="App Password" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 Click the "Done" button to close the pop-up whenever you are ready.
 
@@ -59,21 +59,21 @@ Click the "Done" button to close the pop-up whenever you are ready.
 Go to your [Heroku Dashboard](https://dashboard.heroku.com/apps) and navigate to the pipeline.
 Inside your Pipeline, click on the name of the app you want to add the email to.
 
-<img src="/assets/heroku_pipeline.png" alt="Heroku Pipeline" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/heroku_pipeline.png" alt="Heroku Pipeline" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 ### Step 5: Set the Config Vars in the App Settings
 
 Click on the Settings tab.
 
-<img src="/assets/settings_heroku_app.png" alt="Heroku App" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/settings_heroku_app.png" alt="Heroku App" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 Click where it says "Reveal Config Vars"
 
-<img src="/assets/reveal_vars.png" alt="Reveal Config Vars Button" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/reveal_vars.png" alt="Reveal Config Vars Button" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 At the bottom of the list of Config Vars is a field where you can create new Vars.
 
-<img src="/assets/add_var.png" alt="Create new Config Vars field" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/add_var.png" alt="Create new Config Vars field" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 You will create 2 Config Vars:
 
@@ -82,7 +82,7 @@ You will create 2 Config Vars:
 
 Use quotation marks around the values for each Var as shown. Click the "Add" button when you finish filling in each Var.
 
-<img src="/assets/add_password.png" alt="Add Config Vars Button" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/add_password.png" alt="Add Config Vars Button" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 
 ## Sending an Email
@@ -91,7 +91,7 @@ The email contains the details of the announcement, including the subject and bo
 
  * The Subject of the Announcement is also a link to the Announcement's page in the web app
 
-<img src="/assets/email_ex.png" alt="Sample Email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
+<img src="/assets/email/email_ex.png" alt="Sample Email" style="max-width: 100%; max-height: 300px; width: auto; display: block; margin: 20px auto;">
 
 - Emails about New Announcements will have the subject line: "New MABS Announcement - \<Announcement Subject\>"
 - Emails about Updated Announcements will have the subject line: "Update to MABS Announcement - \<Announcement Subject\>"
