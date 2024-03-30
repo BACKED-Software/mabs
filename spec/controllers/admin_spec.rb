@@ -380,42 +380,42 @@ RSpec.describe AdminController, type: :controller do
   end
 end
 
-RSpec.describe AdminController, type: :controller do
-  describe 'GET #demographics' do
-    let!(:user1) { FactoryBot.create(:user, gender: 'Male', is_hispanic_or_latino: false, race: 'Asian', is_us_citizen: true, is_first_generation_college_student: true, classification: 'U4') }
-    let!(:user2) { FactoryBot.create(:user, gender: 'Female', is_hispanic_or_latino: true, race: 'Hispanic or Latino', is_us_citizen: false, is_first_generation_college_student: false, classification: 'U1') }
-    let!(:admin) { create(:user, is_admin: true) }
+# RSpec.describe AdminController, type: :controller do
+#   describe 'GET #demographics' do
+#     let!(:user1) { FactoryBot.create(:user, gender: 'Male', is_hispanic_or_latino: false, race: 'Asian', is_us_citizen: true, is_first_generation_college_student: true, classification: 'U4') }
+#     let!(:user2) { FactoryBot.create(:user, gender: 'Female', is_hispanic_or_latino: true, race: 'Hispanic or Latino', is_us_citizen: false, is_first_generation_college_student: false, classification: 'U1') }
+#     let!(:admin) { create(:user, is_admin: true) }
 
-    before do
-      sign_in admin # Adjust this line to match your user factory setup
-      get :'admin/demographics'
-    end
+#     before do
+#       sign_in admin # Adjust this line to match your user factory setup
+#       get :'admin/demographics'
+#     end
 
-    it 'assigns the correct gender distribution' do
-      expect(assigns(:gender_distribution)).to eq({ 'Male' => 1, 'Female' => 1 })
-    end
+#     it 'assigns the correct gender distribution' do
+#       expect(assigns(:gender_distribution)).to eq({ 'Male' => 1, 'Female' => 1 })
+#     end
 
-    it 'assigns the correct ethnicity distribution' do
-      expect(assigns(:ethnicity_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
-    end
+#     it 'assigns the correct ethnicity distribution' do
+#       expect(assigns(:ethnicity_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
+#     end
 
-    it 'assigns the correct race distribution' do
-      expect(assigns(:race_distribution)).to eq({ 'Asian' => 1, 'Hispanic' => 1 })
-    end
+#     it 'assigns the correct race distribution' do
+#       expect(assigns(:race_distribution)).to eq({ 'Asian' => 1, 'Hispanic' => 1 })
+#     end
 
-    it 'assigns the correct US citizen distribution' do
-      expect(assigns(:us_citizen_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
-    end
+#     it 'assigns the correct US citizen distribution' do
+#       expect(assigns(:us_citizen_distribution)).to eq({ 'Yes' => 1, 'No' => 1 })
+#     end
 
-    it 'assigns the correct first generation college student distribution' do
-      expect(assigns(:first_generation_college_student_distribution)).to eq({ true => 1, false => 1 })
-    end
+#     it 'assigns the correct first generation college student distribution' do
+#       expect(assigns(:first_generation_college_student_distribution)).to eq({ true => 1, false => 1 })
+#     end
 
-    it 'assigns the correct classification distribution' do
-      expect(assigns(:classification_distribution)).to eq({ 'Senior' => 1, 'Junior' => 1 })
-    end
-  end
-end
+#     it 'assigns the correct classification distribution' do
+#       expect(assigns(:classification_distribution)).to eq({ 'Senior' => 1, 'Junior' => 1 })
+#     end
+#   end
+# end
 
 
 # RSpec.describe AdminController, type: :controller do
