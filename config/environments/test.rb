@@ -30,6 +30,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
+  # Enable logging to stdout
+  # config.logger = ActiveSupport::Logger.new($stdout)
+  # config.log_level = :debug  # Set the desired log level
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
@@ -60,4 +64,6 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :test
 end

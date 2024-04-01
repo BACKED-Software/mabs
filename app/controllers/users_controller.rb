@@ -8,7 +8,8 @@ class UsersController < ApplicationController
 
   def make_admin
     @user.update!(is_admin: true)
-    redirect_to @user, notice: 'User is now an admin.'
+    flash[:notice] = 'User is now an admin.'
+    redirect_to @user
   end
 
   # GET /users or /users.json
@@ -47,7 +48,22 @@ class UsersController < ApplicationController
     # Sign out the user before deleting the account
     sign_out(current_user) if user_signed_in?
     @user.destroy!
-    redirect_to(root_path, notice: 'Your account has been successfully deleted.')
+    flash[:notice] = 'Your account has been successfully deleted.'
+    redirect_to(root_path)
+  end
+
+  def update_user_title
+    # Rails.logger.debug "Params: #{params.inspect}"
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      @user.save
+      # Rails.logger.debug "Update succeeded"
+      flash[:notice] = 'User title updated successfully.'
+    else
+      # Rails.logger.debug "Update failed: #{user.errors.full_messages.join(", ")}"
+      flash[:alert] = "Failed to update user title: #{user.errors.full_messages.join(', ')}"
+    end
+    redirect_to admin_tools_path
   end
 
   private
@@ -59,7 +75,7 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:email, :is_admin, :full_name, :middle_initial, :gender,
+    params.require(:user).permit(:email, :is_admin, :full_name, :title, :middle_initial, :gender,
                                  :is_hispanic_or_latino, :race, :is_us_citizen,
                                  :is_first_generation_college_student, :date_of_birth,
                                  :phone_number, :avatar_url, :bio, :classification,

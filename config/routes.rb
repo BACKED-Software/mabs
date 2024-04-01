@@ -14,13 +14,15 @@ Rails.application.routes.draw do
   get '/admin/upcoming_events', to: 'admin#upcoming_events'
   get '/admin/event/:id', to: 'admin#event', as: 'admin_event'
   get '/admin/demographics', to: 'admin#index', as: 'admin_demographics'
+  # get 'demographics', to: 'admin#demographics', as: 'actual_admin_demographics'
 
   get '/admin-tools/:id/promote_to_admin', to: 'admin#promote_to_admin', as: 'promote_to_admin'
   get '/admin-tools/:id/demote_to_user', to: 'admin#demote_to_user', as: 'demote_to_user'
   get '/admin-tools/:id/destroy', to: 'admin#destroy', as: 'destroy_user'
   get 'admin/export_demographics', to: 'admin#export_demographics', as: 'export_demographics'
+  patch 'users/:id/update_user_title', to: 'users#update_user_title', as: :update_user_title
 
-  resources :admin do
+  resources :admin, only: [:index] do
     member do
       # get 'make_admin'
       # patch 'update'
@@ -28,11 +30,12 @@ Rails.application.routes.draw do
       get 'delete'
       get 'promote_to_admin'
       get 'demote_to_user'
+      get 'demographics'
       # get 'export_demographics'
     end
   end
 
-  resources :events do
+  resources :events, except: [:show] do
     # special route for deleting events
     member do
       get 'delete'
@@ -47,15 +50,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users do
+  resources :users, only: %i[edit update destroy] do
     # special route for deleting users
     member do
       get 'delete'
       patch 'make_admin'
+      # patch 'update_user_title'
     end
   end
 
-  resources :attendances do
+  resources :attendances, only: %i[create destroy] do
     member do
       get 'delete'
     end
@@ -71,7 +75,6 @@ Rails.application.routes.draw do
   resources :points do
     member do
       get 'delete'
-      get 'destroy'
     end
   end
 
@@ -90,8 +93,6 @@ Rails.application.routes.draw do
   get 'delete_backup', to: 'admin#delete_backup', as: :delete_backup
   post 'import_backup', to: 'admin#import_backup', as: :import_backup
 
-
   get 'help' => 'help#index', as: :help
   get 'help/:id' => 'help#show', as: :help_article
-
 end

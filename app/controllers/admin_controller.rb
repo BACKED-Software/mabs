@@ -32,32 +32,39 @@ class AdminController < ApplicationController
   def promote_to_admin
     user = User.find(params[:id])
     user.update!(is_admin: true)
-    redirect_to admin_index_path, notice: "#{user.email} has been promoted to admin."
+    user.save
+    flash[:notice] = "#{user.email} has been promoted to admin."
+    redirect_to admin_index_path
   end
 
   def demote_to_user
     user = User.find(params[:id])
     user.update!(is_admin: false)
-    redirect_to admin_index_path, notice: "#{user.email} has been demoted to user."
+    user.save
+    flash[:notice] = "#{user.email} has been demoted to user."
+    redirect_to admin_index_path
   end
 
-  def update
-    @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to admin_index_path, notice: "#{user.email} was successfully updated."
-    else
-      render :index, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   @user = User.find(params[:id])
+  #   if @user.update(user_params)
+  #     user.save
+  #     flash[:notice] = '#{user.email} User was successfully updated.'
+  #     redirect_to admin_index_path
+  #   else
+  #     render :index, status: :unprocessable_entity
+  #   end
+  # end
 
-  def delete
-    @user = User.find(params[:id])
-  end
+  # def delete
+  #   @user = User.find(params[:id])
+  # end
 
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_index_path, notice: "#{@user.email} was successfully removed."
+    flash[:notice] = "#{@user.email} was successfully removed."
+    redirect_to admin_index_path
   end
 
   def event
@@ -80,23 +87,27 @@ class AdminController < ApplicationController
     @first_generation_college_student_distribution = User.group(:is_first_generation_college_student).count.except(nil)
     @classification_distribution = User.group(:classification).count.except(nil)
 
-    respond_to do |format|
-      format.html # For the webpage
-      format.json { render json: @users }
-      format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
-    rescue StandardError => e
-      flash[:error] = "There was a problem retrieving statistics: #{e.message}"
-      redirect_to admin_tools_path
-    end
+    # respond_to do |format|
+    #   format.html # For the webpage
+    #   format.json { render json: @users }
+    #   format.csv { send_data @users.to_csv, filename: "demographics-#{Date.today}.csv" }
+    # rescue StandardError => e
+    #   flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+    #   redirect_to admin_tools_path
+    # end
   end
 
   def export_demographics
     send_data User.to_csv, filename: "export-of-user-demographics-#{Date.today}.csv"
+  rescue StandardError => e
+    flash[:error] = "There was a problem retrieving statistics: #{e.message}"
+    redirect_to admin_tools_path
   end
 
   def recalculate_points
     RecalculateUserPointsJob.perform_later
-    redirect_to admin_index_path, notice: 'Recalculation of points has been initiated.'
+    flash[:notice] = 'Recalculation of points has been initiated.'
+    redirect_to admin_index_path
   end
 
   def backup_database
@@ -155,7 +166,7 @@ class AdminController < ApplicationController
     uploaded_file = params[:backup_file]
 
     unless ENV['DATABASE_URL']
-      flash[:alert] = "Database URL is not configured."
+      flash[:alert] = 'Database URL is not configured.'
       redirect_to admin_index_path and return
     end
 
@@ -174,7 +185,7 @@ class AdminController < ApplicationController
 
       # Parse database URL from environment variables
       db_url = URI.parse(ENV['DATABASE_URL'])
-      database_name = db_url.path.delete_prefix("/")
+      database_name = db_url.path.delete_prefix('/')
       username = db_url.user
       password = db_url.password
       host = db_url.host
@@ -208,7 +219,6 @@ class AdminController < ApplicationController
     flash[:alert] = "Import failed: #{e.message}"
     redirect_to admin_index_path
   end
-
 
   private
 

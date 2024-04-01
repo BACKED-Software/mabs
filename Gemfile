@@ -77,7 +77,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'webdrivers'
+  gem 'webdrivers', '~> 5.0'
 
   gem 'brakeman'
   gem 'launchy'
@@ -99,7 +99,7 @@ gem 'rails-controller-testing'
 
 gem 'chartkick'
 # gem 'chart_js'
+gem 'redcarpet'
+gem 'sassc', '~> 2.4'
 gem 'simple_calendar'
 gem 'whenever', require: false
-gem "sassc", "~> 2.4"
-gem 'redcarpet'

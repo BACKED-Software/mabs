@@ -2,6 +2,7 @@
 
 RSpec.describe 'Users combined history', type: :feature do
   before do
+    @user2 = create(:user)
     @user = create(:user)
     sign_in @user
     @event = Event.create(
@@ -44,6 +45,15 @@ RSpec.describe 'Users combined history', type: :feature do
       expect(page).to have_content(@attendance.timeOfCheckIn.in_time_zone.strftime('%m/%d'))
       expect(page).to have_content("Attendance to #{@event.eventName}")
       expect(page).to have_content(@attendance.pointsAwarded)
+    end
+  end
+
+  it 'shows a message if no history is available' do
+    sign_out @user
+    sign_in @user2
+    visit root_path
+    within('.pointHistoryModal') do
+      expect(page).to have_content('No points history available')
     end
   end
 end

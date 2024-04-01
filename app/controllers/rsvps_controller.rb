@@ -2,13 +2,10 @@
 
 class RsvpsController < ApplicationController
   before_action :set_user
-  before_action :set_event, except: :index
+  before_action :set_event, except: %i[destroy index]
   before_action :check_admin, only: :index
-  layout 'authenticated_layout'
 
-  def index
-    @rsvps = Rsvp.all
-  end
+  layout 'authenticated_layout'
 
   def create
     if @user.nil? || @event.nil?
@@ -21,15 +18,15 @@ class RsvpsController < ApplicationController
         # render json: @rsvp, status: :created
         redirect_to root_path
       else
-        render json: @rsvp.errors, status: :unprocessable_entity
+        render json: { errors: @rsvp.errors.full_messages }, status: :unprocessable_entity
       end
     end
   end
 
   def destroy
-    @rsvp = Rsvp.find_by(user_uid: @user.uid, event_id: @event.id)
+    @rsvp = Rsvp.find(params[:id])
     @rsvp.destroy
-    head :no_content
+    redirect_to(dashboard_index_path)
   end
 
   private
@@ -38,18 +35,9 @@ class RsvpsController < ApplicationController
     @user = current_user
   end
 
-  def check_admin
-    return if current_user&.admin?
-
-    flash[:alert] = 'You are not authorized to access this page.'
-    redirect_to dashboard_index_path # or any other path you wish to redirect to
-  end
-
   def set_event
     event_id = params[:event_id] || params[:rsvp][:event_id]
-    @event = Event.find(event_id)
-    return if @event
-
-    render json: { error: 'Event not found' }, status: :not_found
+    @event = Event.find_by_id(event_id)
+    render json: { error: 'Event not found' }, status: :not_found if @event.nil?
   end
 end
