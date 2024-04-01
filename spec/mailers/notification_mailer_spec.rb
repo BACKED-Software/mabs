@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe NotificationMailer, type: :mailer do
@@ -5,7 +7,6 @@ RSpec.describe NotificationMailer, type: :mailer do
     let(:announcement) { create(:announcement) } # Assuming you have a factory for Announcement model
 
     it 'sends a new announcement email' do
-
       email = NotificationMailer.new_announcement(announcement, 'example.com', 3000).deliver_now
 
       expect(ActionMailer::Base.deliveries.count).to eq(1)
@@ -20,7 +21,6 @@ RSpec.describe NotificationMailer, type: :mailer do
     let(:announcement) { create(:announcement) } # Assuming you have a factory for Announcement model
 
     it 'sends an edit announcement email' do
-
       email = NotificationMailer.edit_announcement(announcement, 'example.com', 3000).deliver_now
 
       expect(ActionMailer::Base.deliveries.count).to eq(1)
